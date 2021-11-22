@@ -1,0 +1,17 @@
+.logout {
+    height: 2.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #00345E;
+    padding-right: 1.5rem;
+}
+
+.logout p {
+    margin: 0 1rem;
+}
+
+.logout mat-icon {
+    font-weight: bold;
+}

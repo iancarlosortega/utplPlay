@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material/material.module';
+
 import { HeaderComponent } from './header/header.component';
 import { LogoutComponent } from './logout/logout.component';
 
@@ -11,10 +13,12 @@ import { LogoutComponent } from './logout/logout.component';
     LogoutComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    LogoutComponent
   ]
 })
 export class SharedModule { }
