@@ -4,7 +4,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    color: #00345E;
+    color: var(--primario);
     padding-right: 1.5rem;
 }
 

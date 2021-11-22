@@ -1,6 +1,18 @@
 * {
-    font-family:'Poppins', sans-serif;
+    font-family: var(--fuente-principal);
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+:root {
+    /* Fuentes */
+    --fuente-principal: 'Poppins', sans-serif;
+    /* Colores */
+    --blanco: #FFFFFF;
+    --negro: #000000;
+    --gris-bordes: #a7a7a7;
+    --primario: #00345E;
+    /* Separción */
+    --separacion: 5rem;
 }
