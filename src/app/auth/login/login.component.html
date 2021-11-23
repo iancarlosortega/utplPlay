@@ -3,7 +3,7 @@
         <div class="logo">
             <img src="./assets/logo.png" alt="">
         </div>
-        <form>
+        <form [formGroup]="miFormulario">
             <div class="campo">
                 <p class="label">Correo institucional:</p>
                 <input type="text">
@@ -14,7 +14,14 @@
             </div>
 
             <div class="boton">
-                <button mat-fab type="submit" class="boton-submit">
+                <button (click)="login()" mat-fab class="boton-submit">
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+                <button (click)="loginGoogle()" class="boton-submit" *ngIf="(afAuth.authState | async) === null">
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                    <p>Google</p>
+                </button>
+                <button (click)="logout()" mat-fab class="boton-submit" *ngIf="(afAuth.authState | async)">
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button>
             </div>

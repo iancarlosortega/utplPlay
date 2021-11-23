@@ -1,0 +1,55 @@
+.materias {
+    width: 100vw;
+    height: 100%;
+    background-color: coral;
+}
+
+@media (min-width : 1024px) {
+    .materias {
+        height: calc(100vh - 2.5rem);
+    }
+}
+
+.contenedor {
+    width: 80%;
+    margin: auto;
+    padding: var(--separacion) 0;
+}
+
+.caja {
+    background-color: white;
+    height: 250px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.columnas {
+    display: block;
+}
+
+@media (min-width : 1024px) {
+    .columnas {
+        display: grid;
+        grid-template-columns: 60% 40%;
+    }
+}
+
+.col-izq {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo img {
+    max-width: 100%;
+}
+
+.texto {
+    margin: var(--separacion) 0;
+    color: var(--blanco);
+}
+
+.col-der {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

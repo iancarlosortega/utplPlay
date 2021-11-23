@@ -2,10 +2,16 @@
     height: 2.5rem;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     color: var(--primario);
-    padding-right: 1.5rem;
+    padding: 0 1.5rem;
+}
+
+@media (min-width: 768px){
+    .logout {
+        justify-content: flex-end;
+    }
 }
 
 .logout p {

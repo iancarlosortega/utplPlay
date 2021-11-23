@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: var(--separacion) 0;
 }
 
 @media (min-width : 1024px) {
@@ -18,7 +19,8 @@
 }
 
 .formulario {
-    width: 80%;
+    max-width: 80%;
+    min-height: 80%;
 }
 
 .logo {
