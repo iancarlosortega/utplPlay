@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   })
 
   constructor( public afAuth: AngularFireAuth,
-               private router: Router,   
                private fb: FormBuilder
   ) { }
 
@@ -31,10 +30,6 @@ export class LoginComponent implements OnInit {
 
   async logout() {
     await this.afAuth.signOut();
-  }
-
-  login() {
-    this.router.navigateByUrl('/play');
   }
 
 }

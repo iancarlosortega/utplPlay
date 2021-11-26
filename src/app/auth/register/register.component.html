@@ -1,1 +1,29 @@
-<p>register works!</p>
+<form class="formulario-form" [formGroup]="miFormulario">
+    <!-- <div class="logo">
+        <img src="./assets/logo.png" alt="">
+    </div> -->
+    <div class="campo">
+        <p class="label">Nombres y Apellidos:</p>
+        <input formControlName="nombre" type="text">
+    </div>
+    <div class="campo">
+        <p class="label">Correo institucional:</p>
+        <input formControlName="email" type="text">
+    </div>
+    <div class="campo">
+        <p class="label">Contraseña:</p>
+        <input formControlName="password" type="password">
+    </div>
+
+    <div class="boton">
+        <button (click)="register()" mat-fab class="boton-submit">
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+    </div>
+
+    <pre>{{miFormulario.valid}}</pre>
+    <pre>
+        {{miFormulario.value | json}}
+    </pre>
+
+</form>

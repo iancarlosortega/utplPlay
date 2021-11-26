@@ -7,10 +7,6 @@ import { MaterialModule } from '../material/material.module';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from 'src/environments/environment';
-
 
 @NgModule({
   declarations: [
@@ -21,9 +17,7 @@ import { environment } from 'src/environments/environment';
     CommonModule,
     AuthRoutingModule,
     MaterialModule,
-    ReactiveFormsModule,
-    AngularFireAuthModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }

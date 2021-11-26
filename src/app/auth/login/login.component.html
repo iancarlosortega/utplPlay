@@ -1,9 +1,9 @@
 <div class="login">
     <div class="formulario">
-        <div class="logo">
-            <img src="./assets/logo.png" alt="">
-        </div>
-        <form [formGroup]="miFormulario">
+        <form class="formulario-form" [formGroup]="miFormulario">
+            <div class="logo">
+                <img src="./assets/logo.png" alt="">
+            </div>
             <div class="campo">
                 <p class="label">Correo institucional:</p>
                 <input type="text">
@@ -14,7 +14,7 @@
             </div>
 
             <div class="boton">
-                <button (click)="login()" mat-fab class="boton-submit">
+                <button routerLink="/play" mat-fab class="boton-submit">
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button>
                 <button (click)="loginGoogle()" class="boton-submit" *ngIf="(afAuth.authState | async) === null">
@@ -28,7 +28,7 @@
 
             <div class="formulario-footer">
                 <p>¿No puedes iniciar sesión?</p>
-                <p class="register">Regístrate</p>
+                <p routerLink="../register" class="register">Regístrate</p>
             </div>
         </form>
     </div>
