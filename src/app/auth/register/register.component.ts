@@ -25,6 +25,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //TODO: Añadir los campos para el registro del usuario
+
   register() {
 
     if( this.miFormulario.invalid ) {

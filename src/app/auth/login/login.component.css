@@ -1,5 +1,5 @@
 .login {
-    background-image:linear-gradient(to left, rgba(236,104,36,0.52) 0%,rgba(252,160,31,0.73) 100%), url('/assets/login/background.png');
+    background-image:url('/assets/auth/login/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

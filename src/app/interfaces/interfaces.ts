@@ -9,4 +9,6 @@ export interface User {
     establecimiento?: string;
     pais?: string;
     ciudad?: string;
+    genero?: string;
+    cedula?: string;
 }
