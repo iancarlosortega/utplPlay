@@ -1,5 +1,5 @@
 .register {
-    background-image:url('/assets/auth/register/background.jpg');
+    background-image:url('/assets/auth/register/background.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -48,15 +48,26 @@
     width: 100%;
 }
 
-.campo input {
+.campo, .custom-select {
+    margin-bottom: 1rem;
+}
+
+.campo input, .custom-select select {
+    display: block;
     width: 100%;
     border: 1px solid var(--gris-bordes);
     border-radius: 10px;
-    margin: 1rem 0;
+    margin-top: 1rem 0;
+    padding: 0.3rem 0.5rem;
+}
+
+.campo input:focus, .custom-select select:focus {
+    outline: none !important;
+    border:2px solid var(--primario);
 }
 
 @media (min-width:992px){
-    .campo input {
+    .campo input, .custom-select {
         width: 25rem;
     }
 }
@@ -105,3 +116,10 @@
     }
 }
 
+.text-error {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    padding: 0.5rem;
+    margin: 0.3rem 0 0 0;
+}

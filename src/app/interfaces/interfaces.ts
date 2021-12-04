@@ -1,10 +1,11 @@
 export interface User {
     uid: string;
-    nombre?: string;
+    nombres?: string;
+    apellidos?: string;
     email: string;
     password?: string;
-    edad?: number;
-    foto_perfil?: string;
+    //TODO: Agregar foto de perfil
+    // foto_perfil?: string;
     nivel_educacion?: string;
     establecimiento?: string;
     pais?: string;

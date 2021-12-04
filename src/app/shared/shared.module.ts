@@ -3,22 +3,21 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 
 import { HeaderComponent } from './header/header.component';
-import { LogoutComponent } from './logout/logout.component';
+import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    LogoutComponent
+    HeaderComponent
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    PrimeNGModule
   ],
   exports: [
-    HeaderComponent,
-    LogoutComponent
+    HeaderComponent
   ]
 })
 export class SharedModule { }

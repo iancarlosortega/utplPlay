@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import firebase from '@firebase/app-compat';
 import { User } from '../interfaces/interfaces';
 
 @Injectable({
@@ -10,35 +11,40 @@ export class AuthService {
 
   //TODO: Cambiar las reglas de leer, escribir del firestore a futuro en produccion.
 
-  constructor( private af: AngularFireAuth,
+  constructor( private afAuth: AngularFireAuth,
                private firestore: AngularFirestore   
   ) { }
 
-  //TODO: Manejo de errores del firebase en el registro.
-  register(usuario: User) {
-    this.af.createUserWithEmailAndPassword( usuario.email, usuario.password! )
-      .then( (userCredential: any)  => {
-        delete usuario.password;
-        usuario.uid = userCredential.user.uid;
-        this.agregarUsuario( usuario );
-      })
-      .catch( error => {
-        console.log('Error al registrar el usuario:', error);
-    });
+  authState() {
+    this.afAuth.onAuthStateChanged( user => {
+      console.log(user);
+    })
+
+
+    this.afAuth.authState.subscribe( res => {
+      console.log('authstate', res);
+    } );
   }
 
-  agregarUsuario( usuario: any ) {
+  //TODO: Manejo de errores del firebase en el registro.
+  register(usuario: User) {
+    return this.afAuth.createUserWithEmailAndPassword( usuario.email, usuario.password! );
+  }
 
-    const user: User = {
-      uid: usuario.uid,
-      email: usuario.email,
-      nombre: usuario.nombre
-    }
+  loginEmailPassword( email: string, password: string ) {
+    return this.afAuth.signInWithEmailAndPassword( email, password );
+  }
 
-    this.firestore.collection('users').add( user )
-      .then()
-      .catch( error => {
-        console.log('Error al agregar el usuario:', error);
-    })
+  loginGoogle() {
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    this.afAuth.signInWithPopup(googleAuthProvider);
+  }
+
+  async logout() {
+    await this.afAuth.signOut();
+  }
+
+  agregarUsuario( usuario: User ) {
+    return this.firestore.collection('usuarios').add( usuario );
   }
 }

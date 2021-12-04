@@ -1,33 +1,41 @@
 <div class="login">
     <div class="formulario">
-        <form class="formulario-form" [formGroup]="miFormulario">
+        <form class="formulario-form" [formGroup]="miFormulario" (submit)="login()">
             <div class="logo">
                 <img src="./assets/logo.png" alt="">
             </div>
             <div class="campo">
                 <p class="label">Correo institucional:</p>
-                <input type="text">
+                <input type="text" formControlName="email">
+                <span 
+                    class="text-error alert alert-danger" 
+                    *ngIf="campoNoValido('email')"
+                    >El campo de nombres es  <b>obligatorio</b>
+                </span>
             </div>
             <div class="campo">
                 <p class="label">Contraseña:</p>
-                <input type="password">
+                <input type="password" formControlName="password">
+                <span 
+                    class="text-error alert alert-danger" 
+                    *ngIf="campoNoValido('password')"
+                    >El campo de nombres es  <b>obligatorio</b>
+                </span>
             </div>
 
             <div class="boton">
-                <button routerLink="/play" mat-fab class="boton-submit">
+                <button type="submit" mat-fab class="boton-submit">
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button>
-                <button (click)="loginGoogle()" class="boton-submit" *ngIf="(afAuth.authState | async) === null">
+                <!-- TODO: Activar botones de login de google y fb -->
+                <!-- <button (click)="loginGoogle()" class="boton-submit">
                     <mat-icon>arrow_forward_ios</mat-icon>
                     <p>Google</p>
-                </button>
-                <button (click)="logout()" mat-fab class="boton-submit" *ngIf="(afAuth.authState | async)">
-                    <mat-icon>arrow_forward_ios</mat-icon>
-                </button>
+                </button> -->
             </div>
 
             <div class="formulario-footer">
-                <p>¿No puedes iniciar sesión?</p>
+                <p>¿No tienes una cuenta aún?</p>
                 <p routerLink="../register" class="register">Regístrate</p>
             </div>
         </form>

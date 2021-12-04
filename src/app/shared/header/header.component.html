@@ -1,1 +1,24 @@
-<p>header works!</p>
+<nav class="navbar">
+
+    <div class="logo">
+        <img src="./assets/logo.png" alt="">
+    </div>
+
+    <div class="nav-items">
+        <a routerLink="">Home</a>
+        <a routerLink="">Carreras</a>
+        <a routerLink="">Materias</a>
+    </div>
+
+    <div class="buscador">
+        <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="Search">         
+        </span>
+    </div>
+
+    <div class="perfil-usuario">
+        <mat-icon (click)="logout()" >person</mat-icon>
+    </div>
+</nav>
+

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import firebase from '@firebase/app-compat';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,24 +12,46 @@ import firebase from '@firebase/app-compat';
 export class LoginComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
-    'email': [ '' ],
-    'password': ''
+    'email': [ '', [Validators.required, Validators.email] ],
+    'password': [ '', [Validators.required, Validators.minLength(6)] ]
   })
 
-  constructor( public afAuth: AngularFireAuth,
-               private fb: FormBuilder
+  constructor( private authService: AuthService ,
+               private fb: FormBuilder,
+               private router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
-  loginGoogle() {
-    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    this.afAuth.signInWithPopup(googleAuthProvider);
+  campoNoValido( campo: string) {
+    return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
   }
 
-  async logout() {
-    await this.afAuth.signOut();
+  login() {
+
+    if( this.miFormulario.invalid ) {
+      this.miFormulario.markAllAsTouched();
+      return;
+    }
+
+    const email = this.miFormulario.value.email;
+    const password = this.miFormulario.value.password;
+
+    this.authService.loginEmailPassword( email, password ).then( res => {
+
+      console.log('Login exitoso', res);
+      this.router.navigateByUrl('/play');
+
+    }).catch( error => {
+      console.log('Login error', error);
+    })
   }
+
+  loginGoogle() {
+    this.authService.loginGoogle();
+  }
+
+  
 
 }
