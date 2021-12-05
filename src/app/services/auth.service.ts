@@ -1,8 +1,12 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { Router } from '@angular/router';
 import firebase from '@firebase/app-compat';
 import { User } from '../interfaces/interfaces';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,19 +16,11 @@ export class AuthService {
   //TODO: Cambiar las reglas de leer, escribir del firestore a futuro en produccion.
 
   constructor( private afAuth: AngularFireAuth,
-               private firestore: AngularFirestore   
-  ) { }
-
-  authState() {
-    this.afAuth.onAuthStateChanged( user => {
-      console.log(user);
-    })
-
-
-    this.afAuth.authState.subscribe( res => {
-      console.log('authstate', res);
-    } );
-  }
+               private firestore: AngularFirestore,
+               private functions: AngularFireFunctions,
+               private router: Router,
+               private http: HttpClient
+  ) {}
 
   //TODO: Manejo de errores del firebase en el registro.
   register(usuario: User) {
@@ -45,6 +41,20 @@ export class AuthService {
   }
 
   agregarUsuario( usuario: User ) {
-    return this.firestore.collection('usuarios').add( usuario );
+    return this.firestore.collection('usuarios').doc( usuario.uid ).set( usuario );
   }
+
+
+  //TODO: Agregar con el plan avanzado de firebase con Cloud Functions
+  // agregarRolAdmin( email: string ) {
+  //   return this.http.post(`${ environment.baseURL }/api/addAdminRole`, { email });
+  // }
+
+  obtenerClaims() {
+    this.afAuth.idTokenResult.subscribe( idTokenResult => {
+      const claims = idTokenResult?.claims;
+      return claims;
+    });
+  }
+
 }

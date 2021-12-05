@@ -46,7 +46,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.authService.authState();
     this.paises = this.paisesService.obtenerPaises()
 
     //Cargar las ciudades cuando elija un pais
