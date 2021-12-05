@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,10 +9,27 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit  {
 
+  hidden: boolean = false;
+
   ngOnInit(): void {
+
+    if( this.router.url === '/play' ) {
+      this.hidden = true;
+    }
+
+    const res = this.authService.obtenerClaims();
+    console.log(res);
+    
   }
 
-  constructor( private authService: AuthService ) {}
+  constructor( private authService: AuthService,
+               private router: Router
+  ) {}
+
+  irDashboard() {
+    console.log('click');
+    this.router.navigateByUrl('/admin')
+  }
 
   logout() {
     this.authService.logout();

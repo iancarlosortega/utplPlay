@@ -1,9 +1,49 @@
 .navbar {
     padding: 1.7rem 0;
     width: 80%;
+    min-width: 400px;
     margin: auto;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.perfil-usuario {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.nav-items {
+    margin: auto;
+    grid-column: 1 / 3;
+}
+
+.buscador {
+    grid-column: 1 / 3;
+}
+
+@media (min-width:992px){
+    .navbar {
+        grid-template-columns: 20% 50% 20% 10%;
+        grid-template-rows: initial;
+    }
+
+    .perfil-usuario {
+        grid-area: initial;
+    }
+    
+    .nav-items {
+        grid-area: initial;
+    }
+    
+    .buscador {
+        grid-area: initial;
+    }
 }
 
 .logo img {
@@ -12,9 +52,31 @@
 
 .nav-items a {
     cursor: pointer;
-    margin: 0 3rem;
+    margin: 0 1rem;
+    color: var(--blanco);
+    font-weight: 500;
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
 }
 
-.nav-items a:hover {
-    
+@media (min-width:992px){
+    .nav-items a {
+        margin: 0 3rem;
+    }
+}
+
+.nav-items a:hover, .link-activo {
+    color: var(--primario);
+}
+
+.buscador span, .buscador input {
+    width: 100%;
+}
+
+.perfil-usuario button {
+    background-color: var(--primario);
+    border-color: var(--primario);
 }

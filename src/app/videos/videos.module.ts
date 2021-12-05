@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { ElegirMateriasComponent } from './elegir-materias/elegir-materias.component';
 import { HomeComponent } from './home/home.component';
+import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { HomeComponent } from './home/home.component';
   imports: [
     CommonModule,
     VideosRoutingModule,
-    SharedModule
+    SharedModule,
+    PrimeNGModule
   ]
 })
 export class VideosModule { }

@@ -5,20 +5,28 @@
     </div>
 
     <div class="nav-items">
-        <a routerLink="">Home</a>
-        <a routerLink="">Carreras</a>
-        <a routerLink="">Materias</a>
+        <a routerLink="/" routerLinkActive="link-activo">Home</a>
+        <a routerLink="" routerLinkActive="link-activo">Carreras</a>
+        <a routerLink="" routerLinkActive="link-activo">Materias</a>
+        <a (click)="irDashboard()" routerLinkActive="link-activo">Dashboard</a>
     </div>
 
-    <div class="buscador">
+    <div class="buscador" [ngClass]="{ 'hidden' : hidden }">
         <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="Search">         
+            <input type="text" pInputText placeholder="Buscar">         
         </span>
     </div>
 
     <div class="perfil-usuario">
-        <mat-icon (click)="logout()" >person</mat-icon>
+        <button 
+            (click)="logout()" 
+            pButton 
+            icon="pi pi-user"
+            type="button" 
+            class="p-button-raised p-button-rounded">
+        </button>
+        
     </div>
 </nav>
 
