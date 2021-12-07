@@ -1,0 +1,66 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    background: var(--gradiente1); /* Old browsers */
+    background: -moz-linear-gradient(top,  var(--gradiente1) 0%, var(--gradiente2) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  var(--gradiente1) 0%,var(--gradiente2) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  var(--gradiente1) 0%,var(--gradiente2) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3c1d2', endColorstr='#bebfcd',GradientType=0 ); /* IE6-9 */
+    padding: 1rem 3rem;
+    flex-wrap: nowrap;
+    height: 10rem;
+}
+
+@media (min-width : 768px) {
+    .navbar {
+        flex-direction: row;
+        align-items: center;
+        padding: 0 7rem;
+        height: 7rem;
+    }
+}
+
+@media (min-width : 768px) {
+    .logo {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: .5rem 0;
+    }
+
+    .logo a, .logo img {
+        width: 100%;
+    }
+}
+
+.logout {
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+mat-icon {
+    margin: 0 1rem;
+    cursor: pointer;
+}
+
+@media (min-width : 768px) {
+    .logout {
+        margin: 0;
+    }
+
+    .logout img {
+        width: 70%;
+    }
+}
+
+.username {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 0 2rem;
+}
+
+.username p {
+    margin: 0;
+}

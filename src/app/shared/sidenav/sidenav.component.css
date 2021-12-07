@@ -1,0 +1,26 @@
+.listado {
+    list-style-type: none;
+    padding: 0;
+}
+
+.listado-item {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+    cursor: pointer;
+}
+
+.item-nombre p {
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.nav-item {
+    color: var(--negro);
+    text-decoration: none;
+}
+
+.activo {
+    font-weight: bold;
+    color: var(--primario);
+}

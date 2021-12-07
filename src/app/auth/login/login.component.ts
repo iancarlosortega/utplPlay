@@ -12,8 +12,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
-    // 'email': [ 'juan@juan.com', [Validators.required, Validators.email] ],
-    'email': [ 'icortega@utpl.edu.ec', [Validators.required, Validators.email] ],
+    'email': [ 'juan@juan.com', [Validators.required, Validators.email] ],
+    // 'email': [ 'icortega@utpl.edu.ec', [Validators.required, Validators.email] ],
     'password': [ '123456', [Validators.required, Validators.minLength(6)] ]
   })
 

@@ -1,0 +1,68 @@
+mat-toolbar {
+    padding: 0;
+    height: 10rem;
+}
+
+@media (min-width : 768px) {
+    mat-toolbar {
+        height: 7rem;
+    }
+}
+
+app-navbar {
+    height: 10rem;
+    width: 100%;
+}
+
+@media (min-width : 768px) {
+    app-navbar {
+        height: 7rem;
+    }
+    
+}
+
+mat-sidenav {
+    width: 70%;
+    padding: 1.6rem;
+}
+
+@media (min-width: 768px){
+    mat-sidenav {
+        width: 20rem;
+    }
+}
+
+mat-sidenav-container {
+    height: 100%;
+}
+
+.navbar-button {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e3c1d2+0,bebfcd+100 */
+    background: #e3c1d2; /* Old browsers */
+    background: -moz-linear-gradient(top,  #e3c1d2 0%, #bebfcd 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #e3c1d2 0%,#bebfcd 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #e3c1d2 0%,#bebfcd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3c1d2', endColorstr='#bebfcd',GradientType=0 ); /* IE6-9 */
+
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+.navbar-button-border {
+    border-right: 2px solid #ffffff;
+}
+
+.content {
+    height: calc(100vh - 10rem);
+}
+
+@media (min-width : 768px) {
+    .content {
+        height: calc(100vh - 7rem);
+    }
+    mat-sidenav-container {
+        height: calc(100vh - 7rem);
+    }
+}

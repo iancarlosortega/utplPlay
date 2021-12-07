@@ -13,6 +13,8 @@
     --negro: #000000;
     --gris-bordes: #a7a7a7;
     --primario: #00345E;
-    /* Separción */
+    --gradiente1: #E3C1D2;
+    --gradiente2: #BEBFCD;
+    /* Separación */
     --separacion: 5rem;
 }

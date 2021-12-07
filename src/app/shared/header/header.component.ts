@@ -26,11 +26,6 @@ export class HeaderComponent implements OnInit  {
                private router: Router
   ) {}
 
-  irDashboard() {
-    console.log('click');
-    this.router.navigateByUrl('/admin')
-  }
-
   logout() {
     this.authService.logout();
     console.log('logout');

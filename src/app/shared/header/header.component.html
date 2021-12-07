@@ -5,10 +5,10 @@
     </div>
 
     <div class="nav-items">
-        <a routerLink="/" routerLinkActive="link-activo">Home</a>
-        <a routerLink="" routerLinkActive="link-activo">Carreras</a>
-        <a routerLink="" routerLinkActive="link-activo">Materias</a>
-        <a (click)="irDashboard()" routerLinkActive="link-activo">Dashboard</a>
+        <a class="nav-item" routerLink="../home" routerLinkActive="link-activo">Home</a>
+        <a class="nav-item" routerLink="../carreras" routerLinkActive="link-activo">Carreras</a>
+        <a class="nav-item" routerLink="../materias" routerLinkActive="link-activo">Materias</a>
+        <a class="nav-item" routerLink="/admin" routerLinkActive="link-activo">Dashboard</a>
     </div>
 
     <div class="buscador" [ngClass]="{ 'hidden' : hidden }">
