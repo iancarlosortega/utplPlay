@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 
 import {ButtonModule} from 'primeng/button';
+import {CheckboxModule} from 'primeng/checkbox';
 import {InputTextModule} from 'primeng/inputtext';
+import {TableModule} from 'primeng/table';
 
 
 
@@ -9,7 +11,9 @@ import {InputTextModule} from 'primeng/inputtext';
   declarations: [],
   exports:[
     ButtonModule,
-    InputTextModule
+    CheckboxModule,
+    InputTextModule,
+    TableModule
   ]
 })
 export class PrimeNGModule { }

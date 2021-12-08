@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
+import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -14,6 +15,7 @@ import { AgregarMateriaComponent } from './materias/agregar-materia/agregar-mate
 import { ListadoMateriasComponent } from './materias/listado-materias/listado-materias.component';
 import { SubirVideoComponent } from './videos/subir-video/subir-video.component';
 import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.component';
+import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.c
   imports: [
     CommonModule,
     AdminRoutingModule,
+    FormsModule,
     MaterialModule,
+    PrimeNGModule,
     SharedModule
   ]
 })

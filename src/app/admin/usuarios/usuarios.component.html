@@ -1,1 +1,78 @@
-<p>usuarios works!</p>
+<div class="card">
+    <h3 class="p-text-center">Listado de usuarios</h3>
+   
+    <p-table #dt2 [value]="usuarios" dataKey="nombres" selectionMode="single" [(selection)]="selectedRow" (onRowSelect)="onRowSelect($event)"
+        [rows]="15" [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50]" [loading]="loading" styleClass="p-datatable-usuarios p-datatable-gridlines"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} usuarios"
+        [globalFilterFields]="['nombres', 'apellidos', 'email']">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="p-inputtext p-component" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Buscar usuario" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 2.25em">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="nombres" >
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Nombres
+                        <p-sortIcon field="nombres"></p-sortIcon>
+                        <p-columnFilter type="text" field="nombres" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Apellidos
+                        <p-columnFilter type="text" field="apellidos" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Correo electronico
+                        <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>Hacer Admin</th>
+                <th>Hacer Editor</th>
+                
+            </tr>
+            
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="usuario.email"></p-tableCheckbox>
+                </td>
+                <td>
+                    {{usuario.nombres}}
+                </td>
+                <td>
+                    
+                    {{usuario.apellidos}}
+                </td>
+                
+                <td>
+                    {{usuario.email}}
+                </td>
+                <td>
+                    <p-checkbox name="admin" (onChange)="prueba(usuario.email)" [value]="usuario.email"></p-checkbox>
+                </td>
+                <td>
+                    <mat-checkbox (change)="prueba(usuario.email)" [value]="usuario.email" [checked]="usuario.email == 'juan@juan.com'"></mat-checkbox>
+                    <!-- <p-checkbox name="editor" [value]="usuario.email"></p-checkbox> -->
+                </td>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Ningún usuario encontrado.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -20,7 +20,7 @@ export class AdminGuard implements CanActivate, CanLoad {
 
       this.afAuth.idTokenResult.subscribe( idTokenResult => {
         const claims = idTokenResult?.claims;
-        if( !claims ||  !claims['admin'] ) {
+        if( !claims ||  !claims['admin'] || !claims['editor'] ) {
           this.router.navigateByUrl('/play')
         } 
       });
@@ -31,7 +31,7 @@ export class AdminGuard implements CanActivate, CanLoad {
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       this.afAuth.idTokenResult.subscribe( idTokenResult => {
         const claims = idTokenResult?.claims;
-        if( !claims ||  !claims['admin'] ) {
+        if( !claims ||  !claims['admin'] || !claims['admin']) {
           this.router.navigateByUrl('/play')
         } 
       });
