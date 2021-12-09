@@ -1,1 +1,155 @@
-<p>listado-carreras works!</p>
+
+
+<h3 class="p-text-center">Listado de usuarios</h3>
+   
+    <p-table 
+        #dt 
+        [value]="carreras" 
+        dataKey="nombre" 
+        selectionMode="single"
+        [rows]="15" 
+        [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[15,25,50]" 
+        [loading]="loading" 
+        styleClass="p-datatable-usuarios p-datatable-gridlines"
+        [paginator]="true" 
+        currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
+        [globalFilterFields]="['nombre', 'num_ciclos']">
+
+        <!-- Modal para crear carrera -->
+ 
+        <ng-template #modal>
+            <div class="modal-header">
+            <h4 class="modal-title pull-left">Agregar Carrera</h4>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form 
+                [formGroup]="miFormulario" 
+                (submit)="agregarCarrera(form)" 
+                #form="ngForm"
+                autocomplete="off" >
+
+                    <!-- Input Nombre -->
+                
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Nombre de la carrera</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            formControlName="nombre" 
+                            [errorStateMatcher]="matcher"
+                            placeholder="Ex. Computación">
+                        <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                          El campo de nombre es <strong>obligatorio</strong>
+                        </mat-error>
+                    </mat-form-field>
+                
+                
+                    <!-- Input número de ciclos -->
+                    
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Número de ciclos</mat-label>
+                        <input 
+                            type="number" 
+                            matInput 
+                            formControlName="num_ciclos" 
+                            [errorStateMatcher]="matcher"
+                            placeholder="Ex. 1"
+                            min="1">
+                        <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                          El número de ciclos debe ser mínimo <strong>1</strong>
+                        </mat-error>
+                    </mat-form-field>
+                            
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button 
+                    pButton 
+                    type="button" 
+                    icon="pi pi-times" 
+                    iconPos="right"
+                    class="p-button-raised"
+                    >Cancelar
+                </button>
+                <button 
+                    pButton 
+                    type="submit" 
+                    icon="pi pi-check-circle" 
+                    iconPos="right"
+                    class="p-button-raised"
+                    >Guardar
+                </button>
+            </div>
+        </ng-template>
+
+        <!-- Buscador -->
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <!-- Agregar Carrera -->
+                <button type="button" class="btn btn-primary" (click)="openModal(modal)">Agregar Carrera</button>
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input 
+                        class="p-inputtext p-component" 
+                        pInputText 
+                        type="text" 
+                        (input)="applyFilterGlobal($event, 'contains')" 
+                        placeholder="Buscar carrera" />
+                </span>
+            </div>
+        </ng-template>
+
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 2.25em">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="nombre" >
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Nombre
+                        <p-sortIcon field="nombre"></p-sortIcon>
+                        <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="num_ciclos">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Número de ciclos
+                        <p-sortIcon field="num_ciclos"></p-sortIcon>
+                        <p-columnFilter type="number" field="apellidos" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>Acciones</th>
+                
+            </tr>
+            
+        </ng-template>
+        <ng-template pTemplate="body" let-carrera>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="carrera.nombre"></p-tableCheckbox>
+                </td>
+                <td>
+                    {{carrera.nombre}}
+                </td>
+                <td>
+                    
+                    {{carrera.num_ciclos}}
+                </td>
+                
+                <td></td>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">Ninguna carrera encontrada.</td>
+            </tr>
+        </ng-template>
+    </p-table>

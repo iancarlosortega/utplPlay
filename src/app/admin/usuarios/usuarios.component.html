@@ -1,15 +1,29 @@
 <div class="card">
     <h3 class="p-text-center">Listado de usuarios</h3>
    
-    <p-table #dt2 [value]="usuarios" dataKey="nombres" selectionMode="single" [(selection)]="selectedRow" (onRowSelect)="onRowSelect($event)"
-        [rows]="15" [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50]" [loading]="loading" styleClass="p-datatable-usuarios p-datatable-gridlines"
-        [paginator]="true" currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} usuarios"
+    <p-table 
+        #dt 
+        [value]="usuarios" 
+        dataKey="nombres" 
+        selectionMode="single"
+        [rows]="15" 
+        [showCurrentPageReport]="true" 
+        [rowsPerPageOptions]="[15,25,50]" 
+        [loading]="loading" 
+        styleClass="p-datatable-usuarios p-datatable-gridlines"
+        [paginator]="true" 
+        currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} usuarios"
         [globalFilterFields]="['nombres', 'apellidos', 'email']">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
                     <i class="pi pi-search"></i>
-                    <input class="p-inputtext p-component" pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Buscar usuario" />
+                    <input 
+                        class="p-inputtext p-component" 
+                        pInputText 
+                        type="text" 
+                        (input)="applyFilterGlobal($event, 'contains')" 
+                        placeholder="Buscar usuario" />
                 </span>
             </div>
         </ng-template>
@@ -60,11 +74,18 @@
                     {{usuario.email}}
                 </td>
                 <td>
-                    <p-checkbox name="admin" (onChange)="prueba(usuario.email)" [value]="usuario.email"></p-checkbox>
+                    <mat-checkbox 
+                        (change)="prueba(usuario.email)" 
+                        [value]="usuario.email" 
+                        [checked]="usuario.email == 'juan@juan.com'">
+                    </mat-checkbox>
                 </td>
                 <td>
-                    <mat-checkbox (change)="prueba(usuario.email)" [value]="usuario.email" [checked]="usuario.email == 'juan@juan.com'"></mat-checkbox>
-                    <!-- <p-checkbox name="editor" [value]="usuario.email"></p-checkbox> -->
+                    <mat-checkbox 
+                        (change)="prueba(usuario.email)" 
+                        [value]="usuario.email" 
+                        [checked]="usuario.email == 'juan@juan.com'">
+                    </mat-checkbox>
                 </td>
                 
             </tr>

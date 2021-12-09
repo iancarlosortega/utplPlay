@@ -13,3 +13,19 @@ export interface User {
     genero?: string;
     cedula?: string;
 }
+
+export interface Carrera {
+    id: string;
+    nombre: string;
+    num_ciclos: number;
+    //TODO: Agregar foto de carrera
+    // img: string;
+}
+
+export interface Materia {
+    id: string;
+    nombre: string;
+    carrera: string;
+    //TODO: Agregar foto de materia
+    // img: string;
+}

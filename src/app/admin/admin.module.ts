@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -15,8 +17,6 @@ import { AgregarMateriaComponent } from './materias/agregar-materia/agregar-mate
 import { ListadoMateriasComponent } from './materias/listado-materias/listado-materias.component';
 import { SubirVideoComponent } from './videos/subir-video/subir-video.component';
 import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.component';
-import { PrimeNGModule } from '../prime-ng/prime-ng.module';
-
 
 @NgModule({
   declarations: [
@@ -33,10 +33,11 @@ import { PrimeNGModule } from '../prime-ng/prime-ng.module';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     PrimeNGModule,
-    SharedModule
+    SharedModule,
+    ModalModule.forRoot()
   ]
 })
 export class AdminModule { }

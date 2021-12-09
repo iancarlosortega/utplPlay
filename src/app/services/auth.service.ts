@@ -53,6 +53,7 @@ export class AuthService {
   obtenerClaims() {
     this.afAuth.idTokenResult.subscribe( idTokenResult => {
       const claims = idTokenResult?.claims;
+      console.log('obtener claims',claims);
       return claims;
     });
   }

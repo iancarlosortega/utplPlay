@@ -10,21 +10,15 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class UsuariosComponent implements OnInit {
 
-  @ViewChild ('dt2') dt2: Table | undefined;
+  @ViewChild ('dt') dt: Table | undefined;
 
   usuarios: User[] = [];
   loading: boolean = true;
-  selectedRow: any;
-  checked: boolean = true
 
   constructor( private adminService: AdminService ) { }
 
   applyFilterGlobal($event: any, stringVal: string) {
-    this.dt2!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
-  }
-
-  onRowSelect( rowInfo: any ) {
-    console.log(rowInfo);
+    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
   ngOnInit(): void {

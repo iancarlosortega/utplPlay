@@ -1,0 +1,20 @@
+mat-form-field, .modal-footer {
+    display: block;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-footer button {
+    margin: 0.5rem 0;
+    width: 80%;
+}
+
+@media (min-width: 768px){
+    .modal-footer button {
+        margin: 0 0.5rem;
+        width: 40%;
+    }
+}
