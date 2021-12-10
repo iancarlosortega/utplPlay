@@ -41,8 +41,11 @@ export class AdminService {
     return this.firestore.collection('carreras').doc(id).snapshotChanges();
   }
 
-  editarCarrera( id: string, data: Carrera ) {
-    return this.firestore.collection('carreras').doc(id).update( { data } );
+  actualizarCarrera(id: string, data: Carrera ) {
+    return this.firestore.collection('carreras').doc(id).update( {
+      nombre: data.nombre,
+      num_ciclos: data.num_ciclos
+    });
   }
 
   eliminarCarrera( id: string ) {

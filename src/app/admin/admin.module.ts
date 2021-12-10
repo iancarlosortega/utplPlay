@@ -37,7 +37,7 @@ import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.c
     MaterialModule,
     PrimeNGModule,
     SharedModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ]
 })
 export class AdminModule { }

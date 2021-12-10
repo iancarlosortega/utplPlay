@@ -18,7 +18,7 @@
 
         <!-- Modal para crear carrera -->
  
-        <ng-template #modal>
+        <ng-template #modalCrear>
             <div class="modal-header">
             <h4 class="modal-title pull-left">Agregar Carrera</h4>
             <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
@@ -81,6 +81,80 @@
                 <button 
                     pButton 
                     (click)="agregarCarrera()" 
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    iconPos="right" 
+                    class="p-button-raised">
+                </button>
+                
+            </div>
+        </ng-template>
+
+        <!-- Modal para crear carrera -->
+ 
+        <ng-template #modalEditar>
+            <div class="modal-header">
+            <h4 class="modal-title pull-left">Editar Carrera</h4>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form 
+                [formGroup]="miFormulario" 
+                #formulario
+                #form="ngForm"
+                autocomplete="off" >
+
+                    <!-- Input Nombre -->
+                
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Nombre de la carrera</mat-label>
+                        <input 
+                            type="text" 
+                            matInput 
+                            formControlName="nombre" 
+                            [errorStateMatcher]="matcher"
+                            placeholder="Ex. Computación">
+                        <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                          El campo de nombre es <strong>obligatorio</strong>
+                        </mat-error>
+                    </mat-form-field>
+                
+                
+                    <!-- Input número de ciclos -->
+                    
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Número de ciclos</mat-label>
+                        <input 
+                            type="number" 
+                            matInput 
+                            formControlName="num_ciclos" 
+                            [errorStateMatcher]="matcher"
+                            placeholder="Ex. 1"
+                            min="1">
+                        <mat-error *ngIf="this.miFormulario.controls['num_ciclos'].hasError('required')">
+                          El número de ciclos debe ser mínimo <strong>1</strong>
+                        </mat-error>
+                    </mat-form-field>
+                            
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button 
+                    pButton 
+                    (click)="closeModalEditar()" 
+                    label="Cancelar" 
+                    icon="pi pi-times" 
+                    iconPos="left" 
+                    class="p-button-raised boton-cancelar">
+                </button>
+
+                <button 
+                    pButton 
+                    (click)="actualizarCarrera()" 
                     label="Guardar" 
                     icon="pi pi-check" 
                     iconPos="right" 
