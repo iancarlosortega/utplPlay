@@ -1,0 +1,10 @@
+.botones {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cancelar {
+    background-color: #56717D;
+    color: #FFFFFF;
+}

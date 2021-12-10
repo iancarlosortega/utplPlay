@@ -17,6 +17,7 @@ import { AgregarMateriaComponent } from './materias/agregar-materia/agregar-mate
 import { ListadoMateriasComponent } from './materias/listado-materias/listado-materias.component';
 import { SubirVideoComponent } from './videos/subir-video/subir-video.component';
 import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.component';
+import { EliminarComponent } from './eliminar/eliminar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.c
     AgregarMateriaComponent,
     ListadoMateriasComponent,
     SubirVideoComponent,
-    ListadoVideosComponent
+    ListadoVideosComponent,
+    EliminarComponent
   ],
   imports: [
     CommonModule,

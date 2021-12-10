@@ -1,0 +1,20 @@
+<h5>¿Desea confirmar la elimación?</h5>
+<hr>
+
+<div class="botones">
+        <button mat-raised-button
+                color="danger"
+                (click)="cerrar()"
+                class="cancelar">
+                Cancelar
+                <mat-icon>highlight_off</mat-icon>
+        </button>
+
+        <button mat-raised-button
+                color="warn"
+                (click)="borrar()">
+                Si, eliminar
+                <mat-icon>delete_forever</mat-icon>
+        </button>
+
+</div>

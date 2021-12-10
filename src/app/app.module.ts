@@ -25,7 +25,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
-      timeOut: 1000
+      timeOut: 3000
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule

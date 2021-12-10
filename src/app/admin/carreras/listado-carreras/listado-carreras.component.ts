@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { Table } from 'primeng/table';
 import { Carrera } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
+import { EliminarComponent } from '../../eliminar/eliminar.component';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -71,7 +73,8 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
   constructor( private adminService: AdminService, 
                private modalService: BsModalService,
                private fb: FormBuilder ,
-               private toastr: ToastrService
+               private toastr: ToastrService,
+               public dialog: MatDialog
   ) { }
 
 
@@ -151,15 +154,26 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
   }
 
   eliminarCarrera( id: string ) {
-    //TODO: Agregar modal de confirmación
-    this.adminService.eliminarCarrera(id)
-      .then( res => {
-        console.log(res);
-        this.toastr.error(`La carrera ${this.carrera} fue eliminada con éxito`, 'Carrera eliminada!');
-      })
-      .catch( err => {
-        console.log('Error al eliminar la carrera', err);
-      })
+    //Ventana modal para confirmar la eliminacion
+    const dialog = this.dialog.open(EliminarComponent, {
+      width: '400px'
+    });
+
+    dialog.afterClosed().subscribe( (result) => {
+        if(result) {
+          this.adminService.eliminarCarrera(id)
+          .then( res => {
+            console.log(res);
+            this.toastr.error(`La carrera ${this.carrera} fue eliminada con éxito`, 'Carrera eliminada!');
+          })
+          .catch( err => {
+            console.log('Error al eliminar la carrera', err);
+          })
+        }
+      }
+    )
+
+    
   }
 
 }
