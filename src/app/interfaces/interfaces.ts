@@ -25,7 +25,7 @@ export interface Carrera {
 export interface Materia {
     id: string;
     nombre: string;
-    carrera: string;
+    carreras: Carrera[];
     //TODO: Agregar foto de materia
     // img: string;
 }

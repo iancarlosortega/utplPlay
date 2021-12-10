@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
 import { Carrera } from 'src/app/interfaces/interfaces';
-import { AdminService } from 'src/app/services/admin.service';
+import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 
 
@@ -21,7 +21,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './carreras.component.html',
   styleUrls: ['./carreras.component.css']
 })
-export class CarrerasComponent implements OnInit, OnDestroy {
+export class CarrerasComponent implements OnInit {
 
   @ViewChild ('dt') dt: Table | undefined;
   @ViewChild ('formulario') formulario!: any;
@@ -167,10 +167,6 @@ export class CarrerasComponent implements OnInit, OnDestroy {
     )
 
     
-  }
-
-  ngOnDestroy(): void {
-    this.modalService.onHidden.unsubscribe();
   }
 
 }

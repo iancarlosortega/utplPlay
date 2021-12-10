@@ -1,0 +1,47 @@
+mat-form-field {
+    display: block;
+}
+
+::ng-deep .mat-form-field-wrapper{
+    margin-bottom: -1.25em;
+ }
+
+.modal-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.boton-cancelar {
+    background-color: #bebebe !important;
+    border-color: #bebebe !important;
+}
+
+.tabla-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.acciones {
+    display: flex;
+    justify-content: center;
+}
+
+.acciones button:first-child{
+    margin-right: 0.5rem;
+}
+
+.carreras-nombre {
+    display: inline;
+}
+
+.carreras-nombre::after {
+    content: ",";
+}
+
+.carreras-nombre:last-child::after {
+    content: ".";
+}
+
+.sin-materias {
+    text-align: center !important;
+}

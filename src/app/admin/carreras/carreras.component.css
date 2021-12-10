@@ -1,4 +1,5 @@
-mat-form-field, .modal-footer {
+mat-form-field {
+    margin-bottom: 0.5rem;
     display: block;
 }
 
@@ -24,4 +25,8 @@ mat-form-field, .modal-footer {
 
 .acciones button:first-child{
     margin-right: 0.5rem;
+}
+
+.sin-carreras {
+    text-align: center !important;
 }

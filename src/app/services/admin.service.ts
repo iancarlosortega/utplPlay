@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs';
-import { Carrera } from '../interfaces/interfaces';
+import { Carrera, Materia } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +52,40 @@ export class AdminService {
     return this.firestore.collection('carreras').doc(id).delete();
   }
 
+  // Materias
   
-  
+  obtenerMaterias(){
+    const materiasCollection = this.firestore.collection('materias');
+
+    return materiasCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Materia;
+            data.id = a.payload.doc.id;  
+            return data
+          });
+        })
+      )
+  }
+
+  agregarMateria( materia: Materia ) {
+    return this.firestore.collection('materias').add(materia);
+  }
+
+  getMateriaById(id: string) {
+    return this.firestore.collection('materias').doc(id).snapshotChanges();
+  }
+
+  actualizarMateria(id: string, data: Materia ) {
+    return this.firestore.collection('materias').doc(id).update( {
+      nombre: data.nombre,
+      carreras: data.carreras
+    });
+  }
+
+  eliminarMateria( id: string ) {
+    return this.firestore.collection('materias').doc(id).delete();
+  }
 
 }

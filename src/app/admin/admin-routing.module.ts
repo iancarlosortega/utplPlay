@@ -4,8 +4,7 @@ import { CarrerasComponent } from './carreras/carreras.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeAdminComponent } from './home-admin/home-admin.component';
-import { AgregarMateriaComponent } from './materias/agregar-materia/agregar-materia.component';
-import { ListadoMateriasComponent } from './materias/listado-materias/listado-materias.component';
+import { MateriasComponent } from './materias/materias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.component';
 import { SubirVideoComponent } from './videos/subir-video/subir-video.component';
@@ -20,8 +19,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'carreras', component: CarrerasComponent },
-      { path: 'agregar/materia', component: AgregarMateriaComponent },
-      { path: 'materias', component: ListadoMateriasComponent },
+      { path: 'materias', component: MateriasComponent },
       { path: 'subir/videos', component: SubirVideoComponent },
       { path: 'videos', component: ListadoVideosComponent },
       { path: '**', redirectTo: 'dashboard' },

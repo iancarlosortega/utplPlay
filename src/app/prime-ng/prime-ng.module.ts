@@ -5,6 +5,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {InputTextModule} from 'primeng/inputtext';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
+import {MultiSelectModule} from 'primeng/multiselect';
 import {TableModule} from 'primeng/table';
 
 
@@ -17,6 +18,7 @@ import {TableModule} from 'primeng/table';
     InputTextModule,
     MessageModule,
     MessagesModule,
+    MultiSelectModule,
     TableModule
   ]
 })

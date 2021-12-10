@@ -12,12 +12,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeAdminComponent } from './home-admin/home-admin.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { CarrerasComponent } from './carreras/carreras.component';
-import { AgregarMateriaComponent } from './materias/agregar-materia/agregar-materia.component';
-import { ListadoMateriasComponent } from './materias/listado-materias/listado-materias.component';
+import { MateriasComponent } from './materias/materias.component';
 import { SubirVideoComponent } from './videos/subir-video/subir-video.component';
 import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.component';
 import { EliminarComponent } from './eliminar/eliminar.component';
-import { MateriasComponent } from './materias/materias.component';
 
 @NgModule({
   declarations: [
@@ -25,8 +23,7 @@ import { MateriasComponent } from './materias/materias.component';
     HomeAdminComponent,
     UsuariosComponent,
     CarrerasComponent,
-    AgregarMateriaComponent,
-    ListadoMateriasComponent,
+    MateriasComponent,
     SubirVideoComponent,
     ListadoVideosComponent,
     EliminarComponent,

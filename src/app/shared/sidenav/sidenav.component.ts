@@ -25,35 +25,15 @@ export class SidenavComponent implements OnInit {
           route: './usuarios',
           icono: 'supervised_user_circle'
         },
-      ]
-    },
-    {
-      titulo: 'Carreras',
-      subItems: [
         {
-          subtitulo: 'Agregar carrera',
-          route: './agregar/carrera',
-          icono: 'playlist_add'
-        },
-        {
-          subtitulo: 'Listado de carreras',
+          subtitulo: 'Carreras',
           route: './carreras',
-          icono: 'list_alt'
-        },
-      ]
-    },
-    {
-      titulo: 'Materias',
-      subItems: [
-        {
-          subtitulo: 'Agregar materia',
-          route: './agregar/materia',
-          icono: 'note_add'
+          icono: 'data_usage'
         },
         {
-          subtitulo: 'Listado de materias',
+          subtitulo: 'Materias',
           route: './materias',
-          icono: 'format_list_bulleted'
+          icono: 'library_books'
         },
       ]
     },

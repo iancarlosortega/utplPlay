@@ -210,7 +210,7 @@
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Número de ciclos
                         <p-sortIcon field="num_ciclos"></p-sortIcon>
-                        <p-columnFilter type="number" field="apellidos" display="menu"></p-columnFilter>
+                        <p-columnFilter type="number" field="num_ciclos" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>Acciones</th>
@@ -257,7 +257,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">Ninguna carrera encontrada.</td>
+                <td class="sin-carreras" colspan="5">Ninguna carrera encontrada.</td>
             </tr>
         </ng-template>
     </p-table>
