@@ -7,14 +7,21 @@ mat-form-field, .modal-footer {
     justify-content: space-around;
 }
 
-.modal-footer button {
-    margin: 0.5rem 0;
-    width: 80%;
+.boton-cancelar {
+    background-color: #bebebe !important;
+    border-color: #bebebe !important;
 }
 
-@media (min-width: 768px){
-    .modal-footer button {
-        margin: 0 0.5rem;
-        width: 40%;
-    }
+.tabla-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.acciones {
+    display: flex;
+    justify-content: center;
+}
+
+.acciones button:first-child{
+    margin-right: 0.5rem;
 }

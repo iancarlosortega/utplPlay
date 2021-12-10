@@ -1,6 +1,6 @@
 
 
-<h3 class="p-text-center">Listado de usuarios</h3>
+<h3 class="p-text-center">Listado de carreras</h3>
    
     <p-table 
         #dt 
@@ -28,7 +28,7 @@
             <div class="modal-body">
                 <form 
                 [formGroup]="miFormulario" 
-                (submit)="agregarCarrera(form)" 
+                #formulario
                 #form="ngForm"
                 autocomplete="off" >
 
@@ -71,28 +71,40 @@
             <div class="modal-footer">
                 <button 
                     pButton 
-                    type="button" 
+                    (click)="closeModal()" 
+                    label="Cancelar" 
                     icon="pi pi-times" 
-                    iconPos="right"
-                    class="p-button-raised"
-                    >Cancelar
+                    iconPos="left" 
+                    class="p-button-raised boton-cancelar">
                 </button>
+
                 <button 
                     pButton 
-                    type="submit" 
-                    icon="pi pi-check-circle" 
-                    iconPos="right"
-                    class="p-button-raised"
-                    >Guardar
+                    (click)="agregarCarrera()" 
+                    label="Guardar" 
+                    icon="pi pi-check" 
+                    iconPos="right" 
+                    class="p-button-raised">
                 </button>
+                
             </div>
         </ng-template>
 
-        <!-- Buscador -->
+        <!-- Tabla header -->
         <ng-template pTemplate="caption">
-            <div class="p-d-flex">
+            <div class="tabla-header">
                 <!-- Agregar Carrera -->
-                <button type="button" class="btn btn-primary" (click)="openModal(modal)">Agregar Carrera</button>
+                <button 
+                    pButton
+                    icon="pi pi-plus-circle" 
+                    iconPos="right"
+                    type="button" 
+                    class="p-button-raised" 
+                    label="Agregar Carrera"
+                    (click)="openModal()">
+                </button>
+
+                <!-- Buscador -->
                 <span class="p-input-icon-left p-ml-auto">
                     <i class="pi pi-search"></i>
                     <input 
@@ -143,7 +155,27 @@
                     {{carrera.num_ciclos}}
                 </td>
                 
-                <td></td>
+                <td class="acciones">
+                    <!-- Botón de editar -->
+                    <button 
+                        pButton 
+                        icon="pi pi-pencil" 
+                        iconPos="right"
+                        type="button" 
+                        (click)="editarCarrera(carrera.id)"
+                        class="p-button-raised p-button-rounded">
+                    </button>
+
+                    <!-- Botón de eliminar -->
+                    <button 
+                        pButton 
+                        icon="pi pi-trash" 
+                        iconPos="right"
+                        type="button" 
+                        (click)="eliminarCarrera(carrera.id)"
+                        class="p-button-raised p-button-rounded p-button-danger">
+                    </button>
+                </td>
                 
             </tr>
         </ng-template>

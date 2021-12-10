@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Form, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Table } from 'primeng/table';
@@ -18,9 +18,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './listado-carreras.component.html',
   styleUrls: ['./listado-carreras.component.css']
 })
-export class ListadoCarrerasComponent implements OnInit {
+export class ListadoCarrerasComponent implements OnInit, OnDestroy {
 
   @ViewChild ('dt') dt: Table | undefined;
+  @ViewChild ('formulario') formulario!: any;
+  @ViewChild ('modal') modal!: TemplateRef<any>;
 
   $: any;
   carreras: Carrera[] = [];
@@ -39,8 +41,18 @@ export class ListadoCarrerasComponent implements OnInit {
     return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
   }
  
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openModal() {
+    this.modalRef = this.modalService.show(this.modal);
+  }
+
+  closeModal() {
+    this.modalRef?.hide();
+    this.miFormulario.reset();
+    this.formulario?.resetForm();
+  }
+
+  applyFilterGlobal($event: any, stringVal: string) {
+    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
   constructor( private adminService: AdminService, 
@@ -48,20 +60,26 @@ export class ListadoCarrerasComponent implements OnInit {
                private fb: FormBuilder 
   ) { }
 
-  applyFilterGlobal($event: any, stringVal: string) {
-    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+
+  ngOnDestroy(): void {
+    this.modalService.onHidden.unsubscribe();
   }
 
   ngOnInit(): void {
 
-    this.adminService.obtenerCarreras().subscribe( res => {
-      this.carreras = res;
+    this.modalService.onHidden.subscribe( (_)=> {
+      this.miFormulario.reset();
+      this.formulario?.resetForm();
+    })
+
+    this.adminService.obtenerCarreras().subscribe( carreras => {
+      this.carreras = carreras;
       this.loading = false;
     });
 
   }
 
-  agregarCarrera( formulario: any ) {
+  agregarCarrera() {
 
     if( this.miFormulario.invalid ) {
       this.miFormulario.markAllAsTouched();
@@ -74,12 +92,32 @@ export class ListadoCarrerasComponent implements OnInit {
       .then( res => {
         // this.modalRef?.hide();
         this.miFormulario.reset();
-        formulario.resetForm();
+        this.formulario?.resetForm();
       })
       .catch( err => {
         console.log('Error al agregar la carrera', err);
       })
 
+  }
+
+  editarCarrera(id: string) {
+    this.openModal();
+    this.adminService.getCarreraById(id).subscribe( (data: any) => {
+      this.miFormulario.setValue({
+        nombre: data.payload.data()['nombre'],
+        num_ciclos: data.payload.data()['num_ciclos'],
+      })
+    })
+  }
+
+  eliminarCarrera( id: string ) {
+    this.adminService.eliminarCarrera(id)
+      .then( res => {
+        console.log(res);
+      })
+      .catch( err => {
+        console.log('Error al eliminar la carrera', err);
+      })
   }
 
 }
