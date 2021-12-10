@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Table } from 'primeng/table';
 import { Carrera } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
-import { EliminarComponent } from '../../eliminar/eliminar.component';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -17,22 +17,22 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 @Component({
-  selector: 'app-listado-carreras',
-  templateUrl: './listado-carreras.component.html',
-  styleUrls: ['./listado-carreras.component.css']
+  selector: 'app-carreras',
+  templateUrl: './carreras.component.html',
+  styleUrls: ['./carreras.component.css']
 })
-export class ListadoCarrerasComponent implements OnInit, OnDestroy {
+export class CarrerasComponent implements OnInit, OnDestroy {
 
   @ViewChild ('dt') dt: Table | undefined;
   @ViewChild ('formulario') formulario!: any;
   @ViewChild ('modalCrear') modalCrear!: TemplateRef<any>;
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
 
-  $: any;
   id?: string;
   carreras: Carrera[] = [];
   carrera!: Carrera;
   loading: boolean = true;
+  disabled: boolean = false;
   modalRef?: BsModalRef;
 
   miFormulario: FormGroup = this.fb.group({
@@ -40,11 +40,8 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
     num_ciclos: [ '', [ Validators.required, Validators.min(1) ] ],
   })
 
+  //Errores de formulario
   matcher = new MyErrorStateMatcher();
-
-  campoNoValido( campo: string) {
-    return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
-  }
  
   openModal() {
     this.modalRef = this.modalService.show(this.modalCrear);
@@ -60,27 +57,16 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(this.modalEditar);
   }
 
-  closeModalEditar() {
-    this.modalRef?.hide();
-    this.miFormulario.reset();
-    this.formulario?.resetForm();
-  }
-
   applyFilterGlobal($event: any, stringVal: string) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  constructor( private adminService: AdminService, 
+  constructor( private fb: FormBuilder ,
+               private adminService: AdminService, 
                private modalService: BsModalService,
-               private fb: FormBuilder ,
                private toastr: ToastrService,
-               public dialog: MatDialog
+               public  dialog: MatDialog
   ) { }
-
-
-  ngOnDestroy(): void {
-    this.modalService.onHidden.unsubscribe();
-  }
 
   ngOnInit(): void {
 
@@ -105,20 +91,23 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
 
     this.carrera = this.miFormulario.value;
 
+    this.disabled = true;
     this.adminService.agregarCarrera(this.carrera)
       .then( res => {
         this.modalRef?.hide();
+        this.disabled = false;
         this.miFormulario.reset();
         this.formulario?.resetForm();
         this.toastr.success(`La carrera ${this.carrera.nombre} fue registrada con éxito!`, 'Carrera Registrada');
       })
       .catch( err => {
+        this.toastr.error(`${err}`, 'Error al agregar la carrerar');
         console.log('Error al agregar la carrera', err);
       })
 
   }
 
-  editarCarrera(id: string) {
+  obtenerCarrera(id: string) {
     this.openModalEditar();
     this.adminService.getCarreraById(id).subscribe( (data: any) => {
       if( data.type != 'removed' ) {
@@ -141,14 +130,17 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
 
     this.carrera = this.miFormulario.value;
 
+    this.disabled = true;
     this.adminService.actualizarCarrera(this.id!, this.carrera )
       .then( res => {
         this.modalRef?.hide();
+        this.disabled = false;
         this.miFormulario.reset();
         this.formulario?.resetForm();
-        this.toastr.info(`La carrera ${this.carrera} fue actualizada con éxito`, 'Carrera actualizada!');
+        this.toastr.info(`La carrera ${this.carrera.nombre} fue actualizada con éxito`, 'Carrera actualizada!');
       })
       .catch( err => {
+        this.toastr.error(`${err}`, 'Error al actualizar la carrerar');
         console.log('Error al actualizar la carrerar', err);
       })
   }
@@ -164,9 +156,10 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
           this.adminService.eliminarCarrera(id)
           .then( res => {
             console.log(res);
-            this.toastr.error(`La carrera ${this.carrera} fue eliminada con éxito`, 'Carrera eliminada!');
+            this.toastr.error('La carrera fue eliminada con éxito', 'Carrera eliminada!');
           })
           .catch( err => {
+            this.toastr.error(`${err}`, 'Error al eliminar la carrerar');
             console.log('Error al eliminar la carrera', err);
           })
         }
@@ -174,6 +167,10 @@ export class ListadoCarrerasComponent implements OnInit, OnDestroy {
     )
 
     
+  }
+
+  ngOnDestroy(): void {
+    this.modalService.onHidden.unsubscribe();
   }
 
 }

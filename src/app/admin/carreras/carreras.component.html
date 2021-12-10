@@ -82,6 +82,7 @@
                     pButton 
                     (click)="agregarCarrera()" 
                     label="Guardar" 
+                    [disabled]="disabled"
                     icon="pi pi-check" 
                     iconPos="right" 
                     class="p-button-raised">
@@ -90,7 +91,7 @@
             </div>
         </ng-template>
 
-        <!-- Modal para crear carrera -->
+        <!-- Modal para editar carrera -->
  
         <ng-template #modalEditar>
             <div class="modal-header">
@@ -145,7 +146,7 @@
             <div class="modal-footer">
                 <button 
                     pButton 
-                    (click)="closeModalEditar()" 
+                    (click)="closeModal()" 
                     label="Cancelar" 
                     icon="pi pi-times" 
                     iconPos="left" 
@@ -155,7 +156,8 @@
                 <button 
                     pButton 
                     (click)="actualizarCarrera()" 
-                    label="Guardar" 
+                    [disabled]="disabled"
+                    label="Actualizar" 
                     icon="pi pi-check" 
                     iconPos="right" 
                     class="p-button-raised">
@@ -236,7 +238,7 @@
                         icon="pi pi-pencil" 
                         iconPos="right"
                         type="button" 
-                        (click)="editarCarrera(carrera.id)"
+                        (click)="obtenerCarrera(carrera.id)"
                         class="p-button-raised p-button-rounded">
                     </button>
 
