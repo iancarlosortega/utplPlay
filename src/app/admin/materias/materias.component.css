@@ -2,9 +2,6 @@ mat-form-field {
     display: block;
 }
 
-::ng-deep .mat-form-field-wrapper{
-    margin-bottom: -1.25em;
- }
 
 .modal-footer {
     display: flex;

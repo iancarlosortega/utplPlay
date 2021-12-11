@@ -29,3 +29,14 @@ export interface Materia {
     //TODO: Agregar foto de materia
     // img: string;
 }
+
+export interface Video {
+    id: string;
+    titulo: string;
+    tutor: string;
+    materia: string;
+    visualizaciones: number;
+    fecha_publicacion: Date;
+    url: string;
+    file?: string;
+}

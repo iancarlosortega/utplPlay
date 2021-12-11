@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
@@ -15,7 +15,7 @@ import { EliminarComponent } from '../eliminar/eliminar.component';
 export class MateriasComponent implements OnInit {
 
   @ViewChild ('dt') dt: Table | undefined;
-  @ViewChild ('formulario') formulario!: any;
+  @ViewChild( FormGroupDirective ) formulario!: FormGroupDirective;
   @ViewChild ('modalCrear') modalCrear!: TemplateRef<any>;
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
 
@@ -48,6 +48,10 @@ export class MateriasComponent implements OnInit {
 
   campoNoValido( campo: string) {
     return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
+  }
+
+  applyFilterGlobal($event: any, stringVal: string) {
+    this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
   constructor( private fb: FormBuilder ,

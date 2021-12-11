@@ -39,10 +39,9 @@
                         <input 
                             type="text" 
                             matInput 
-                            formControlName="nombre" 
-                            [errorStateMatcher]="matcher"
+                            formControlName="nombre"
                             placeholder="Ex. Computación">
-                        <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                        <mat-error *ngIf="campoNoValido('nombre')">
                           El campo de nombre es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
@@ -55,11 +54,10 @@
                         <input 
                             type="number" 
                             matInput 
-                            formControlName="num_ciclos" 
-                            [errorStateMatcher]="matcher"
+                            formControlName="num_ciclos"
                             placeholder="Ex. 1"
                             min="1">
-                        <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                        <mat-error *ngIf="campoNoValido('num_ciclos')">
                           El número de ciclos debe ser mínimo <strong>1</strong>
                         </mat-error>
                     </mat-form-field>
@@ -114,10 +112,9 @@
                         <input 
                             type="text" 
                             matInput 
-                            formControlName="nombre" 
-                            [errorStateMatcher]="matcher"
+                            formControlName="nombre"
                             placeholder="Ex. Computación">
-                        <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                        <mat-error *ngIf="campoNoValido('nombre')">
                           El campo de nombre es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
@@ -130,11 +127,10 @@
                         <input 
                             type="number" 
                             matInput 
-                            formControlName="num_ciclos" 
-                            [errorStateMatcher]="matcher"
+                            formControlName="num_ciclos"
                             placeholder="Ex. 1"
                             min="1">
-                        <mat-error *ngIf="this.miFormulario.controls['num_ciclos'].hasError('required')">
+                        <mat-error *ngIf="campoNoValido('num_ciclos')">
                           El número de ciclos debe ser mínimo <strong>1</strong>
                         </mat-error>
                     </mat-form-field>

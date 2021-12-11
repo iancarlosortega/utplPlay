@@ -1,0 +1,23 @@
+mat-form-field, .custom-file {
+    display: block;
+}
+
+.custom-file {
+    margin-top: 0.5rem;
+}
+
+.video, .video video {
+    margin: 1rem 0;
+    width: 100%;
+    min-width: 400px;
+}
+
+.boton-upload {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.espacio {
+    height: 100px;
+}

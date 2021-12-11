@@ -27,10 +27,8 @@
         </div>
         <div class="modal-body">
             <form 
-            [formGroup]="miFormulario" 
-            #formulario
-            #form="ngForm"
-            autocomplete="off" >
+                [formGroup]="miFormulario" 
+                autocomplete="off">
 
                 <!-- Input Nombre -->
             
@@ -41,12 +39,10 @@
                         matInput 
                         formControlName="nombre"
                         placeholder="Ex. Física">
+                    <mat-error *ngIf="campoNoValido('nombre')">
+                        El campo de nombre es <strong>obligatorio</strong>
+                    </mat-error>
                 </mat-form-field>
-                <small 
-                    *ngIf="campoNoValido('nombre')" 
-                    class="text text-danger">
-                    El campo de nombre es <strong>obligatorio</strong>
-                </small>
             
             
                 <!-- Input carreras -->
@@ -103,10 +99,8 @@
         </div>
         <div class="modal-body">
             <form 
-            [formGroup]="miFormulario" 
-            #formulario
-            #form="ngForm"
-            autocomplete="off" >
+                [formGroup]="miFormulario" 
+                autocomplete="off">
 
                 <!-- Input Nombre -->
             
@@ -117,17 +111,10 @@
                         matInput 
                         formControlName="nombre"
                         placeholder="Ex. Física">
-                    <mat-error *ngIf="this.miFormulario.controls['nombre'].hasError('required')">
+                    <mat-error *ngIf="campoNoValido('nombre')">
                       El campo de nombre es <strong>obligatorio</strong>
                     </mat-error>
-                </mat-form-field>
-            
-                <small 
-                    *ngIf="campoNoValido('nombre')" 
-                    class="text text-danger">
-                    El campo de nombre es <strong>obligatorio</strong>
-                </small>
-            
+                </mat-form-field>            
             
                 <!-- Input carreras -->
 
@@ -193,6 +180,7 @@
                     class="p-inputtext p-component" 
                     pInputText 
                     type="text"
+                    (input)="applyFilterGlobal($event, 'contains')" 
                     placeholder="Buscar materia" />
             </span>
         </div>

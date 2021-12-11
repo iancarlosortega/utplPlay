@@ -9,13 +9,6 @@ import { Carrera } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 @Component({
   selector: 'app-carreras',
   templateUrl: './carreras.component.html',
@@ -24,7 +17,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class CarrerasComponent implements OnInit {
 
   @ViewChild ('dt') dt: Table | undefined;
-  @ViewChild ('formulario') formulario!: any;
+  @ViewChild( FormGroupDirective ) formulario!: FormGroupDirective;
   @ViewChild ('modalCrear') modalCrear!: TemplateRef<any>;
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
 
@@ -39,12 +32,13 @@ export class CarrerasComponent implements OnInit {
     nombre: [ '', [ Validators.required, Validators.minLength(3) ] ],
     num_ciclos: [ '', [ Validators.required, Validators.min(1) ] ],
   })
-
-  //Errores de formulario
-  matcher = new MyErrorStateMatcher();
  
   openModal() {
     this.modalRef = this.modalService.show(this.modalCrear);
+  }
+
+  openModalEditar() {
+    this.modalRef = this.modalService.show(this.modalEditar);
   }
 
   closeModal() {
@@ -53,12 +47,12 @@ export class CarrerasComponent implements OnInit {
     this.formulario?.resetForm();
   }
 
-  openModalEditar() {
-    this.modalRef = this.modalService.show(this.modalEditar);
-  }
-
   applyFilterGlobal($event: any, stringVal: string) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
+  }
+
+  campoNoValido( campo: string) {
+    return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
   }
 
   constructor( private fb: FormBuilder ,

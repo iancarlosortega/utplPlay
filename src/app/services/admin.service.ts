@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs';
-import { Carrera, Materia } from '../interfaces/interfaces';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize, map, Observable } from 'rxjs';
+import { FileUpload } from '../admin/videos/models/file-upload-model';
+import { Carrera, Materia, Video } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor( private firestore: AngularFirestore ) { }
+  // Nombre de la carpeta donde se guardaran en el storage de firebase
+  private basePath = '/videos';
+
+  constructor( private firestore: AngularFirestore,
+               private storage: AngularFireStorage
+  ) { }
 
   // Usuarios
 
@@ -86,6 +93,63 @@ export class AdminService {
 
   eliminarMateria( id: string ) {
     return this.firestore.collection('materias').doc(id).delete();
+  }
+
+  // Videos
+
+  obtenerVideos(){
+    const videosCollection = this.firestore.collection('videos');
+
+    return videosCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Video;
+            data.id = a.payload.doc.id;  
+            return data
+          });
+        })
+      )
+  }
+
+  subirVideo(fileUpload: FileUpload, videoData: Video) {
+
+    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, fileUpload.file);
+  
+    //Esperar a obtener el link de descarga del archivo subido
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe(downloadURL => {
+          videoData.url = downloadURL;
+          this.agregarVideo(videoData);
+        });
+      })
+    ).subscribe();
+  
+    return uploadTask.percentageChanges();
+  }
+
+  private agregarVideo(video: any) {
+    this.firestore.collection('videos').add(video);
+  }
+
+  eliminarVideo(fileUpload: FileUpload): void {
+    this.eliminarVideoFirestore(fileUpload.key)
+      .then(() => {
+        this.eliminarVideoStorage(fileUpload.name);
+      })
+      .catch(error => console.log(error));
+  }
+
+  private eliminarVideoFirestore(key: string): Promise<void> {
+    return this.firestore.collection('videos').doc(key).delete()
+  }
+
+  private eliminarVideoStorage(name: string): void {
+    const storageRef = this.storage.ref(this.basePath);
+    storageRef.child(name).delete();
   }
 
 }
