@@ -14,7 +14,7 @@
             <mat-label>Título del video</mat-label>
             <input 
                 type="text" 
-                matInput 
+                matInput
                 formControlName="titulo"
                 placeholder="Ex. Leyes de Newton">
             <mat-error *ngIf="campoNoValido('titulo')">
@@ -38,13 +38,28 @@
 
         <!-- Input Materia -->
 
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field>
             <mat-label>Materia</mat-label>
-            <input 
-                type="text" 
-                matInput 
+            <mat-select 
+                placeholder="Materia" 
                 formControlName="materia"
-                placeholder="Ex. Computación">
+                (closed)="limpiarBuscador()">
+                <mat-form-field class="select-input">
+                    <mat-label>Buscador</mat-label>
+                    <form autocomplete="off">
+                        <input
+                            #txtBuscar
+                            matInput type="text" 
+                            placeholder="Buscar Materia" 
+                            (keyup)="filtrarMaterias($event)"
+                        >
+                    </form>
+                </mat-form-field>
+                
+                <mat-option *ngFor="let materia of materias" [value]="materia">
+                    {{ materia.nombre }}
+                </mat-option>
+            </mat-select>
             <mat-error *ngIf="campoNoValido('materia')">
                 El campo de materia es <strong>obligatorio</strong>
             </mat-error>
@@ -56,8 +71,9 @@
             <input 
                 type="file" 
                 class="form-control" 
-                formControlName="file" 
-                id="importFile" 
+                formControlName="file"
+                accept="video/mp4,video/x-m4v,video/*"
+
                 (change)="selectFile($event)">
             <small 
                 *ngIf="campoNoValido('file')" 
@@ -68,27 +84,45 @@
 
         <!-- Previsualizacion del video -->
         <div class="video">
-            <video [src]="url" *ngIf="format==='video' && url" controls></video> <br/>
+            <video 
+                [src]="url" 
+                *ngIf="format==='video' && url" 
+                controls>
+            </video> <br/>
         </div>
 
         <!-- Barra de porcentaje -->
-        <div *ngIf="currentFileUpload && visible" class="progress mt-2">
-            <div
-                class="progress-bar progress-bar-striped"
-                role="progressbar"
-                attr.aria-valuenow="{{ percentage }}"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                [ngStyle]="{ width: percentage + '%' }"
-                [ngClass]="{
-                    'bg-success': percentage > 70,
-                    'bg-info': percentage > 40 && percentage < 70,
-                    'bg-warning': percentage > 20 && percentage < 40,
-                    'bg-danger': percentage > 0 && percentage < 20
-                }"
-                >
-                {{ percentage }}%
+        <div *ngIf="currentFileUpload && visible">
+            
+            <div class="alert alert-info loading">
+                <p>Por favor espere a que el video se termine de subir</p>
+                <p-progressSpinner 
+                    [style]="{width: '20px', height: '20px'}" 
+                    styleClass="custom-spinner" 
+                    strokeWidth="8"
+                    animationDuration=".5s">
+                </p-progressSpinner>
             </div>
+
+            <div class="progress mt-2">
+                <div
+                    class="progress-bar progress-bar-striped"
+                    role="progressbar"
+                    attr.aria-valuenow="{{ percentage }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    [ngStyle]="{ width: percentage + '%' }"
+                    [ngClass]="{
+                        'bg-success': percentage > 70,
+                        'bg-info': percentage > 40 && percentage < 70,
+                        'bg-warning': percentage > 20 && percentage < 40,
+                        'bg-danger': percentage > 0 && percentage < 20
+                    }"
+                    >
+                    {{ percentage }}%
+                </div>
+            </div>
+
         </div>
         
         <div class="boton-upload">
@@ -99,7 +133,7 @@
                 [disabled]="disabled"
                 label="Subir video" 
                 icon="pi pi-cloud-upload" 
-                iconPos="right" 
+                iconPos="left" 
                 class="p-button-raised">
             </button>
         </div>

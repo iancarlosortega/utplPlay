@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Video } from 'src/app/interfaces/interfaces';
+import { Materia, Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
 import { FileUpload } from '../models/file-upload-model';
 
@@ -13,8 +13,11 @@ import { FileUpload } from '../models/file-upload-model';
 export class SubirVideoComponent implements OnInit {
 
   @ViewChild(FormGroupDirective) formulario!: FormGroupDirective;
+  @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
 
   video!: Video;
+  materias!: Materia[];
+  materiasAux!: any[];
   selectedFiles?: any;
   currentFileUpload?: FileUpload;
   url: any;
@@ -24,10 +27,10 @@ export class SubirVideoComponent implements OnInit {
   disabled = false;
 
   miFormulario: FormGroup = this.fb.group({
-    titulo: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    tutor: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    materia: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    file: [ , [Validators.required]  ]
+    titulo: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
+    tutor: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
+    materia: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
+    file: [{ value: '', disabled: false } , [Validators.required]  ]
   })
 
   campoNoValido( campo: string) {
@@ -40,6 +43,12 @@ export class SubirVideoComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+
+    this.adminService.obtenerMateriasVideos().subscribe( materias => {
+      this.materias = materias;
+      this.materiasAux = materias;
+    });
+
   }
 
   selectFile(event: any): void {
@@ -75,6 +84,7 @@ export class SubirVideoComponent implements OnInit {
       return;
     }
     this.disabled = true;
+    this.disableForm();
     this.video = this.miFormulario.value;
     this.video.visualizaciones = 0;
     this.video.fecha_publicacion = new Date();
@@ -93,6 +103,7 @@ export class SubirVideoComponent implements OnInit {
               this.toastr.success('El video fue subido con éxito!', 'Video Subido');
               this.miFormulario.reset();
               this.formulario.resetForm();
+              this.enableForm();
               this.url = null;
               this.visible = false;
               this.percentage = 0;
@@ -104,5 +115,40 @@ export class SubirVideoComponent implements OnInit {
 
     }
 
+  }
+
+  enableForm(): void {
+    this.miFormulario.controls['titulo'].enable();
+    this.miFormulario.controls['tutor'].enable();
+    this.miFormulario.controls['materia'].enable();
+    this.miFormulario.controls['file'].enable();
+  }
+
+  disableForm(): void {
+    this.miFormulario.controls['titulo'].disable();
+    this.miFormulario.controls['tutor'].disable();
+    this.miFormulario.controls['materia'].disable();
+    this.miFormulario.controls['file'].disable();
+  }
+
+  
+  filtrarMaterias($event: any) {
+    let valor: string = $event.target.value;
+    valor = valor.toLowerCase().trim();
+
+    this.materias = this.materiasAux
+    this.materias = this.materias.filter((materia: Materia) => {
+      const nombreMateria = materia.nombre.toLowerCase();
+      if( nombreMateria.includes(valor) ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  limpiarBuscador() {
+    this.txtBuscar.nativeElement.value = '';
+    this.materias = this.materiasAux;
   }
 }

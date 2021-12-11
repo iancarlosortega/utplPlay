@@ -28,7 +28,6 @@ export class UsuariosComponent implements OnInit {
         this.usuarios.push(element.data())
       });
       this.loading = false;
-      console.log(this.usuarios);
     });
 
   }

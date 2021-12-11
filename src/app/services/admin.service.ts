@@ -76,6 +76,22 @@ export class AdminService {
       )
   }
 
+  obtenerMateriasVideos(){
+    const materiasCollection = this.firestore.collection('materias');
+
+    return materiasCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Materia;
+            data.id = a.payload.doc.id;  
+            delete data.carreras;
+            return data
+          });
+        })
+      )
+  }
+
   agregarMateria( materia: Materia ) {
     return this.firestore.collection('materias').add(materia);
   }

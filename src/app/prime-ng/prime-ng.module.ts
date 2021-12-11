@@ -6,6 +6,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TableModule} from 'primeng/table';
 
 
@@ -19,6 +20,7 @@ import {TableModule} from 'primeng/table';
     MessageModule,
     MessagesModule,
     MultiSelectModule,
+    ProgressSpinnerModule,
     TableModule
   ]
 })
