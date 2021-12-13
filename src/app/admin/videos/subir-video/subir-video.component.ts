@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { switchMap } from 'rxjs';
 import { Materia, Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
-import { FileUpload } from '../models/file-upload-model';
+import { FileUpload } from '../../models/file-upload-model';
 
 @Component({
   selector: 'app-subir-video',
@@ -15,7 +17,19 @@ export class SubirVideoComponent implements OnInit {
   @ViewChild(FormGroupDirective) formulario!: FormGroupDirective;
   @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
 
-  video!: Video;
+  video: Video = {
+    id : '',
+    titulo : '',
+    tutor : '',
+    materia : {
+      id: '',
+      nombre: ''
+    },
+    visualizaciones : 0,
+    url : '',
+    fecha_publicacion: null
+  }
+  tipo: string = 'agregar';
   materias!: Materia[];
   materiasAux!: any[];
   selectedFiles?: any;
@@ -30,16 +44,23 @@ export class SubirVideoComponent implements OnInit {
     titulo: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
     tutor: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
     materia: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
-    file: [{ value: '', disabled: false } , [Validators.required]  ]
+    file: [{ value: '', disabled: false }]
   })
 
   campoNoValido( campo: string) {
     return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
   }
 
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.name === o2.name && o1.id === o2.id;
+  }
+
   constructor( private fb: FormBuilder,
                private adminService: AdminService,
                private toastr: ToastrService,
+               private activatedRoute: ActivatedRoute,
+               private router: Router
+               
     ) { }
 
   ngOnInit(): void {
@@ -49,12 +70,31 @@ export class SubirVideoComponent implements OnInit {
       this.materiasAux = materias;
     });
 
+    if( !this.router.url.includes('editar') ) {
+      return;
+    }
+
+    // Si la ruta es de editar traer la informacion segun su id para rellenar los campos del formulario
+    this.activatedRoute.params
+      .pipe(
+        switchMap( ({id}) => this.adminService.obtenerVideoPorId(id) )
+      )
+      .subscribe( (video: Video) => {
+        //Rellenar el formulario con la informacion obtenida
+        this.video = video;
+        this.format = 'video';
+        this.url = video.url;
+        this.miFormulario.reset({
+          ...this.video
+        });
+      });
+
   }
 
   selectFile(event: any): void {
 
     const file = event.target.files && event.target.files[0];
-    
+
     //Previsualizacion del video
     if( file ) {
       var reader = new FileReader();
@@ -83,34 +123,108 @@ export class SubirVideoComponent implements OnInit {
       this.miFormulario.markAllAsTouched();
       return;
     }
-    this.disabled = true;
-    this.disableForm();
-    this.video = this.miFormulario.value;
-    this.video.visualizaciones = 0;
-    this.video.fecha_publicacion = new Date();
-    delete this.video.file;
 
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-      this.selectedFiles = undefined;
+    
+    if( this.video.id ){
+      //Actualizar
+      console.log('Editar');
+      this.tipo = 'editar';
+      // const { id, visualizaciones, fecha_publicacion, filename } = this.video;
+      // this.video = {...this.miFormulario.value, id, visualizaciones, fecha_publicacion, filename };
+      this.video = {...this.video, ...this.miFormulario.value };
 
-      if (file) {
-        this.currentFileUpload = new FileUpload(file);
-        this.adminService.subirVideo(this.currentFileUpload, this.video).subscribe( percentage => {
-          this.percentage = Math.round(percentage ? percentage : 0);
-          if( this.percentage == 100 ){
-            setTimeout(() => {
-              this.toastr.success('El video fue subido con éxito!', 'Video Subido');
-              this.miFormulario.reset();
-              this.formulario.resetForm();
-              this.enableForm();
-              this.url = null;
-              this.visible = false;
-              this.percentage = 0;
-              this.disabled = false
-            }, 500);
-          }
-        });
+      if (this.selectedFiles) {
+
+        this.adminService.eliminarVideoStorage(this.video.filename!)
+        
+        let filename: string = this.miFormulario.controls['file'].value;
+        filename = filename.split('\\').slice(-1)[0];
+        this.video.filename = filename;
+        delete this.video.file;
+        
+        
+        const file: File | null = this.selectedFiles.item(0);
+        this.selectedFiles = undefined;
+  
+        if (file) {
+          this.disabled = true;
+          this.disableForm();
+          this.currentFileUpload = new FileUpload(file);
+          this.adminService.subirVideo(this.currentFileUpload, this.video, this.tipo).subscribe( percentage => {
+            this.percentage = Math.round(percentage ? percentage : 0);
+            if( this.percentage == 100 ){
+              setTimeout(() => {
+                this.toastr.info('El video fue subido con éxito!', 'Video Subido');
+                this.enableForm();
+                this.url = null;
+                this.visible = false;
+                this.percentage = 0;
+                this.disabled = false
+              }, 500);
+            }
+          });
+        } else {
+          this.toastr.error('Por favor, seleccione un video para subir', 'Error')
+        }
+  
+      } else {
+
+        const { filename, file, ...videoData } = this.video; 
+
+        this.adminService.actualizarVideo(videoData)
+          .then( ( _ ) => {
+            this.toastr.info('El video fue actualizado con éxito', 'Video Actualizado')
+          })
+          .catch( err => {
+            console.log(err);
+            this.toastr.error(`err`, 'Error');
+          })
+      }
+
+
+    } else {
+
+      //Crear
+      
+      this.video = this.miFormulario.value;
+      this.video.visualizaciones = 0;
+      this.video.fecha_publicacion = new Date();
+
+      if (this.selectedFiles) {
+
+        let filename: string = this.miFormulario.controls['file'].value;
+        filename = filename.split('\\').slice(-1)[0];
+        this.video.filename = filename;
+        delete this.video.file;
+
+        const file: File | null = this.selectedFiles.item(0);
+        this.selectedFiles = undefined;
+  
+        if (file) {
+          this.disabled = true;
+          this.disableForm();
+          this.currentFileUpload = new FileUpload(file);
+          this.adminService.subirVideo(this.currentFileUpload, this.video, this.tipo).subscribe( percentage => {
+            this.percentage = Math.round(percentage ? percentage : 0);
+            if( this.percentage == 100 ){
+              setTimeout(() => {
+                this.toastr.success('El video fue subido con éxito!', 'Video Subido');
+                this.miFormulario.reset();
+                this.formulario.resetForm();
+                this.enableForm();
+                this.url = null;
+                this.visible = false;
+                this.percentage = 0;
+                this.disabled = false
+              }, 500);
+            }
+          });
+        } else {
+          this.toastr.error('Error', 'Error')
+        }
+  
+      } else {
+        this.toastr.error('Por favor, seleccione un video para subir', 'Error')
       }
 
     }

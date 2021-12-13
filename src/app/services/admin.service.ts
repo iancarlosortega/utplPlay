@@ -1,8 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize, map, Observable } from 'rxjs';
-import { FileUpload } from '../admin/videos/models/file-upload-model';
+import { finalize, map } from 'rxjs';
+import { FileUpload } from '../admin/models/file-upload-model';
 import { Carrera, Materia, Video } from '../interfaces/interfaces';
 
 @Injectable({
@@ -14,7 +15,8 @@ export class AdminService {
   private basePath = '/videos';
 
   constructor( private firestore: AngularFirestore,
-               private storage: AngularFireStorage
+               private storage: AngularFireStorage,
+               private http: HttpClient
   ) { }
 
   // Usuarios
@@ -128,7 +130,19 @@ export class AdminService {
       )
   }
 
-  subirVideo(fileUpload: FileUpload, videoData: Video) {
+  obtenerVideoPorId( id: string ){
+    const video = this.firestore.collection('videos').doc(id);
+    return video.snapshotChanges()
+      .pipe(
+        map(a => {       
+          const data = a.payload.data() as Video;
+            data.id = a.payload.id;  
+            return data
+        })
+      )
+  }
+
+  subirVideo(fileUpload: FileUpload, videoData: Video, tipo: string) {
 
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
@@ -139,7 +153,14 @@ export class AdminService {
       finalize(() => {
         storageRef.getDownloadURL().subscribe(downloadURL => {
           videoData.url = downloadURL;
-          this.agregarVideo(videoData);
+
+          if( tipo === 'editar' ){
+            console.log(videoData);
+            this.actualizarVideo(videoData);
+          } else {
+            this.agregarVideo(videoData);
+          }
+
         });
       })
     ).subscribe();
@@ -151,21 +172,24 @@ export class AdminService {
     this.firestore.collection('videos').add(video);
   }
 
-  eliminarVideo(fileUpload: FileUpload): void {
-    this.eliminarVideoFirestore(fileUpload.key)
+  actualizarVideo(video: any) {
+    return this.firestore.collection('videos').doc(video.id).update(video);
+  }
+
+  eliminarVideo(video: Video) {
+    return this.eliminarVideoFirestore(video.id)
       .then(() => {
-        this.eliminarVideoStorage(fileUpload.name);
+        this.eliminarVideoStorage(video.filename!);
       })
       .catch(error => console.log(error));
   }
 
-  private eliminarVideoFirestore(key: string): Promise<void> {
-    return this.firestore.collection('videos').doc(key).delete()
+  private eliminarVideoFirestore(id: string): Promise<void> {
+    return this.firestore.collection('videos').doc(id).delete()
   }
 
-  private eliminarVideoStorage(name: string): void {
-    const storageRef = this.storage.ref(this.basePath);
-    storageRef.child(name).delete();
+  eliminarVideoStorage(name: string) {
+    this.storage.ref(this.basePath).child(name).delete();
   }
 
 }

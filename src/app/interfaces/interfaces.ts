@@ -34,9 +34,10 @@ export interface Video {
     id: string;
     titulo: string;
     tutor: string;
-    materia: string;
+    materia: Materia;
     visualizaciones: number;
-    fecha_publicacion: Date;
+    fecha_publicacion: Date | null;
     url: string;
     file?: string;
+    filename?: string;
 }

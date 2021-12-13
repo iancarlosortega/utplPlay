@@ -1,1 +1,198 @@
-<p>listado-videos works!</p>
+
+
+<h3 class="text-center">Listado de videos</h3>
+
+<!-- Modal para previsualización del video -->
+ 
+<ng-template #modalVideo>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-video [url]="url"></app-video>
+        </div>
+    </div>
+
+</ng-template>
+
+<p-table 
+    #dt 
+    [value]="videos" 
+    dataKey="nombre" 
+    selectionMode="single"
+    [rows]="15" 
+    [showCurrentPageReport]="true" 
+    [rowsPerPageOptions]="[15,25,50]" 
+    [loading]="loading" 
+    styleClass="p-datatable-usuarios p-datatable-gridlines"
+    [paginator]="true" 
+    currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} videos"
+    [globalFilterFields]="['titulo', 'tutor', 'materia.nombre', 'filename' ,'visualizaciones', 'fecha_publicacion']">
+
+    <!-- Tabla header -->
+    <ng-template pTemplate="caption">
+        <div class="tabla-header">
+            <!-- Agregar Video -->
+            <button 
+                pButton
+                icon="pi pi-plus-circle" 
+                iconPos="right"
+                type="button" 
+                class="p-button-raised" 
+                label="Agregar Video"
+                routerLink="../subir/videos">
+            </button>
+
+            <!-- Buscador -->
+            <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input 
+                    class="p-inputtext p-component" 
+                    pInputText 
+                    type="text" 
+                    (input)="applyFilterGlobal($event, 'contains')" 
+                    placeholder="Buscar video" />
+            </span>
+        </div>
+    </ng-template>
+
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 2.25em">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+
+            <th pSortableColumn="titulo" >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Título
+                    <p-sortIcon field="titulo"></p-sortIcon>
+                    <p-columnFilter type="text" field="titulo" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="tutor">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Tutor
+                    <p-sortIcon field="tutor"></p-sortIcon>
+                    <p-columnFilter type="text" field="tutor" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="materia.nombre">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Materia
+                    <p-sortIcon field="materia.nombre"></p-sortIcon>
+                    <p-columnFilter type="text" field="materia.nombre" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="filename">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Nombre del archivo
+                    <p-sortIcon field="filename"></p-sortIcon>
+                    <p-columnFilter type="number" field="filename" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="visualizaciones">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Visualizaciones
+                    <p-sortIcon field="visualizaciones"></p-sortIcon>
+                    <p-columnFilter type="number" field="visualizaciones" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="fecha_publicacion">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Fecha de publicación
+                    <p-sortIcon field="fecha_publicacion"></p-sortIcon>
+                    <p-columnFilter type="text" field="fecha_publicacion" display="menu"></p-columnFilter>
+                </div>
+            </th>
+
+            <th>Acciones</th>
+            
+        </tr>
+        
+    </ng-template>
+    <ng-template pTemplate="body" let-video>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="video.titulo"></p-tableCheckbox>
+            </td>
+            <td>
+                {{video.titulo}}
+            </td>
+            <td>
+                
+                {{video.tutor}}
+            </td>
+            <td>
+                {{video.materia.nombre}}
+            </td>
+            <td>     
+                {{video.filename}}
+            </td>
+            <td>     
+                {{video.visualizaciones}}
+            </td>
+            <td>
+                {{video.fecha_publicacion.toDate() | date:'dd/MM/yyyy h:mm:ss a' }}
+            </td>
+            
+            <td class="acciones">
+                <!-- Botón de descargar -->
+                <button 
+                    pButton 
+                    icon="pi pi-download" 
+                    iconPos="right"
+                    type="button" 
+                    (click)="descargarVideo(video.url)"
+                    class="p-button-raised p-button-rounded p-button-success">
+                </button>
+
+                <!-- Botón de previsualización -->
+                <button 
+                    pButton 
+                    icon="pi pi-video" 
+                    iconPos="right"
+                    type="button" 
+                    (click)="openModal(video.url)"
+                    class="p-button-raised p-button-rounded p-button-warning previsualizacion">
+                </button>
+
+                <!-- Botón de editar -->
+                <button 
+                    pButton 
+                    icon="pi pi-pencil" 
+                    iconPos="right"
+                    type="button" 
+                    [routerLink]="['../editar/video', video.id]"
+                    class="p-button-raised p-button-rounded">
+                </button>
+
+                <!-- Botón de eliminar -->
+                <button 
+                    pButton 
+                    icon="pi pi-trash" 
+                    iconPos="right"
+                    type="button" 
+                    (click)="eliminarVideo(video)"
+                    class="p-button-raised p-button-rounded p-button-danger">
+                </button>
+            </td>
+            
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td class="sin-videos" colspan="8">Ningún video encontrado.</td>
+        </tr>
+    </ng-template>
+</p-table>
+

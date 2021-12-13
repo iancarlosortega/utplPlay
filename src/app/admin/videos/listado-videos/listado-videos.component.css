@@ -1,0 +1,30 @@
+mat-form-field {
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.tabla-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.acciones {
+    display: flex;
+    justify-content: center;
+}
+
+.acciones button{
+    margin-right: 0.5rem;
+}
+
+.acciones button:last-child{
+    margin-right: 0;
+}
+
+.previsualizacion, .previsualizacion:hover {
+    color: #FFFFFF !important;
+}
+
+.sin-videos {
+    text-align: center !important;
+}

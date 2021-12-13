@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
+import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 
 import { HeaderComponent } from './header/header.component';
-import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { VideoComponent } from './video/video.component';
 
 
 
@@ -14,7 +15,8 @@ import { NavbarComponent } from './navbar/navbar.component';
   declarations: [
     HeaderComponent,
     SidenavComponent,
-    NavbarComponent
+    NavbarComponent,
+    VideoComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { NavbarComponent } from './navbar/navbar.component';
   exports: [
     HeaderComponent,
     SidenavComponent,
-    NavbarComponent
+    NavbarComponent,
+    VideoComponent
   ]
 })
 export class SharedModule { }

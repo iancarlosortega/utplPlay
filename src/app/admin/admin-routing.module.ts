@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'carreras', component: CarrerasComponent },
       { path: 'materias', component: MateriasComponent },
       { path: 'subir/videos', component: SubirVideoComponent },
+      { path: 'editar/video/:id', component: SubirVideoComponent },
       { path: 'videos', component: ListadoVideosComponent },
       { path: '**', redirectTo: 'dashboard' },
   

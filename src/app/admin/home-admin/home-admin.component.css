@@ -5,7 +5,7 @@ mat-toolbar {
 
 @media (min-width : 768px) {
     mat-toolbar {
-        height: 7rem;
+        height: 5rem;
     }
 }
 
@@ -16,7 +16,7 @@ app-navbar {
 
 @media (min-width : 768px) {
     app-navbar {
-        height: 7rem;
+        height: 5rem;
     }
     
 }
@@ -62,9 +62,9 @@ mat-sidenav-container {
 
 @media (min-width : 768px) {
     .content {
-        height: calc(100vh - 7rem);
+        height: calc(100vh - 5rem);
     }
     mat-sidenav-container {
-        height: calc(100vh - 7rem);
+        height: calc(100vh - 5rem);
     }
 }

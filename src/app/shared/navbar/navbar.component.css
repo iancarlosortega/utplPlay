@@ -16,7 +16,7 @@
         flex-direction: row;
         align-items: center;
         padding: 0 7rem;
-        height: 7rem;
+        height: 5rem;
     }
 }
 
@@ -29,7 +29,7 @@
     }
 
     .logo a, .logo img {
-        width: 100%;
+        width: 80%;
     }
 }
 

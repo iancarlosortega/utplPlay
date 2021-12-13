@@ -8,7 +8,7 @@
         <a class="nav-item" routerLink="../home" routerLinkActive="link-activo">Home</a>
         <a class="nav-item" routerLink="../carreras" routerLinkActive="link-activo">Carreras</a>
         <a class="nav-item" routerLink="../materias" routerLinkActive="link-activo">Materias</a>
-        <a class="nav-item" routerLink="/admin" routerLinkActive="link-activo">Dashboard</a>
+        <a *ngIf="claims?.admin" class="nav-item" routerLink="/admin" routerLinkActive="link-activo">Dashboard</a>
     </div>
 
     <div class="buscador" [ngClass]="{ 'hidden' : hidden }">
@@ -20,13 +20,10 @@
 
     <div class="perfil-usuario">
         <button 
-            (click)="logout()" 
-            pButton 
-            icon="pi pi-user"
-            type="button" 
-            class="p-button-raised p-button-rounded">
-        </button>
-        
+            mat-fab color="primary" 
+            (click)="logout()">
+            <mat-icon>person</mat-icon>
+        </button>      
     </div>
 </nav>
 

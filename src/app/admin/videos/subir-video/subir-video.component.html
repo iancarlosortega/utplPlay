@@ -1,4 +1,4 @@
-<h3>Subir video</h3>
+<h3>{{ !video.id ? 'Subir' : 'Actualizar' }} video</h3>
 <hr>
 
 <div class="formulario">
@@ -43,6 +43,7 @@
             <mat-select 
                 placeholder="Materia" 
                 formControlName="materia"
+                [compareWith]="compareObjects"
                 (closed)="limpiarBuscador()">
                 <mat-form-field class="select-input">
                     <mat-label>Buscador</mat-label>
@@ -69,17 +70,12 @@
 
         <div class="custom-file">
             <input 
+                #inputFile
                 type="file" 
                 class="form-control" 
                 formControlName="file"
                 accept="video/mp4,video/x-m4v,video/*"
-
                 (change)="selectFile($event)">
-            <small 
-                *ngIf="campoNoValido('file')" 
-                class="text text-danger">
-                Por favor, seleccione al menos  <strong>1</strong> video para subir
-            </small>
         </div>
 
         <!-- Previsualizacion del video -->
@@ -131,7 +127,7 @@
                 pButton 
                 type="submit" 
                 [disabled]="disabled"
-                label="Subir video" 
+                [label]="!video.id ? 'Subir video' : 'Actualizar video'" 
                 icon="pi pi-cloud-upload" 
                 iconPos="left" 
                 class="p-button-raised">
@@ -142,7 +138,3 @@
 </div>
 
 <div class="espacio"></div>
-
-
-
-

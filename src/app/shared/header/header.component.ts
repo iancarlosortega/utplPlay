@@ -10,15 +10,19 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit  {
 
   hidden: boolean = false;
+  claims: any;
 
   ngOnInit(): void {
 
-    if( this.router.url === '/play' ) {
+    if( this.router.url === '/play/home' ) {
       this.hidden = true;
     }
 
-    const res = this.authService.obtenerClaims();
-    console.log(res);
+    this.authService.obtenerClaims().subscribe( idTokenResult => {
+      const claims = idTokenResult?.claims;
+      this.claims = claims;
+      console.log('obtener claims',claims);
+    });
     
   }
 
