@@ -8,10 +8,6 @@
     grid-template-rows: repeat(3, 1fr);
 }
 
-.hidden {
-    visibility: hidden;
-}
-
 .perfil-usuario {
     display: flex;
     justify-content: flex-end;
@@ -80,4 +76,8 @@
 .perfil-usuario button {
     background-color: var(--primario);
     border-color: var(--primario);
+}
+
+.perfil-usuario button mat-icon {
+    vertical-align: unset;
 }

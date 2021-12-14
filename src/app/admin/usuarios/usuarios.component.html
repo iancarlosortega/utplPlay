@@ -12,6 +12,7 @@
         [loading]="loading" 
         styleClass="p-datatable-usuarios p-datatable-gridlines"
         [paginator]="true" 
+        [scrollable]="scrollable" scrollDirection="both"
         currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} usuarios"
         [globalFilterFields]="['nombres', 'apellidos', 'email']">
         <ng-template pTemplate="caption">
@@ -29,58 +30,50 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 2.25em">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="nombres" >
+                <th pSortableColumn="nombres" style="width: 200px">
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Nombres
                         <p-sortIcon field="nombres"></p-sortIcon>
-                        <p-columnFilter type="text" field="nombres" display="menu"></p-columnFilter>
                     </div>
                 </th>
-                <th>
+                <th pSortableColumn="apellidos" style="width: 200px">
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Apellidos
-                        <p-columnFilter type="text" field="apellidos" display="menu"></p-columnFilter>
+                        <p-sortIcon field="apellidos"></p-sortIcon>
                     </div>
                 </th>
-                <th>
+                <th pSortableColumn="email" style="width: 250px">
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Correo electronico
-                        <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+                        <p-sortIcon field="email"></p-sortIcon>
                     </div>
                 </th>
-                <th>Hacer Admin</th>
-                <th>Hacer Editor</th>
+                <th style="width: 150px">Hacer Admin</th>
+                <th style="width: 150px">Hacer Editor</th>
                 
             </tr>
             
         </ng-template>
         <ng-template pTemplate="body" let-usuario>
             <tr>
-                <td>
-                    <p-tableCheckbox [value]="usuario.email"></p-tableCheckbox>
-                </td>
-                <td>
+                <td style="width: 200px">
                     {{usuario.nombres}}
                 </td>
-                <td>
-                    
+                <td style="width: 200px">                   
                     {{usuario.apellidos}}
                 </td>
                 
-                <td>
+                <td style="width: 250px">
                     {{usuario.email}}
                 </td>
-                <td>
+                <td style="width: 150px">
                     <mat-checkbox 
                         (change)="prueba(usuario.email)" 
                         [value]="usuario.email" 
                         [checked]="usuario.email == 'juan@juan.com'">
                     </mat-checkbox>
                 </td>
-                <td>
+                <td style="width: 150px">
                     <mat-checkbox 
                         (change)="prueba(usuario.email)" 
                         [value]="usuario.email" 

@@ -1,4 +1,5 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +13,7 @@ import { EliminarComponent } from '../../eliminar/eliminar.component';
   templateUrl: './listado-videos.component.html',
   styleUrls: ['./listado-videos.component.css']
 })
-export class ListadoVideosComponent implements OnInit {
+export class ListadoVideosComponent implements OnInit, AfterViewInit {
 
   @ViewChild ('dt') dt: Table | undefined;
   @ViewChild ('modalVideo') modalVideo!: TemplateRef<any>;
@@ -22,6 +23,7 @@ export class ListadoVideosComponent implements OnInit {
   videos: Video[] = [];
   modalRef?: BsModalRef;
   loading: boolean = true;
+  scrollable: boolean = true;
 
   applyFilterGlobal($event: any, stringVal: string) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
@@ -37,6 +39,7 @@ export class ListadoVideosComponent implements OnInit {
 
   constructor( private modalService: BsModalService,
                private adminService: AdminService,
+               private observer: BreakpointObserver,
                private toastr: ToastrService,
                public  dialog: MatDialog
   ) { }
@@ -52,6 +55,18 @@ export class ListadoVideosComponent implements OnInit {
       this.loading = false;
     });
 
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.observer.observe(['(min-width: 1140px)']).subscribe((res) => {
+        if (res.matches) {
+          this.scrollable = false;
+        } else {
+          this.scrollable = true;
+        }
+      });
+    }, 0)
   }
 
   eliminarVideo( video: Video ) {

@@ -28,8 +28,15 @@
         padding: .5rem 0;
     }
 
+}
+
+.logo a, .logo img {
+    width: 80%;
+}
+
+@media (min-width:767px) and (max-width:905px) {
     .logo a, .logo img {
-        width: 80%;
+        width: 100%;
     }
 }
 

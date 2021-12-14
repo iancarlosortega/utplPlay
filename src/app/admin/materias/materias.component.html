@@ -13,6 +13,7 @@
     [loading]="loading" 
     styleClass="p-datatable-usuarios p-datatable-gridlines"
     [paginator]="true" 
+    [scrollable]="scrollable" scrollHeight="flex" scrollDirection="both"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} materias"
     [globalFilterFields]="['nombre']">
 
@@ -189,62 +190,55 @@
 
     <ng-template pTemplate="header">
         <tr>
-            <th style="width: 2.25em">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th pSortableColumn="nombre" >
+            <th pSortableColumn="nombre" style="width: 200px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Nombre
                     <p-sortIcon field="nombre"></p-sortIcon>
-                    <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th pSortableColumn="num_ciclos">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Carreras
-                    <p-sortIcon field="carreras"></p-sortIcon>
-                    <p-columnFilter type="text" field="carreras" display="menu"></p-columnFilter>
-                </div>
+            <th style="width: 400px">
+                Carreras
             </th>
-            <th>Acciones</th>
+            <th style="width: 200px">Acciones</th>
             
         </tr>
         
     </ng-template>
     <ng-template pTemplate="body" let-materia>
         <tr>
-            <td>
-                <p-tableCheckbox [value]="materia.nombre"></p-tableCheckbox>
-            </td>
-            <td>
+            <td style="width: 200px">
                 {{materia.nombre}}
             </td>
-            <td>
+            <td style="width: 400px">
                 <p *ngFor="let item of materia.carreras" class="carreras-nombre">
                     {{item.nombre}}
                 </p>
             </td>
             
-            <td class="acciones">
-                <!-- Botón de editar -->
-                <button 
-                    pButton 
-                    icon="pi pi-pencil" 
-                    iconPos="right"
-                    type="button" 
-                    (click)="obtenerMateria(materia.id)"
-                    class="p-button-raised p-button-rounded">
-                </button>
+            <td style="width: 200px">
 
-                <!-- Botón de eliminar -->
-                <button 
-                    pButton 
-                    icon="pi pi-trash" 
-                    iconPos="right"
-                    type="button" 
-                    (click)="eliminarMateria(materia.id)"
-                    class="p-button-raised p-button-rounded p-button-danger">
-                </button>
+                <div class="acciones">
+                    <!-- Botón de editar -->
+                    <button 
+                        pButton 
+                        icon="pi pi-pencil" 
+                        iconPos="right"
+                        type="button" 
+                        (click)="obtenerMateria(materia.id)"
+                        class="p-button-raised p-button-rounded">
+                    </button>
+
+                    <!-- Botón de eliminar -->
+                    <button 
+                        pButton 
+                        icon="pi pi-trash" 
+                        iconPos="right"
+                        type="button" 
+                        (click)="eliminarMateria(materia.id)"
+                        class="p-button-raised p-button-rounded p-button-danger">
+                    </button>
+                </div>
+                
             </td>
             
         </tr>

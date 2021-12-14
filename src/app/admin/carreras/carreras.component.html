@@ -13,6 +13,7 @@
         [loading]="loading" 
         styleClass="p-datatable-usuarios p-datatable-gridlines"
         [paginator]="true" 
+        [scrollable]="scrollable" scrollHeight="flex" scrollDirection="both"
         currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
         [globalFilterFields]="['nombre', 'num_ciclos']">
 
@@ -180,7 +181,7 @@
                 <span class="p-input-icon-left p-ml-auto">
                     <i class="pi pi-search"></i>
                     <input 
-                        class="p-inputtext p-component" 
+                        class="p-inputtext p-component"
                         pInputText 
                         type="text" 
                         (input)="applyFilterGlobal($event, 'contains')" 
@@ -192,61 +193,56 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 2.25em">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-                <th pSortableColumn="nombre" >
-                    <div class="p-d-flex p-jc-between p-ai-center">
+                <th pSortableColumn="nombre" style="width: 300px">
+                    <div>
                         Nombre
                         <p-sortIcon field="nombre"></p-sortIcon>
-                        <p-columnFilter type="text" field="nombre" display="menu"></p-columnFilter>
                     </div>
                 </th>
-                <th pSortableColumn="num_ciclos">
-                    <div class="p-d-flex p-jc-between p-ai-center">
+                <th pSortableColumn="num_ciclos" style="width: 300px">
+                    <div>
                         Número de ciclos
                         <p-sortIcon field="num_ciclos"></p-sortIcon>
-                        <p-columnFilter type="number" field="num_ciclos" display="menu"></p-columnFilter>
                     </div>
                 </th>
-                <th>Acciones</th>
+                <th style="width: 300px">Acciones</th>
                 
             </tr>
             
         </ng-template>
         <ng-template pTemplate="body" let-carrera>
             <tr>
-                <td>
-                    <p-tableCheckbox [value]="carrera.nombre"></p-tableCheckbox>
-                </td>
-                <td>
+                <td style="width: 300px">
                     {{carrera.nombre}}
                 </td>
-                <td>
+                <td style="width: 300px">
                     
                     {{carrera.num_ciclos}}
                 </td>
                 
-                <td class="acciones">
-                    <!-- Botón de editar -->
-                    <button 
-                        pButton 
-                        icon="pi pi-pencil" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="obtenerCarrera(carrera.id)"
-                        class="p-button-raised p-button-rounded">
-                    </button>
+                <td style="width: 300px">
 
-                    <!-- Botón de eliminar -->
-                    <button 
-                        pButton 
-                        icon="pi pi-trash" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="eliminarCarrera(carrera.id)"
-                        class="p-button-raised p-button-rounded p-button-danger">
-                    </button>
+                    <div class="acciones">
+                        <!-- Botón de editar -->
+                        <button 
+                            pButton 
+                            icon="pi pi-pencil" 
+                            iconPos="right"
+                            type="button" 
+                            (click)="obtenerCarrera(carrera.id)"
+                            class="p-button-raised p-button-rounded">
+                        </button>
+
+                        <!-- Botón de eliminar -->
+                        <button 
+                            pButton 
+                            icon="pi pi-trash" 
+                            iconPos="right"
+                            type="button" 
+                            (click)="eliminarCarrera(carrera.id)"
+                            class="p-button-raised p-button-rounded p-button-danger">
+                        </button>
+                    </div> 
                 </td>
                 
             </tr>

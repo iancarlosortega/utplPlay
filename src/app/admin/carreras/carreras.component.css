@@ -14,8 +14,29 @@ mat-form-field {
 }
 
 .tabla-header {
-    display: flex;
-    justify-content: space-between;
+    display: block;
+}
+
+.tabla-header button, .tabla-header span, .tabla-header span input {
+    width: 100%;
+}
+
+.tabla-header button {
+    margin-bottom: 0.5rem;
+}
+
+@media (min-width: 600px){
+    .tabla-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .tabla-header button, .tabla-header span, .tabla-header span input {
+        width: initial;
+    }
+    
+    .tabla-header button {
+        margin-bottom: 0;
+    }
 }
 
 .acciones {

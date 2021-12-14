@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { ElegirCarrerasComponent } from './elegir-carreras/elegir-carreras.component';
 import { ElegirMateriasComponent } from './elegir-materias/elegir-materias.component';
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ElegirMateriasComponent } from './elegir-materias/elegir-materias.compo
     HomeComponent,
     ElegirCarrerasComponent,
     ElegirMateriasComponent,
+    EditarPerfilComponent,
   ],
   imports: [
     CommonModule,

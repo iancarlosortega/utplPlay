@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -8,13 +8,14 @@ import { Table } from 'primeng/table';
 import { Carrera } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-carreras',
   templateUrl: './carreras.component.html',
   styleUrls: ['./carreras.component.css']
 })
-export class CarrerasComponent implements OnInit {
+export class CarrerasComponent implements OnInit, AfterViewInit {
 
   @ViewChild ('dt') dt: Table | undefined;
   @ViewChild( FormGroupDirective ) formulario!: FormGroupDirective;
@@ -26,6 +27,7 @@ export class CarrerasComponent implements OnInit {
   carrera!: Carrera;
   loading: boolean = true;
   disabled: boolean = false;
+  scrollable: boolean = true;
   modalRef?: BsModalRef;
 
   miFormulario: FormGroup = this.fb.group({
@@ -59,6 +61,7 @@ export class CarrerasComponent implements OnInit {
                private adminService: AdminService, 
                private modalService: BsModalService,
                private toastr: ToastrService,
+               private observer: BreakpointObserver,
                public  dialog: MatDialog
   ) { }
 
@@ -74,6 +77,18 @@ export class CarrerasComponent implements OnInit {
       this.loading = false;
     });
 
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.observer.observe(['(min-width: 1140px)']).subscribe((res) => {
+        if (res.matches) {
+          this.scrollable = false;
+        } else {
+          this.scrollable = true;
+        }
+      });
+    }, 0)
   }
 
   agregarCarrera() {
