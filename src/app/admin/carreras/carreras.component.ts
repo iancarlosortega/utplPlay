@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
-import { Carrera } from 'src/app/interfaces/interfaces';
+import { Career } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -23,16 +22,16 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
 
   id?: string;
-  carreras: Carrera[] = [];
-  carrera!: Carrera;
+  carreras: Career[] = [];
+  carrera!: Career;
   loading: boolean = true;
   disabled: boolean = false;
   scrollable: boolean = true;
   modalRef?: BsModalRef;
 
   miFormulario: FormGroup = this.fb.group({
-    nombre: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    num_ciclos: [ '', [ Validators.required, Validators.min(1) ] ],
+    name: [ '', [ Validators.required, Validators.minLength(3) ] ],
+    duration: [ '', [ Validators.required, Validators.min(1) ] ],
   })
  
   openModal() {
@@ -107,7 +106,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
         this.disabled = false;
         this.miFormulario.reset();
         this.formulario?.resetForm();
-        this.toastr.success(`La carrera ${this.carrera.nombre} fue registrada con éxito!`, 'Carrera Registrada');
+        this.toastr.success(`La carrera ${this.carrera.name} fue registrada con éxito!`, 'Carrera Registrada');
       })
       .catch( err => {
         this.toastr.error(`${err}`, 'Error al agregar la carrerar');
@@ -122,8 +121,8 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
       if( data.type != 'removed' ) {
         this.id = data.payload.id;
         this.miFormulario.setValue({
-          nombre: data.payload.data()['nombre'],
-          num_ciclos: data.payload.data()['num_ciclos'],
+          name: data.payload.data()['name'],
+          duration: data.payload.data()['duration'],
         });
       }
       
@@ -146,7 +145,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
         this.disabled = false;
         this.miFormulario.reset();
         this.formulario?.resetForm();
-        this.toastr.info(`La carrera ${this.carrera.nombre} fue actualizada con éxito`, 'Carrera actualizada!');
+        this.toastr.info(`La carrera ${this.carrera.name} fue actualizada con éxito`, 'Carrera actualizada!');
       })
       .catch( err => {
         this.toastr.error(`${err}`, 'Error al actualizar la carrerar');

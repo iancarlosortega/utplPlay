@@ -15,9 +15,9 @@
             <input 
                 type="text" 
                 matInput
-                formControlName="titulo"
+                formControlName="title"
                 placeholder="Ex. Leyes de Newton">
-            <mat-error *ngIf="campoNoValido('titulo')">
+            <mat-error *ngIf="campoNoValido('title')">
                 El campo del título es <strong>obligatorio</strong>
             </mat-error>
         </mat-form-field>
@@ -29,9 +29,9 @@
             <input 
                 type="text" 
                 matInput 
-                formControlName="tutor"
+                formControlName="teacher"
                 placeholder="Ex. Juan Maldonado">
-            <mat-error *ngIf="campoNoValido('tutor')">
+            <mat-error *ngIf="campoNoValido('teacher')">
                 El campo del tutor es <strong>obligatorio</strong>
             </mat-error>
         </mat-form-field>
@@ -42,7 +42,7 @@
             <mat-label>Materia</mat-label>
             <mat-select 
                 placeholder="Materia" 
-                formControlName="materia"
+                formControlName="course"
                 [compareWith]="compareObjects"
                 (closed)="limpiarBuscador()">
                 <mat-form-field class="select-input">
@@ -58,10 +58,15 @@
                 </mat-form-field>
                 
                 <mat-option *ngFor="let materia of materias" [value]="materia">
-                    {{ materia.nombre }}
+                    {{ materia.name }}
                 </mat-option>
+
+                <mat-option *ngIf="materias?.length == 0" disabled>
+                    No existe ninguna materia, cree una en <b>Materias</b>
+                </mat-option>
+
             </mat-select>
-            <mat-error *ngIf="campoNoValido('materia')">
+            <mat-error *ngIf="campoNoValido('course')">
                 El campo de materia es <strong>obligatorio</strong>
             </mat-error>
         </mat-form-field>

@@ -1,42 +1,43 @@
 export interface User {
     uid: string;
-    nombres?: string;
-    apellidos?: string;
+    name?: string;
+    last_name?: string;
     email: string;
     password?: string;
     //TODO: Agregar foto de perfil
     // foto_perfil?: string;
-    nivel_educacion?: string;
-    establecimiento?: string;
-    pais?: string;
-    ciudad?: string;
-    genero?: string;
-    cedula?: string;
+    education_level?: string;
+    institution?: string;
+    country?: string;
+    city?: string;
+    genre?: string;
+    identification_card?: string;
 }
 
-export interface Carrera {
+export interface Career {
     id: string;
-    nombre: string;
-    num_ciclos: number;
+    name: string;
+    duration: number;
+    views: number;
     //TODO: Agregar foto de carrera
     // img: string;
 }
 
-export interface Materia {
+export interface Course {
     id: string;
-    nombre: string;
-    carreras?: Carrera[];
+    name: string;
+    careers?: Career[];
     //TODO: Agregar foto de materia
     // img: string;
 }
 
 export interface Video {
     id: string;
-    titulo: string;
-    tutor: string;
-    materia: Materia;
-    visualizaciones: number;
-    fecha_publicacion: Date | null;
+    title: string;
+    teacher: string;
+    course: Course;
+    views: number;
+    publication_date: Date | null;
     url: string;
     file?: string;
     filename?: string;

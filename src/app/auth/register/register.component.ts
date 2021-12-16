@@ -22,17 +22,17 @@ export class RegisterComponent implements OnInit {
   //TODO: Validaciones de confirmar contrasenia, cedula y selects 
 
   miFormulario: FormGroup = this.fb.group({
-    'nombres': [ '', Validators.required ],
-    'apellidos': [ '', Validators.required ],
-    'email': [ '', [Validators.required, Validators.email] ],
-    'password': ['', [Validators.required, Validators.minLength(6)] ],
-    'password2': ['', [Validators.required] ],
-    'nivel_educacion': [ '', Validators.required ],
-    'establecimiento': [ '', Validators.required ],
-    'pais': [ '', Validators.required ],
-    'ciudad': [ { value: '', disabled: this.ciudades.length === 0 }, Validators.required ],
-    'genero': [ '', Validators.required ],
-    'cedula': [ '', Validators.required ]
+    name: [ '', Validators.required ],
+    last_name: [ '', Validators.required ],
+    email: [ '', [Validators.required, Validators.email] ],
+    password: ['', [Validators.required, Validators.minLength(6)] ],
+    password2: ['', [Validators.required] ],
+    education_level: [ '', Validators.required ],
+    institution: [ '', Validators.required ],
+    country: [ '', Validators.required ],
+    city: [ { value: '', disabled: this.ciudades.length === 0 }, Validators.required ],
+    genre: [ '', Validators.required ],
+    identification_card: [ '', Validators.required ]
   }, {
     validators: [ this.validator.camposIguales( 'password', 'password2' ) ]
   })

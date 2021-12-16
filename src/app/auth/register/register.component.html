@@ -14,20 +14,20 @@
                 <div class="col-12 col-lg-6 flex-end">
                     <div class="campo">
                         <p class="label">Nombres:</p>
-                        <input formControlName="nombres" type="text">
+                        <input formControlName="name" type="text">
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('nombres')"
+                            *ngIf="campoNoValido('name')"
                             >El campo de nombres es  <b>obligatorio</b>
                         </span>
                     </div>
 
                     <div class="campo">
                         <p class="label">Apellidos:</p>
-                        <input formControlName="apellidos" type="text">
+                        <input formControlName="last_name" type="text">
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('apellidos')"
+                            *ngIf="campoNoValido('last_name')"
                             >El campo de apellidos es  <b>obligatorio</b>
                         </span>
                     </div>
@@ -67,69 +67,69 @@
                 <div class="col-12 col-lg-6">
                     <div class="custom-select">
                         <p class="label">Nacionalidad:</p>
-                        <select formControlName="pais">
+                        <select formControlName="country">
                             <option value="" disabled> --Seleccione Pais --</option>
                             <option *ngFor="let pais of paises">{{ pais }}</option>
                         </select>
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('pais')"
+                            *ngIf="campoNoValido('country')"
                             >El campo de nacionalidad es  <b>obligatorio</b>
                         </span>
                     </div>
 
                     <div class="custom-select">
                         <p class="label">Ciudad de origen:</p>
-                        <select formControlName="ciudad">
+                        <select formControlName="city">
                             <option value="" disabled> --Seleccione Ciudad --</option>
                             <option *ngFor="let ciudad of ciudades">{{ ciudad }}</option>
                         </select>
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('ciudad')"
+                            *ngIf="campoNoValido('city')"
                             >El campo de ciudad de origen es  <b>obligatorio</b>
                         </span>
                     </div>
     
                     <div class="custom-select">
                         <p class="label">Genero:</p>
-                        <select formControlName="genero">
+                        <select formControlName="genre">
                             <option value="hombre">Hombre</option>
                             <option value="mujer">Mujer</option>
                         </select>
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('genero')"
+                            *ngIf="campoNoValido('genre')"
                             >El campo de genero es  <b>obligatorio</b>
                         </span>
                     </div>
 
                     <div class="campo">
                         <p class="label">Cedula:</p>
-                        <input formControlName="cedula" type="text">
+                        <input formControlName="identification_card" type="text">
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('cedula')"
+                            *ngIf="campoNoValido('identification_card')"
                             >El campo de cedula es  <b>obligatorio</b>
                         </span>
                     </div>
 
                     <div class="campo">
                         <p class="label">Nivel educativo:</p>
-                        <input formControlName="nivel_educacion" type="text">
+                        <input formControlName="education_level" type="text">
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('nivel_educacion')"
+                            *ngIf="campoNoValido('education_level')"
                             >El campo de nivel educativo es  <b>obligatorio</b>
                         </span>
                     </div>
                     
                     <div class="campo">
                         <p class="label">Establecimiento educativo:</p>
-                        <input formControlName="establecimiento" type="text">
+                        <input formControlName="institution" type="text">
                         <span 
                             class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('establecimiento')"
+                            *ngIf="campoNoValido('institution')"
                             >El campo del establecimiento es  <b>obligatorio</b>
                         </span>
                     </div>

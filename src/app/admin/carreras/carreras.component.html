@@ -5,7 +5,7 @@
     <p-table 
         #dt 
         [value]="carreras" 
-        dataKey="nombre" 
+        dataKey="name" 
         selectionMode="single"
         [rows]="15" 
         [showCurrentPageReport]="true" 
@@ -13,9 +13,9 @@
         [loading]="loading" 
         styleClass="p-datatable-usuarios p-datatable-gridlines"
         [paginator]="true" 
-        [scrollable]="scrollable" scrollHeight="flex" scrollDirection="both"
+        [scrollable]="scrollable" scrollDirection="both"
         currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
-        [globalFilterFields]="['nombre', 'num_ciclos']">
+        [globalFilterFields]="['name', 'duration']">
 
         <!-- Modal para crear carrera -->
  
@@ -40,9 +40,9 @@
                         <input 
                             type="text" 
                             matInput 
-                            formControlName="nombre"
+                            formControlName="name"
                             placeholder="Ex. Computación">
-                        <mat-error *ngIf="campoNoValido('nombre')">
+                        <mat-error *ngIf="campoNoValido('name')">
                           El campo de nombre es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
@@ -55,10 +55,10 @@
                         <input 
                             type="number" 
                             matInput 
-                            formControlName="num_ciclos"
+                            formControlName="duration"
                             placeholder="Ex. 1"
                             min="1">
-                        <mat-error *ngIf="campoNoValido('num_ciclos')">
+                        <mat-error *ngIf="campoNoValido('duration')">
                           El número de ciclos debe ser mínimo <strong>1</strong>
                         </mat-error>
                     </mat-form-field>
@@ -113,9 +113,9 @@
                         <input 
                             type="text" 
                             matInput 
-                            formControlName="nombre"
+                            formControlName="name"
                             placeholder="Ex. Computación">
-                        <mat-error *ngIf="campoNoValido('nombre')">
+                        <mat-error *ngIf="campoNoValido('name')">
                           El campo de nombre es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
@@ -128,10 +128,10 @@
                         <input 
                             type="number" 
                             matInput 
-                            formControlName="num_ciclos"
+                            formControlName="duration"
                             placeholder="Ex. 1"
                             min="1">
-                        <mat-error *ngIf="campoNoValido('num_ciclos')">
+                        <mat-error *ngIf="campoNoValido('duration')">
                           El número de ciclos debe ser mínimo <strong>1</strong>
                         </mat-error>
                     </mat-form-field>
@@ -193,16 +193,16 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="nombre" style="width: 300px">
+                <th pSortableColumn="name" style="width: 300px">
                     <div>
                         Nombre
-                        <p-sortIcon field="nombre"></p-sortIcon>
+                        <p-sortIcon field="name"></p-sortIcon>
                     </div>
                 </th>
-                <th pSortableColumn="num_ciclos" style="width: 300px">
+                <th pSortableColumn="duration" style="width: 300px">
                     <div>
                         Número de ciclos
-                        <p-sortIcon field="num_ciclos"></p-sortIcon>
+                        <p-sortIcon field="duration"></p-sortIcon>
                     </div>
                 </th>
                 <th style="width: 300px">Acciones</th>
@@ -213,11 +213,11 @@
         <ng-template pTemplate="body" let-carrera>
             <tr>
                 <td style="width: 300px">
-                    {{carrera.nombre}}
+                    {{carrera.name}}
                 </td>
                 <td style="width: 300px">
                     
-                    {{carrera.num_ciclos}}
+                    {{carrera.duration}}
                 </td>
                 
                 <td style="width: 300px">

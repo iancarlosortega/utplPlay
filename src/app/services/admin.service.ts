@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
 import { FileUpload } from '../admin/models/file-upload-model';
-import { Carrera, Materia, Video } from '../interfaces/interfaces';
+import { Career, Course, Video } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +22,19 @@ export class AdminService {
   // Usuarios
 
   obtenerUsuarios() {
-    return this.firestore.collection('usuarios').get();
+    return this.firestore.collection('users').get();
   }
 
   // Carreras
 
   obtenerCarreras(){
-    const carrerasCollection = this.firestore.collection('carreras');
+    const carrerasCollection = this.firestore.collection('careers');
 
     return carrerasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
           return actions.map(a => {
-            const data = a.payload.doc.data() as Carrera;
+            const data = a.payload.doc.data() as Career;
             data.id = a.payload.doc.id;
             return data;
           });
@@ -42,35 +42,35 @@ export class AdminService {
       )
   }
 
-  agregarCarrera( carrera: Carrera ) {
-    return this.firestore.collection('carreras').add(carrera);
+  agregarCarrera( carrera: Career ) {
+    return this.firestore.collection('careers').add(carrera);
   }
 
   getCarreraById(id: string) {
-    return this.firestore.collection('carreras').doc(id).snapshotChanges();
+    return this.firestore.collection('careers').doc(id).snapshotChanges();
   }
 
-  actualizarCarrera(id: string, data: Carrera ) {
-    return this.firestore.collection('carreras').doc(id).update( {
-      nombre: data.nombre,
-      num_ciclos: data.num_ciclos
+  actualizarCarrera(id: string, data: Career ) {
+    return this.firestore.collection('careers').doc(id).update( {
+      name: data.name,
+      duration: data.duration
     });
   }
 
   eliminarCarrera( id: string ) {
-    return this.firestore.collection('carreras').doc(id).delete();
+    return this.firestore.collection('careers').doc(id).delete();
   }
 
   // Materias
   
   obtenerMaterias(){
-    const materiasCollection = this.firestore.collection('materias');
+    const materiasCollection = this.firestore.collection('courses');
 
     return materiasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
           return actions.map(a => {
-            const data = a.payload.doc.data() as Materia;
+            const data = a.payload.doc.data() as Course;
             data.id = a.payload.doc.id;  
             return data
           });
@@ -79,38 +79,38 @@ export class AdminService {
   }
 
   obtenerMateriasVideos(){
-    const materiasCollection = this.firestore.collection('materias');
+    const materiasCollection = this.firestore.collection('courses');
 
     return materiasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
           return actions.map(a => {
-            const data = a.payload.doc.data() as Materia;
+            const data = a.payload.doc.data() as Course;
             data.id = a.payload.doc.id;  
-            delete data.carreras;
+            delete data.careers;
             return data
           });
         })
       )
   }
 
-  agregarMateria( materia: Materia ) {
-    return this.firestore.collection('materias').add(materia);
+  agregarMateria( materia: Course ) {
+    return this.firestore.collection('courses').add(materia);
   }
 
   getMateriaById(id: string) {
-    return this.firestore.collection('materias').doc(id).snapshotChanges();
+    return this.firestore.collection('courses').doc(id).snapshotChanges();
   }
 
-  actualizarMateria(id: string, data: Materia ) {
-    return this.firestore.collection('materias').doc(id).update( {
-      nombre: data.nombre,
-      carreras: data.carreras
+  actualizarMateria(id: string, data: Course ) {
+    return this.firestore.collection('courses').doc(id).update( {
+      name: data.name,
+      careers: data.careers
     });
   }
 
   eliminarMateria( id: string ) {
-    return this.firestore.collection('materias').doc(id).delete();
+    return this.firestore.collection('courses').doc(id).delete();
   }
 
   // Videos
@@ -155,7 +155,6 @@ export class AdminService {
           videoData.url = downloadURL;
 
           if( tipo === 'editar' ){
-            console.log(videoData);
             this.actualizarVideo(videoData);
           } else {
             this.agregarVideo(videoData);

@@ -22,7 +22,7 @@
 <p-table 
     #dt 
     [value]="videos" 
-    dataKey="nombre" 
+    dataKey="title" 
     selectionMode="single"
     [rows]="15" 
     [showCurrentPageReport]="true" 
@@ -30,9 +30,9 @@
     [loading]="loading" 
     styleClass="p-datatable-usuarios p-datatable-gridlines"
     [paginator]="true"
-    [scrollable]="scrollable" scrollHeight="flex" scrollDirection="both"
+    [scrollable]="scrollable" scrollDirection="both"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} videos"
-    [globalFilterFields]="['titulo', 'tutor', 'materia.nombre', 'filename' ,'visualizaciones', 'fecha_publicacion']">
+    [globalFilterFields]="['title', 'teacher', 'course.name', 'filename' ,'views', 'publication_date']">
 
     <!-- Tabla header -->
     <ng-template pTemplate="caption">
@@ -65,24 +65,24 @@
     <ng-template pTemplate="header">
         <tr>
 
-            <th pSortableColumn="titulo" style="width: 150px">
+            <th pSortableColumn="title" style="width: 150px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Título
-                    <p-sortIcon field="titulo"></p-sortIcon>
+                    <p-sortIcon field="title"></p-sortIcon>
                 </div>
             </th>
 
-            <th pSortableColumn="tutor" style="width: 150px">
+            <th pSortableColumn="teacher" style="width: 150px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Tutor
-                    <p-sortIcon field="tutor"></p-sortIcon>
+                    <p-sortIcon field="teacher"></p-sortIcon>
                 </div>
             </th>
 
-            <th pSortableColumn="materia.nombre" style="width: 150px">
+            <th pSortableColumn="course.name" style="width: 150px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Materia
-                    <p-sortIcon field="materia.nombre"></p-sortIcon>
+                    <p-sortIcon field="course.name"></p-sortIcon>
                 </div>
             </th>
 
@@ -93,17 +93,17 @@
                 </div>
             </th>
 
-            <th pSortableColumn="visualizaciones" style="width: 200px">
+            <th pSortableColumn="views" style="width: 200px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Visualizaciones
-                    <p-sortIcon field="visualizaciones"></p-sortIcon>
+                    <p-sortIcon field="views"></p-sortIcon>
                 </div>
             </th>
 
-            <th pSortableColumn="fecha_publicacion" style="width: 200px">
+            <th pSortableColumn="publication_date" style="width: 200px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Fecha de publicación
-                    <p-sortIcon field="fecha_publicacion"></p-sortIcon>
+                    <p-sortIcon field="publication_date"></p-sortIcon>
                 </div>
             </th>
 
@@ -115,22 +115,22 @@
     <ng-template pTemplate="body" let-video>
         <tr>
             <td style="width: 150px">
-                {{video.titulo}}
+                {{video.title}}
             </td>
             <td style="width: 150px">
-                {{video.tutor}}
+                {{video.teacher}}
             </td>
             <td style="width: 150px">
-                {{video.materia.nombre}}
+                {{video.course?.name}}
             </td>
             <td style="width: 250px">     
                 {{video.filename}}
             </td>
             <td style="width: 200px">     
-                {{video.visualizaciones}}
+                {{video.views}}
             </td>
             <td style="width: 200px">
-                {{video.fecha_publicacion.toDate() | date:'dd/MM/yyyy h:mm:ss a' }}
+                {{video.publication_date?.toDate() | date:'dd/MM/yyyy h:mm:ss a' }}
             </td>
             
             <td style="width: 200px">

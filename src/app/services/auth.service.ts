@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
-import firebase from '@firebase/app-compat';
 import { User } from '../interfaces/interfaces';
+import firebase from '@firebase/app-compat';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   agregarUsuario( usuario: User ) {
-    return this.firestore.collection('usuarios').doc( usuario.uid ).set( usuario );
+    return this.firestore.collection('users').doc( usuario.uid ).set( usuario );
   }
 
 

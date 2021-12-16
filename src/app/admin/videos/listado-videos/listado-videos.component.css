@@ -47,5 +47,6 @@ mat-form-field {
 }
 
 .sin-videos {
+    width: 100%;
     text-align: center !important;
 }

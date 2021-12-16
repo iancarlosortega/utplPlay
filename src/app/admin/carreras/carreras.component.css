@@ -49,5 +49,6 @@ mat-form-field {
 }
 
 .sin-carreras {
+    width: 100%;
     text-align: center !important;
 }

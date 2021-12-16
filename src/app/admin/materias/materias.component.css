@@ -61,5 +61,6 @@ mat-form-field {
 }
 
 .sin-materias {
+    width: 100%;
     text-align: center !important;
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
-import { Materia, Video } from 'src/app/interfaces/interfaces';
+import { Course, Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
 import { FileUpload } from '../../models/file-upload-model';
 
@@ -19,18 +19,18 @@ export class SubirVideoComponent implements OnInit {
 
   video: Video = {
     id : '',
-    titulo : '',
-    tutor : '',
-    materia : {
+    title : '',
+    teacher : '',
+    course : {
       id: '',
-      nombre: ''
+      name: ''
     },
-    visualizaciones : 0,
+    views : 0,
     url : '',
-    fecha_publicacion: null
+    publication_date: null
   }
   tipo: string = 'agregar';
-  materias!: Materia[];
+  materias!: Course[];
   materiasAux!: any[];
   selectedFiles?: any;
   currentFileUpload?: FileUpload;
@@ -41,9 +41,9 @@ export class SubirVideoComponent implements OnInit {
   disabled = false;
 
   miFormulario: FormGroup = this.fb.group({
-    titulo: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
-    tutor: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
-    materia: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
+    title: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
+    teacher: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
+    course: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
     file: [{ value: '', disabled: false }]
   })
 
@@ -129,8 +129,6 @@ export class SubirVideoComponent implements OnInit {
       //Actualizar
       console.log('Editar');
       this.tipo = 'editar';
-      // const { id, visualizaciones, fecha_publicacion, filename } = this.video;
-      // this.video = {...this.miFormulario.value, id, visualizaciones, fecha_publicacion, filename };
       this.video = {...this.video, ...this.miFormulario.value };
 
       if (this.selectedFiles) {
@@ -187,8 +185,8 @@ export class SubirVideoComponent implements OnInit {
       //Crear
       
       this.video = this.miFormulario.value;
-      this.video.visualizaciones = 0;
-      this.video.fecha_publicacion = new Date();
+      this.video.views = 0;
+      this.video.publication_date = new Date();
 
       if (this.selectedFiles) {
 
@@ -232,16 +230,16 @@ export class SubirVideoComponent implements OnInit {
   }
 
   enableForm(): void {
-    this.miFormulario.controls['titulo'].enable();
-    this.miFormulario.controls['tutor'].enable();
-    this.miFormulario.controls['materia'].enable();
+    this.miFormulario.controls['title'].enable();
+    this.miFormulario.controls['teacher'].enable();
+    this.miFormulario.controls['course'].enable();
     this.miFormulario.controls['file'].enable();
   }
 
   disableForm(): void {
-    this.miFormulario.controls['titulo'].disable();
-    this.miFormulario.controls['tutor'].disable();
-    this.miFormulario.controls['materia'].disable();
+    this.miFormulario.controls['title'].disable();
+    this.miFormulario.controls['teacher'].disable();
+    this.miFormulario.controls['course'].disable();
     this.miFormulario.controls['file'].disable();
   }
 
@@ -251,8 +249,8 @@ export class SubirVideoComponent implements OnInit {
     valor = valor.toLowerCase().trim();
 
     this.materias = this.materiasAux
-    this.materias = this.materias.filter((materia: Materia) => {
-      const nombreMateria = materia.nombre.toLowerCase();
+    this.materias = this.materias.filter((materia: Course) => {
+      const nombreMateria = materia.name.toLowerCase();
       if( nombreMateria.includes(valor) ) {
         return true;
       } else {

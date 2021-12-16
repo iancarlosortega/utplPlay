@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
-import { Carrera, Materia } from 'src/app/interfaces/interfaces';
+import { Career, Course } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -21,17 +21,18 @@ export class MateriasComponent implements OnInit, AfterViewInit {
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
 
   id?: string;
-  carreras: Carrera[] = [];
-  materias: Materia[] = [];
-  materia!: Materia;
+  carreras: Career[] = [];
+  materias: Course[] = [];
+  materia!: Course;
   loading: boolean = true;
   disabled: boolean = false;
   scrollable: boolean = true;
   modalRef?: BsModalRef;
+  emptyMessage: string = 'Ninguna carrera encontrada'
 
   miFormulario: FormGroup = this.fb.group({
-    nombre: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    carreras: [ '', [ Validators.required, Validators.minLength(1) ] ],
+    name: [ '', [ Validators.required, Validators.minLength(3) ] ],
+    careers: [ '', [ Validators.required, Validators.minLength(1) ] ],
   })
  
   openModal() {
@@ -111,7 +112,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
         this.disabled = false;
         this.miFormulario.reset();
         this.formulario?.resetForm();
-        this.toastr.success(`La carrera ${this.materia.nombre} fue registrada con éxito!`, 'Materia Registrada');
+        this.toastr.success(`La carrera ${this.materia.name} fue registrada con éxito!`, 'Materia Registrada');
       })
       .catch( err => {
         this.toastr.error(`${err}`, 'Error al agregar la materia');
@@ -126,8 +127,8 @@ export class MateriasComponent implements OnInit, AfterViewInit {
       if( data.type != 'removed' ) {
         this.id = data.payload.id;
         this.miFormulario.setValue({
-          nombre: data.payload.data()['nombre'],
-          carreras: data.payload.data()['carreras'],
+          name: data.payload.data()['name'],
+          careers: data.payload.data()['careers'],
         });
       }
       
@@ -150,7 +151,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
         this.disabled = false;
         this.miFormulario.reset();
         this.formulario?.resetForm();
-        this.toastr.info(`La materia ${this.materia.nombre} fue actualizada con éxito`, 'Materia actualizada!');
+        this.toastr.info(`La materia ${this.materia.name} fue actualizada con éxito`, 'Materia actualizada!');
       })
       .catch( err => {
         this.toastr.error(`${err}`, 'Error al actualizar la materia');

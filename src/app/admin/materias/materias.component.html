@@ -5,7 +5,7 @@
 <p-table 
     #dt 
     [value]="materias" 
-    dataKey="nombre" 
+    dataKey="name" 
     selectionMode="single"
     [rows]="15" 
     [showCurrentPageReport]="true" 
@@ -13,9 +13,9 @@
     [loading]="loading" 
     styleClass="p-datatable-usuarios p-datatable-gridlines"
     [paginator]="true" 
-    [scrollable]="scrollable" scrollHeight="flex" scrollDirection="both"
+    [scrollable]="scrollable" scrollDirection="both"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} materias"
-    [globalFilterFields]="['nombre']">
+    [globalFilterFields]="['name']">
 
     <!-- Modal para crear materia -->
 
@@ -38,9 +38,9 @@
                     <input 
                         type="text" 
                         matInput 
-                        formControlName="nombre"
+                        formControlName="name"
                         placeholder="Ex. Física">
-                    <mat-error *ngIf="campoNoValido('nombre')">
+                    <mat-error *ngIf="campoNoValido('name')">
                         El campo de nombre es <strong>obligatorio</strong>
                     </mat-error>
                 </mat-form-field>
@@ -50,14 +50,15 @@
 
                 <p-multiSelect 
                     [options]="carreras" 
-                    formControlName="carreras" 
+                    formControlName="careers" 
                     defaultLabel="Selecione las carreras"
-                    optionLabel="nombre" 
+                    optionLabel="name"
+                    emptyFilterMessage="Ninguna carrera encontrada"
                     [style]="{'width': '100%', 'margin-top': '0.5rem'}"
                     display="chip">
                 </p-multiSelect>
                 <small 
-                    *ngIf="campoNoValido('carreras')" 
+                    *ngIf="campoNoValido('careers')" 
                     class="text text-danger">
                     Seleccion al menos <strong>1</strong> carrera
                 </small>
@@ -110,9 +111,9 @@
                     <input 
                         type="text" 
                         matInput 
-                        formControlName="nombre"
+                        formControlName="name"
                         placeholder="Ex. Física">
-                    <mat-error *ngIf="campoNoValido('nombre')">
+                    <mat-error *ngIf="campoNoValido('name')">
                       El campo de nombre es <strong>obligatorio</strong>
                     </mat-error>
                 </mat-form-field>            
@@ -121,14 +122,15 @@
 
                 <p-multiSelect 
                     [options]="carreras" 
-                    formControlName="carreras" 
+                    formControlName="careers" 
                     defaultLabel="Selecione las carreras"
-                    optionLabel="nombre" 
+                    optionLabel="name"
+                    emptyFilterMessage="Ninguna carrera encontrada"
                     [style]="{'width': '100%', 'margin-top': '0.5rem'}"
                     display="chip">
                 </p-multiSelect>
                 <small 
-                    *ngIf="campoNoValido('carreras')" 
+                    *ngIf="campoNoValido('careers')" 
                     class="text text-danger">
                     Seleccion al menos <strong>1</strong> carrera
                 </small>
@@ -207,11 +209,11 @@
     <ng-template pTemplate="body" let-materia>
         <tr>
             <td style="width: 200px">
-                {{materia.nombre}}
+                {{materia.name}}
             </td>
             <td style="width: 400px">
-                <p *ngFor="let item of materia.carreras" class="carreras-nombre">
-                    {{item.nombre}}
+                <p *ngFor="let item of materia.careers" class="carreras-nombre">
+                    {{item.name}}
                 </p>
             </td>
             
