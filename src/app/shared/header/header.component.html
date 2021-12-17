@@ -1,21 +1,14 @@
-<nav class="navbar">
+<nav class="navbar" *ngIf="!toolBar" [ngClass]=" { 'gradiente' : !hidden } " >
 
     <div class="logo">
-        <img src="./assets/logo.png" alt="">
+        <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="../home">
     </div>
 
     <div class="nav-items">
-        <a class="nav-item" routerLink="../home" routerLinkActive="link-activo">Home</a>
-        <a class="nav-item" routerLink="../carreras" routerLinkActive="link-activo">Carreras</a>
-        <a class="nav-item" routerLink="../materias" routerLinkActive="link-activo">Materias</a>
-        <a *ngIf="claims?.admin" class="nav-item" routerLink="/admin" routerLinkActive="link-activo">Dashboard</a>
-    </div>
-
-    <div class="buscador" *ngIf="!hidden">
-        <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input type="text" pInputText placeholder="Buscar">         
-        </span>
+        <a class="nav-item hvr-underline-from-center" routerLink="../home" routerLinkActive="link-activo">Home</a>
+        <a class="nav-item hvr-underline-from-center" routerLink="../carreras" routerLinkActive="link-activo">Carreras</a>
+        <a class="nav-item hvr-underline-from-center" routerLink="../materias" routerLinkActive="link-activo">Materias</a>
+        <a class="nav-item hvr-underline-from-center" routerLink="../nosotros" routerLinkActive="link-activo">Sobre Nosotros</a>
     </div>
 
     <div class="perfil-usuario">
@@ -28,7 +21,15 @@
         <mat-menu 
             #menu="matMenu" 
             xPosition="before">
-            <button mat-menu-item routerLink="../perfil">
+            <button mat-menu-item routerLink="/admin">
+                <mat-icon>admin_panel_settings</mat-icon>
+                <span>Dashboard</span>
+            </button>
+            <button mat-menu-item routerLink="../historial">
+                <mat-icon>history</mat-icon>
+                <span>Historial</span>
+            </button>
+            <button *ngIf="claims?.admin" mat-menu-item routerLink="../perfil">
                 <mat-icon>account_box</mat-icon>
                 <span>Editar perfil</span>
             </button>
@@ -40,4 +41,44 @@
 
     </div>
 </nav>
+
+<nav class="navbar2" *ngIf="toolBar" [ngClass]=" { 'gradiente' : !hidden } ">
+    <div class="logo">
+        <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="../home">
+    </div>
+</nav>
+
+<mat-toolbar *ngIf="toolBar">
+    <div class="navbar-button">
+        <button mat-icon-button (click)="visibleSidebar = true">
+            <mat-icon>
+                menu
+            </mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<p-sidebar [(visible)]="visibleSidebar" [baseZIndex]="10000">
+    <ul class="listado">
+        <li *ngFor="let item of menuItems">
+          <a class="nav-item2" [routerLink]="item.route">
+            <div class="listado-item">
+              <mat-icon routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">{{item.icono}}</mat-icon>
+              <div class="item-nombre" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
+                <p>{{item.titulo}}</p>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+            <a class="nav-item2" (click)="logout()">
+              <div class="listado-item">
+                <mat-icon>logout</mat-icon>
+                <div class="item-nombre">
+                  <p>Cerrar Sesión</p>
+                </div>
+              </div>
+            </a>
+          </li>
+    </ul>
+</p-sidebar>
 

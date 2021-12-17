@@ -4,7 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
-import { Career } from 'src/app/interfaces/interfaces';
+import { Area, Career } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -24,6 +24,23 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   id?: string;
   carreras: Career[] = [];
   carrera!: Career;
+  areas: Area[] = [
+
+    { name: 'Ciencias económicas y empresariales', value: 'economicas' },
+    { name: 'Ciencias jurídicas y políticas', value: 'juridicas' },
+    { name: 'Ciencias de la salud', value: 'salud' },
+    { name: 'Ingenierías y arquitectura', value: 'ingenierias' },
+    { name: 'Ciencias exactas y naturales', value: 'exactas' },
+    { name: 'Ciencias sociales, educación y humanidades', value: 'sociales' },
+
+  ]
+  
+  // areas: string[] = ['Ciencias economicas y empresariales',
+  //                   'Ciencias juridicas y politicas',
+  //                   'Ciencias de la salud',
+  //                   'Ingenierias y arquitectura',
+  //                   'Ciencias exactas y naturales',
+  //                   'Ciencias sociales, educacion y humanidades']
   loading: boolean = true;
   disabled: boolean = false;
   scrollable: boolean = true;
@@ -32,6 +49,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   miFormulario: FormGroup = this.fb.group({
     name: [ '', [ Validators.required, Validators.minLength(3) ] ],
     duration: [ '', [ Validators.required, Validators.min(1) ] ],
+    area: [ '', [ Validators.required ] ],
   })
  
   openModal() {
@@ -117,15 +135,13 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
 
   obtenerCarrera(id: string) {
     this.openModalEditar();
-    this.adminService.getCarreraById(id).subscribe( (data: any) => {
-      if( data.type != 'removed' ) {
-        this.id = data.payload.id;
-        this.miFormulario.setValue({
-          name: data.payload.data()['name'],
-          duration: data.payload.data()['duration'],
-        });
-      }
-      
+    this.adminService.obtenerCarreraPorId(id).subscribe( (data: Career) => {
+      this.id = data.id;
+      this.miFormulario.setValue({
+        name: data.name,
+        duration: data.duration,
+        area: data.area,
+      });      
     })
   }
 

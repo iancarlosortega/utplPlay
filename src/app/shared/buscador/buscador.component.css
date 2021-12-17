@@ -1,0 +1,19 @@
+.buscador {
+    margin: 1rem;
+}
+
+.buscador span, .buscador input{
+    width: 100%;
+}
+
+@media (min-width: 992px){
+
+    .buscador {
+        display: flex;
+        justify-content: center;
+    }
+
+    .buscador span, .buscador input{
+        width: 30rem;
+    }
+}

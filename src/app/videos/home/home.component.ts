@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AdminService } from 'src/app/services/admin.service';
+import { Career } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor( private authService: AuthService ) { }
+  carreras!: Career[]
+
+  constructor( private adminService: AdminService 
+  ) { }
 
   ngOnInit(): void {
+
+    this.adminService.obtenerCarreras().subscribe( carreras => {
+      this.carreras = carreras;
+    });
+
   }
 
 }

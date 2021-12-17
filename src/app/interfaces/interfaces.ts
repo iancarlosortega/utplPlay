@@ -14,10 +14,16 @@ export interface User {
     identification_card?: string;
 }
 
+export interface Area {
+    name: string,
+    value: string
+}
+
 export interface Career {
     id: string;
     name: string;
     duration: number;
+    area: Area;
     views: number;
     //TODO: Agregar foto de carrera
     // img: string;

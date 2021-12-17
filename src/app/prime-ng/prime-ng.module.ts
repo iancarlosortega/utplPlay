@@ -7,7 +7,10 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MultiSelectModule} from 'primeng/multiselect';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {SidebarModule} from 'primeng/sidebar';
 import {TableModule} from 'primeng/table';
+import {TooltipModule} from 'primeng/tooltip';
+import {TreeSelectModule} from 'primeng/treeselect';
 
 
 
@@ -21,7 +24,10 @@ import {TableModule} from 'primeng/table';
     MessagesModule,
     MultiSelectModule,
     ProgressSpinnerModule,
-    TableModule
+    SidebarModule,
+    TableModule,
+    TooltipModule,
+    TreeSelectModule
   ]
 })
 export class PrimeNGModule { }

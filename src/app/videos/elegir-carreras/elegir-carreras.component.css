@@ -1,0 +1,70 @@
+.background {
+    background-image: url('/assets/videos/carreras-background2.svg');
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-width:992px){
+    .background {
+        height: 100vh;
+    }
+}
+
+.contenedor {
+    width: 80%;
+    margin: auto;
+    padding: 2rem 0;
+}
+
+.carreras {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat( auto-fill, minmax(20rem, 1fr) );
+}
+
+.mat-expansion-panel {
+}
+
+.mat-expansion-panel-header {
+    margin: 0.7rem 0;
+}
+
+.mat-expansion-panel-header-title {
+    display: flex;
+    justify-content: center;
+}
+
+.area-title {
+    font-family: 'Roboto', sans-serif;
+    color: var(--primario);  
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    text-decoration: underline;
+}
+
+.listado {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-item {
+    color: var(--negro);
+    text-decoration: none;
+}
+
+.listado-item {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+    cursor: pointer;
+}
+
+.listado-item mat-icon {
+    color: var(--gradiente1)
+}
+
+.item-nombre p {
+    margin: 0;
+    margin-left: 0.5rem;
+}

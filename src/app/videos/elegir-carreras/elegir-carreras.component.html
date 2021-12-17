@@ -1,2 +1,157 @@
-<app-header></app-header>
-<p>elegir-carreras works!</p>
+<div class="background">
+    <app-header></app-header>
+    <div class="contenedor">
+
+        <app-buscador></app-buscador>
+
+        <main class="carreras">
+    
+            <!-- Ingenierias y Arquitectura -->
+            <div class="area">
+                <mat-expansion-panel 
+                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5 class="area-title">Ingenierías y Arquitectura</h5>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="listado">
+                        <li *ngFor="let carrera of ingenierias">
+                            <a class="nav-item" [routerLink]="">
+                                <div class="listado-item">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                    <div class="item-nombre">
+                                        <p>{{carrera.name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+    
+            <!-- Ciencias economicas y sociales -->
+            <div class="area">
+                <mat-expansion-panel 
+                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5 class="area-title">Ciencias económicas y sociales</h5>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="listado">
+                        <li *ngFor="let carrera of economicas">
+                            <a class="nav-item" [routerLink]="">
+                                <div class="listado-item">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                    <div class="item-nombre">
+                                        <p>{{carrera.name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+    
+            <!-- Ciencias juridicas y politicas -->
+            <div class="area">
+                <mat-expansion-panel 
+                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5 class="area-title">Ciencias jurídicas y políticas</h5>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="listado">
+                        <li *ngFor="let carrera of juridicas">
+                            <a class="nav-item" [routerLink]="">
+                                <div class="listado-item">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                    <div class="item-nombre">
+                                        <p>{{carrera.name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+    
+            <!-- Ciencias de la salud -->
+            <div class="area">
+                <mat-expansion-panel 
+                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5 class="area-title">Ciencias de la salud</h5>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="listado">
+                        <li *ngFor="let carrera of salud">
+                            <a class="nav-item" [routerLink]="">
+                                <div class="listado-item">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                    <div class="item-nombre">
+                                        <p>{{carrera.name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+    
+            <!-- Ciencias exactas y naturales -->
+            <div class="area">
+                <mat-expansion-panel 
+                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5 class="area-title">Ciencias exactas y naturales</h5>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="listado">
+                        <li *ngFor="let carrera of exactas">
+                            <a class="nav-item" [routerLink]="">
+                                <div class="listado-item">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                    <div class="item-nombre">
+                                        <p>{{carrera.name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+    
+            <!-- Ciencias sociales, educación y humanidades -->
+            <div class="area">
+                <mat-expansion-panel 
+                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h5 class="area-title">Ciencias sociales, educación y humanidades</h5>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="listado">
+                        <li *ngFor="let carrera of ingenierias">
+                            <a class="nav-item" [routerLink]="">
+                                <div class="listado-item">
+                                    <mat-icon>arrow_forward_ios</mat-icon>
+                                    <div class="item-nombre">
+                                        <p>{{carrera.name}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+    
+    
+        </main>
+    </div>
+</div>
+

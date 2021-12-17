@@ -42,19 +42,24 @@ export class AdminService {
       )
   }
 
+  obtenerCarreraPorId(id: string) {
+    const carrera = this.firestore.collection('careers').doc(id);
+    return carrera.snapshotChanges()
+      .pipe(
+        map(a => {       
+          const data = a.payload.data() as Career;
+            data.id = a.payload.id;  
+            return data
+        })
+      )
+  }
+
   agregarCarrera( carrera: Career ) {
     return this.firestore.collection('careers').add(carrera);
   }
 
-  getCarreraById(id: string) {
-    return this.firestore.collection('careers').doc(id).snapshotChanges();
-  }
-
   actualizarCarrera(id: string, data: Career ) {
-    return this.firestore.collection('careers').doc(id).update( {
-      name: data.name,
-      duration: data.duration
-    });
+    return this.firestore.collection('careers').doc(id).update(data);
   }
 
   eliminarCarrera( id: string ) {
@@ -80,6 +85,24 @@ export class AdminService {
 
   obtenerMateriasVideos(){
     const materiasCollection = this.firestore.collection('courses');
+
+    return materiasCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Course;
+            data.id = a.payload.doc.id;  
+            delete data.careers;
+            return data
+          });
+        })
+      )
+  }
+
+  obtenerMateriasPorCarrera(carrera: Career){
+
+
+    const materiasCollection = this.firestore.collection('courses', ref => ref.where('careers', 'array-contains' , carrera));
 
     return materiasCollection.snapshotChanges()
       .pipe(

@@ -15,7 +15,7 @@
         [paginator]="true" 
         [scrollable]="scrollable" scrollDirection="both"
         currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
-        [globalFilterFields]="['name', 'duration']">
+        [globalFilterFields]="['name', 'area.name', 'duration']">
 
         <!-- Modal para crear carrera -->
  
@@ -46,7 +46,7 @@
                           El campo de nombre es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
-                
+
                 
                     <!-- Input número de ciclos -->
                     
@@ -60,6 +60,23 @@
                             min="1">
                         <mat-error *ngIf="campoNoValido('duration')">
                           El número de ciclos debe ser mínimo <strong>1</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Input de área  -->
+                    
+                    <mat-form-field>
+                        <mat-label>Área</mat-label>
+                        <mat-select 
+                            formControlName="area">
+                            
+                            <mat-option *ngFor="let area of areas" [value]="area">
+                                {{ area.name }}
+                            </mat-option>
+            
+                        </mat-select>
+                        <mat-error *ngIf="campoNoValido('area')">
+                            El campo de área es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
                             
@@ -119,8 +136,7 @@
                           El campo de nombre es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
-                
-                
+
                     <!-- Input número de ciclos -->
                     
                     <mat-form-field class="example-full-width" appearance="fill">
@@ -133,6 +149,23 @@
                             min="1">
                         <mat-error *ngIf="campoNoValido('duration')">
                           El número de ciclos debe ser mínimo <strong>1</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Input de área  -->
+                    
+                    <mat-form-field>
+                        <mat-label>Área</mat-label>
+                        <mat-select
+                            formControlName="area">
+        
+                            <mat-option *ngFor="let area of areas" [value]="area">
+                                {{ area.name }}
+                            </mat-option>
+            
+                        </mat-select>
+                        <mat-error *ngIf="campoNoValido('area')">
+                            El campo de área es <strong>obligatorio</strong>
                         </mat-error>
                     </mat-form-field>
                             
@@ -199,6 +232,12 @@
                         <p-sortIcon field="name"></p-sortIcon>
                     </div>
                 </th>
+                <th pSortableColumn="area.name" style="width: 300px">
+                    <div>
+                        Área
+                        <p-sortIcon field="area.name"></p-sortIcon>
+                    </div>
+                </th>
                 <th pSortableColumn="duration" style="width: 300px">
                     <div>
                         Número de ciclos
@@ -214,6 +253,9 @@
             <tr>
                 <td style="width: 300px">
                     {{carrera.name}}
+                </td>
+                <td style="width: 300px">
+                    {{carrera.area.name}}
                 </td>
                 <td style="width: 300px">
                     
@@ -253,3 +295,5 @@
             </tr>
         </ng-template>
     </p-table>
+
+    

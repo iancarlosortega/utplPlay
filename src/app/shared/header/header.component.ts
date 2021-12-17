@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,8 +10,49 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit  {
 
+  visibleSidebar: boolean = false;
+  toolBar: boolean = false;
   hidden: boolean = false;
   claims: any;
+
+  menuItems = [
+    {
+      titulo: 'Home',
+      route: '../home',
+      icono: 'home'
+    },
+    {
+      titulo: 'Carreras',
+      route: '../carreras',
+      icono: 'data_usage'
+    },
+    {
+      titulo: 'Materias',
+      route: '../materias',
+      icono: 'library_books'
+    },
+    {
+      titulo: 'Historial',
+      route: '../historial',
+      icono: 'history'
+    },
+    {
+      titulo: 'Editar Perfil',
+      route: '../perfil',
+      icono: 'account_box'
+    },
+    {
+      titulo: 'Sobre Nosotros',
+      route: '../nosotros',
+      icono: 'supervised_user_circle'
+    }
+  ];
+
+
+  constructor( private authService: AuthService,
+               private router: Router,
+               private observer: BreakpointObserver
+) {}
 
   ngOnInit(): void {
 
@@ -26,9 +68,19 @@ export class HeaderComponent implements OnInit  {
     
   }
 
-  constructor( private authService: AuthService,
-               private router: Router
-  ) {}
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.observer.observe(['(min-width: 768px)']).subscribe((res) => {
+        if (res.matches) {
+          this.toolBar = false;
+        } else {
+          this.toolBar = true;
+        }
+      });
+    }, 0)
+  }
+
+  
 
   logout() {
     this.authService.logout();

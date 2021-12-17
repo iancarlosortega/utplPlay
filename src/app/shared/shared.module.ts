@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VideoComponent } from './video/video.component';
+import { BuscadorComponent } from './buscador/buscador.component';
 
 
 
@@ -16,7 +17,8 @@ import { VideoComponent } from './video/video.component';
     HeaderComponent,
     SidenavComponent,
     NavbarComponent,
-    VideoComponent
+    VideoComponent,
+    BuscadorComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { VideoComponent } from './video/video.component';
     HeaderComponent,
     SidenavComponent,
     NavbarComponent,
-    VideoComponent
+    VideoComponent,
+    BuscadorComponent
   ]
 })
 export class SharedModule { }

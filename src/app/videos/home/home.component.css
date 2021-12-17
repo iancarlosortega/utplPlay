@@ -8,13 +8,6 @@
     height: 100%;
 }
 
-.carrera {
-    width: 100px;
-    height: 100px;
-    margin: 1rem;
-    background-color: white;
-}
-
 .contenido {
     margin: auto;
     width: 80%;
@@ -33,7 +26,7 @@
 }
 
 .cursos, .carreras {
-    margin-bottom: 5rem;
+    margin: 2.5rem 0;
 }
 
 .titulo {
@@ -85,14 +78,27 @@
     }
 }
 
-.carreras {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center;
+.container {
+    --d: 6em; /* image size */
+    --rel: 1; /* how much extra space we want between images, 1 = one image size */
+    --r: calc(.5*(1 + var(--rel))*var(--d)/var(--tan)); /* circle radius */
+    --s: calc(2*var(--r) + var(--d)); /* container size */
+    position: relative;
+    width: var(--s); height: var(--s);
 }
-
-@media (min-width:540px){
-    .carreras {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
+  
+.container a {
+    position: absolute;
+    top: 50%; left: 50%;
+    margin: calc(-.5*var(--d));
+    width: var(--d); height: var(--d);
+    --az: calc(var(--i)*1turn/var(--m));
+    transform: 
+        rotate(var(--az)) 
+        translate(var(--r))
+        rotate(calc(-1*var(--az)))
+}
+  
+.container a img { 
+    max-width: 100%;
 }
