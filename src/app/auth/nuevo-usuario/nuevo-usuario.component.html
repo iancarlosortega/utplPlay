@@ -6,65 +6,13 @@
             <img src="./assets/logo.png" alt="">
         </div>
 
-        <p class="titulo">Regístrate</p>
+        <p class="titulo">Completa el formulario</p>
 
         <form class="formulario-form" [formGroup]="miFormulario" (submit)="register()">
 
             <div class="row">
-                <div class="col-12 col-lg-6 flex-end">
-                    <div class="campo">
-                        <p class="label">Nombres:</p>
-                        <input formControlName="name" type="text">
-                        <span 
-                            class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('name')"
-                            >El campo de nombres es  <b>obligatorio</b>
-                        </span>
-                    </div>
-
-                    <div class="campo">
-                        <p class="label">Apellidos:</p>
-                        <input formControlName="last_name" type="text">
-                        <span 
-                            class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('last_name')"
-                            >El campo de apellidos es  <b>obligatorio</b>
-                        </span>
-                    </div>
-
-                    <div class="campo">
-                        <p class="label">Correo institucional:</p>
-                        <input formControlName="email" type="text">
-                        <span 
-                            class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('email')"
-                            >El campo del correo es  <b>obligatorio</b>
-                        </span>
-                    </div>
-
-                    <div class="campo">
-                        <p class="label">Contraseña:</p>
-                        <input formControlName="password" type="password">
-                        <span 
-                            class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('password')"
-                            >El campo de nombres es  <b>obligatorio</b>
-                        </span>
-                    </div>
-
-                    <div class="campo">
-                        <p class="label">Confirmar contraseña:</p>
-                        <input formControlName="password2"  type="password">
-                        <span 
-                            class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('password2')"
-                            >Las contraseñas deben ser iguales
-                        </span>
-                    </div>                    
     
-                </div>
-    
-                <div class="col-12 col-lg-6">
+                <div class="flex-center">
                     <div class="custom-select">
                         <p class="label">Nacionalidad:</p>
                         <select formControlName="country">
@@ -146,10 +94,11 @@
         </form>
         <div class="formulario-footer">
             <p class="me-3">¿Ya tienes una cuenta?</p>
-            <p routerLink="../login" class="login">Inicia sesion</p>
+            <p routerLink="auth/login" class="login">Inicia sesion</p>
         </div>
     </div>
 </div>
+
 
 
 

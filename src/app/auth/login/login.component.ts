@@ -11,9 +11,11 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
-    'email': [ 'juan@juan.com', [Validators.required, Validators.email] ],
+    'email': [ '', [Validators.required, Validators.email] ],
+    // 'email': [ 'juan@juan.com', [Validators.required, Validators.email] ],
     // 'email': [ 'icortega@utpl.edu.ec', [Validators.required, Validators.email] ],
-    'password': [ '123456', [Validators.required, Validators.minLength(6)] ]
+    // 'password': [ '123456', [Validators.required, Validators.minLength(6)] ]
+    'password': [ '', [Validators.required, Validators.minLength(6)] ]
   })
 
   constructor( private authService: AuthService ,
@@ -38,20 +40,22 @@ export class LoginComponent implements OnInit {
     const email = this.miFormulario.value.email;
     const password = this.miFormulario.value.password;
 
-    this.authService.loginEmailPassword( email, password ).then( res => {
+    this.authService.loginEmailPassword( email, password )
+      .then( res => {
+        console.log('Login exitoso', res);
+        this.router.navigateByUrl('/play');
 
-      console.log('Login exitoso', res);
-      this.router.navigateByUrl('/play');
-
-    }).catch( error => {
-      console.log('Login error', error);
-    })
+      }).catch( error => {
+        console.log('Login error', error);
+      })
   }
 
   loginGoogle() {
-    this.authService.loginGoogle();
+    this.authService.loginGoogle()
   }
 
-  
+  loginMicrosoft() {
+    this.authService.loginMicrosoft()
+  }
 
 }

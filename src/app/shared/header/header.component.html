@@ -21,7 +21,7 @@
         <mat-menu 
             #menu="matMenu" 
             xPosition="before">
-            <button mat-menu-item routerLink="/admin">
+            <button *ngIf="claims?.admin" mat-menu-item routerLink="/admin">
                 <mat-icon>admin_panel_settings</mat-icon>
                 <span>Dashboard</span>
             </button>
@@ -29,7 +29,7 @@
                 <mat-icon>history</mat-icon>
                 <span>Historial</span>
             </button>
-            <button *ngIf="claims?.admin" mat-menu-item routerLink="../perfil">
+            <button mat-menu-item routerLink="../perfil">
                 <mat-icon>account_box</mat-icon>
                 <span>Editar perfil</span>
             </button>
@@ -69,6 +69,16 @@
             </div>
           </a>
         </li>
+        <li *ngIf="claims?.admin">
+            <a class="nav-item2" routerLink="/admin">
+              <div class="listado-item">
+                <mat-icon>admin_panel_settings</mat-icon>
+                <div class="item-nombre">
+                  <p>Dashboard</p>
+                </div>
+              </div>
+            </a>
+        </li>
         <li>
             <a class="nav-item2" (click)="logout()">
               <div class="listado-item">
@@ -78,7 +88,7 @@
                 </div>
               </div>
             </a>
-          </li>
+        </li>
     </ul>
 </p-sidebar>
 

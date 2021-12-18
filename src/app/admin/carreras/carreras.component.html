@@ -2,298 +2,296 @@
 
 <h3 class="text-center">Listado de carreras</h3>
    
-    <p-table 
-        #dt 
-        [value]="carreras" 
-        dataKey="name" 
-        selectionMode="single"
-        [rows]="15" 
-        [showCurrentPageReport]="true" 
-        [rowsPerPageOptions]="[15,25,50]" 
-        [loading]="loading" 
-        styleClass="p-datatable-usuarios p-datatable-gridlines"
-        [paginator]="true" 
-        [scrollable]="scrollable" scrollDirection="both"
-        currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
-        [globalFilterFields]="['name', 'area.name', 'duration']">
+<p-table 
+    #dt 
+    [value]="carreras" 
+    dataKey="name" 
+    selectionMode="single"
+    [rows]="15" 
+    [showCurrentPageReport]="true" 
+    [rowsPerPageOptions]="[15,25,50]" 
+    [loading]="loading" 
+    styleClass="p-datatable-usuarios p-datatable-gridlines"
+    [paginator]="true" 
+    [scrollable]="scrollable" scrollDirection="both"
+    currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
+    [globalFilterFields]="['name', 'area.name', 'duration']">
 
-        <!-- Modal para crear carrera -->
- 
-        <ng-template #modalCrear>
-            <div class="modal-header">
-            <h4 class="modal-title pull-left">Agregar Carrera</h4>
-            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-                <span aria-hidden="true" class="visually-hidden">&times;</span>
+    <!-- Tabla header -->
+    <ng-template pTemplate="caption">
+        <div class="tabla-header">
+            <!-- Agregar Carrera -->
+            <button 
+                pButton
+                icon="pi pi-plus-circle" 
+                iconPos="right"
+                type="button" 
+                class="p-button-raised" 
+                label="Agregar Carrera"
+                (click)="openModal()">
             </button>
-            </div>
-            <div class="modal-body">
-                <form 
-                [formGroup]="miFormulario" 
-                #formulario
-                #form="ngForm"
-                autocomplete="off" >
 
-                    <!-- Input Nombre -->
-                
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Nombre de la carrera</mat-label>
-                        <input 
-                            type="text" 
-                            matInput 
-                            formControlName="name"
-                            placeholder="Ex. Computación">
-                        <mat-error *ngIf="campoNoValido('name')">
-                          El campo de nombre es <strong>obligatorio</strong>
-                        </mat-error>
-                    </mat-form-field>
+            <!-- Buscador -->
+            <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input 
+                    class="p-inputtext p-component"
+                    pInputText 
+                    type="text" 
+                    (input)="applyFilterGlobal($event, 'contains')" 
+                    placeholder="Buscar carrera" />
+            </span>
+        </div>
+    </ng-template>
 
-                
-                    <!-- Input número de ciclos -->
-                    
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Número de ciclos</mat-label>
-                        <input 
-                            type="number" 
-                            matInput 
-                            formControlName="duration"
-                            placeholder="Ex. 1"
-                            min="1">
-                        <mat-error *ngIf="campoNoValido('duration')">
-                          El número de ciclos debe ser mínimo <strong>1</strong>
-                        </mat-error>
-                    </mat-form-field>
 
-                    <!-- Input de área  -->
-                    
-                    <mat-form-field>
-                        <mat-label>Área</mat-label>
-                        <mat-select 
-                            formControlName="area">
-                            
-                            <mat-option *ngFor="let area of areas" [value]="area">
-                                {{ area.name }}
-                            </mat-option>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="name" style="width: 300px">
+                <div>
+                    Nombre
+                    <p-sortIcon field="name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="area.name" style="width: 300px">
+                <div>
+                    Área
+                    <p-sortIcon field="area.name"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="duration" style="width: 300px">
+                <div>
+                    Número de ciclos
+                    <p-sortIcon field="duration"></p-sortIcon>
+                </div>
+            </th>
+            <th style="width: 300px">Acciones</th>
             
-                        </mat-select>
-                        <mat-error *ngIf="campoNoValido('area')">
-                            El campo de área es <strong>obligatorio</strong>
-                        </mat-error>
-                    </mat-form-field>
-                            
-                </form>
-
-            </div>
-
-            <div class="modal-footer">
-                <button 
-                    pButton 
-                    (click)="closeModal()" 
-                    label="Cancelar" 
-                    icon="pi pi-times" 
-                    iconPos="left" 
-                    class="p-button-raised boton-cancelar">
-                </button>
-
-                <button 
-                    pButton 
-                    (click)="agregarCarrera()" 
-                    label="Guardar" 
-                    [disabled]="disabled"
-                    icon="pi pi-check" 
-                    iconPos="right" 
-                    class="p-button-raised">
-                </button>
-                
-            </div>
-        </ng-template>
-
-        <!-- Modal para editar carrera -->
- 
-        <ng-template #modalEditar>
-            <div class="modal-header">
-            <h4 class="modal-title pull-left">Editar Carrera</h4>
-            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-                <span aria-hidden="true" class="visually-hidden">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <form 
-                [formGroup]="miFormulario" 
-                #formulario
-                #form="ngForm"
-                autocomplete="off" >
-
-                    <!-- Input Nombre -->
-                
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Nombre de la carrera</mat-label>
-                        <input 
-                            type="text" 
-                            matInput 
-                            formControlName="name"
-                            placeholder="Ex. Computación">
-                        <mat-error *ngIf="campoNoValido('name')">
-                          El campo de nombre es <strong>obligatorio</strong>
-                        </mat-error>
-                    </mat-form-field>
-
-                    <!-- Input número de ciclos -->
-                    
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Número de ciclos</mat-label>
-                        <input 
-                            type="number" 
-                            matInput 
-                            formControlName="duration"
-                            placeholder="Ex. 1"
-                            min="1">
-                        <mat-error *ngIf="campoNoValido('duration')">
-                          El número de ciclos debe ser mínimo <strong>1</strong>
-                        </mat-error>
-                    </mat-form-field>
-
-                    <!-- Input de área  -->
-                    
-                    <mat-form-field>
-                        <mat-label>Área</mat-label>
-                        <mat-select
-                            formControlName="area">
+        </tr>
         
-                            <mat-option *ngFor="let area of areas" [value]="area">
-                                {{ area.name }}
-                            </mat-option>
-            
-                        </mat-select>
-                        <mat-error *ngIf="campoNoValido('area')">
-                            El campo de área es <strong>obligatorio</strong>
-                        </mat-error>
-                    </mat-form-field>
-                            
-                </form>
-
-            </div>
-
-            <div class="modal-footer">
-                <button 
-                    pButton 
-                    (click)="closeModal()" 
-                    label="Cancelar" 
-                    icon="pi pi-times" 
-                    iconPos="left" 
-                    class="p-button-raised boton-cancelar">
-                </button>
-
-                <button 
-                    pButton 
-                    (click)="actualizarCarrera()" 
-                    [disabled]="disabled"
-                    label="Actualizar" 
-                    icon="pi pi-check" 
-                    iconPos="right" 
-                    class="p-button-raised">
-                </button>
+    </ng-template>
+    <ng-template pTemplate="body" let-carrera>
+        <tr>
+            <td style="width: 300px">
+                {{carrera.name}}
+            </td>
+            <td style="width: 300px">
+                {{carrera.area.name}}
+            </td>
+            <td style="width: 300px">
                 
-            </div>
-        </ng-template>
-
-        <!-- Tabla header -->
-        <ng-template pTemplate="caption">
-            <div class="tabla-header">
-                <!-- Agregar Carrera -->
-                <button 
-                    pButton
-                    icon="pi pi-plus-circle" 
-                    iconPos="right"
-                    type="button" 
-                    class="p-button-raised" 
-                    label="Agregar Carrera"
-                    (click)="openModal()">
-                </button>
-
-                <!-- Buscador -->
-                <span class="p-input-icon-left p-ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input 
-                        class="p-inputtext p-component"
-                        pInputText 
-                        type="text" 
-                        (input)="applyFilterGlobal($event, 'contains')" 
-                        placeholder="Buscar carrera" />
-                </span>
-            </div>
-        </ng-template>
-
-
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="name" style="width: 300px">
-                    <div>
-                        Nombre
-                        <p-sortIcon field="name"></p-sortIcon>
-                    </div>
-                </th>
-                <th pSortableColumn="area.name" style="width: 300px">
-                    <div>
-                        Área
-                        <p-sortIcon field="area.name"></p-sortIcon>
-                    </div>
-                </th>
-                <th pSortableColumn="duration" style="width: 300px">
-                    <div>
-                        Número de ciclos
-                        <p-sortIcon field="duration"></p-sortIcon>
-                    </div>
-                </th>
-                <th style="width: 300px">Acciones</th>
-                
-            </tr>
+                {{carrera.duration}}
+            </td>
             
-        </ng-template>
-        <ng-template pTemplate="body" let-carrera>
-            <tr>
-                <td style="width: 300px">
-                    {{carrera.name}}
-                </td>
-                <td style="width: 300px">
-                    {{carrera.area.name}}
-                </td>
-                <td style="width: 300px">
+            <td style="width: 300px">
+
+                <div class="acciones">
+                    <!-- Botón de editar -->
+                    <button 
+                        pButton 
+                        icon="pi pi-pencil" 
+                        iconPos="right"
+                        type="button" 
+                        (click)="obtenerCarrera(carrera.id)"
+                        class="p-button-raised p-button-rounded">
+                    </button>
+
+                    <!-- Botón de eliminar -->
+                    <button 
+                        pButton 
+                        icon="pi pi-trash" 
+                        iconPos="right"
+                        type="button" 
+                        (click)="eliminarCarrera(carrera.id)"
+                        class="p-button-raised p-button-rounded p-button-danger">
+                    </button>
+                </div> 
+            </td>
+            
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td class="sin-carreras" colspan="5">Ninguna carrera encontrada.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!-- Modal para crear carrera -->
+ 
+<ng-template #modalCrear>
+    <div class="modal-header">
+    <h4 class="modal-title pull-left">Agregar Carrera</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form 
+        [formGroup]="miFormulario" 
+        #formulario
+        #form="ngForm"
+        autocomplete="off" >
+
+            <!-- Input Nombre -->
+        
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Nombre de la carrera</mat-label>
+                <input 
+                    type="text" 
+                    matInput 
+                    formControlName="name"
+                    placeholder="Ex. Computación">
+                <mat-error *ngIf="campoNoValido('name')">
+                  El campo de nombre es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+
+        
+            <!-- Input número de ciclos -->
+            
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Número de ciclos</mat-label>
+                <input 
+                    type="number" 
+                    matInput 
+                    formControlName="duration"
+                    placeholder="Ex. 1"
+                    min="1">
+                <mat-error *ngIf="campoNoValido('duration')">
+                  El número de ciclos debe ser mínimo <strong>1</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input de área  -->
+            
+            <mat-form-field>
+                <mat-label>Área</mat-label>
+                <mat-select 
+                    formControlName="area">
                     
-                    {{carrera.duration}}
-                </td>
-                
-                <td style="width: 300px">
+                    <mat-option *ngFor="let area of areas" [value]="area">
+                        {{ area.name }}
+                    </mat-option>
+    
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('area')">
+                    El campo de área es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+                    
+        </form>
 
-                    <div class="acciones">
-                        <!-- Botón de editar -->
-                        <button 
-                            pButton 
-                            icon="pi pi-pencil" 
-                            iconPos="right"
-                            type="button" 
-                            (click)="obtenerCarrera(carrera.id)"
-                            class="p-button-raised p-button-rounded">
-                        </button>
+    </div>
 
-                        <!-- Botón de eliminar -->
-                        <button 
-                            pButton 
-                            icon="pi pi-trash" 
-                            iconPos="right"
-                            type="button" 
-                            (click)="eliminarCarrera(carrera.id)"
-                            class="p-button-raised p-button-rounded p-button-danger">
-                        </button>
-                    </div> 
-                </td>
-                
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td class="sin-carreras" colspan="5">Ninguna carrera encontrada.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+    <div class="modal-footer">
+        <button 
+            pButton 
+            (click)="closeModal()" 
+            label="Cancelar" 
+            icon="pi pi-times" 
+            iconPos="left" 
+            class="p-button-raised boton-cancelar">
+        </button>
 
+        <button 
+            pButton 
+            (click)="agregarCarrera()" 
+            label="Guardar" 
+            [disabled]="disabled"
+            icon="pi pi-check" 
+            iconPos="right" 
+            class="p-button-raised">
+        </button>
+        
+    </div>
+</ng-template>
+
+<!-- Modal para editar carrera -->
+
+<ng-template #modalEditar>
+    <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar Carrera</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form 
+        [formGroup]="miFormulario" 
+        #formulario
+        #form="ngForm"
+        autocomplete="off" >
+
+            <!-- Input Nombre -->
+        
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Nombre de la carrera</mat-label>
+                <input 
+                    type="text" 
+                    matInput 
+                    formControlName="name"
+                    placeholder="Ex. Computación">
+                <mat-error *ngIf="campoNoValido('name')">
+                  El campo de nombre es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input número de ciclos -->
+            
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Número de ciclos</mat-label>
+                <input 
+                    type="number" 
+                    matInput 
+                    formControlName="duration"
+                    placeholder="Ex. 1"
+                    min="1">
+                <mat-error *ngIf="campoNoValido('duration')">
+                  El número de ciclos debe ser mínimo <strong>1</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Input de área  -->
+            
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Área</mat-label>
+                <mat-select formControlName="area" [compareWith]="compareObjects"> 
+
+                    <mat-option *ngFor="let area of areas" [value]="area">
+                        {{ area.name }}
+                    </mat-option>
+    
+                </mat-select>
+                <mat-error *ngIf="campoNoValido('area')">
+                    El campo de área es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+                    
+        </form>
+
+    </div>
+
+    <div class="modal-footer">
+        <button 
+            pButton 
+            (click)="closeModal()" 
+            label="Cancelar" 
+            icon="pi pi-times" 
+            iconPos="left" 
+            class="p-button-raised boton-cancelar">
+        </button>
+
+        <button 
+            pButton 
+            (click)="actualizarCarrera()" 
+            [disabled]="disabled"
+            label="Actualizar" 
+            icon="pi pi-check" 
+            iconPos="right" 
+            class="p-button-raised">
+        </button>
+        
+    </div>
+</ng-template>
     

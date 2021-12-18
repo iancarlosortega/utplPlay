@@ -17,151 +17,6 @@
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} materias"
     [globalFilterFields]="['name']">
 
-    <!-- Modal para crear materia -->
-
-    <ng-template #modalCrear>
-        <div class="modal-header">
-        <h4 class="modal-title pull-left">Agregar Materia</h4>
-        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-            <span aria-hidden="true" class="visually-hidden">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            <form 
-                [formGroup]="miFormulario" 
-                autocomplete="off">
-
-                <!-- Input Nombre -->
-            
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Nombre de la materia</mat-label>
-                    <input 
-                        type="text" 
-                        matInput 
-                        formControlName="name"
-                        placeholder="Ex. Física">
-                    <mat-error *ngIf="campoNoValido('name')">
-                        El campo de nombre es <strong>obligatorio</strong>
-                    </mat-error>
-                </mat-form-field>
-            
-            
-                <!-- Input carreras -->
-
-                <p-multiSelect 
-                    [options]="carreras" 
-                    formControlName="careers" 
-                    defaultLabel="Selecione las carreras"
-                    optionLabel="name"
-                    emptyFilterMessage="Ninguna carrera encontrada"
-                    [style]="{'width': '100%', 'margin-top': '0.5rem'}"
-                    display="chip">
-                </p-multiSelect>
-                <small 
-                    *ngIf="campoNoValido('careers')" 
-                    class="text text-danger">
-                    Seleccion al menos <strong>1</strong> carrera
-                </small>
-                        
-            </form>
-
-        </div>
-
-        <div class="modal-footer">
-            <button 
-                pButton 
-                (click)="closeModal()" 
-                label="Cancelar" 
-                icon="pi pi-times" 
-                iconPos="left" 
-                class="p-button-raised boton-cancelar">
-            </button>
-
-            <button 
-                pButton 
-                (click)="agregarMateria()" 
-                label="Guardar" 
-                [disabled]="disabled"
-                icon="pi pi-check" 
-                iconPos="right" 
-                class="p-button-raised">
-            </button>
-            
-        </div>
-    </ng-template>
-
-    <!-- Modal para editar materia -->
-
-    <ng-template #modalEditar>
-        <div class="modal-header">
-        <h4 class="modal-title pull-left">Editar Materia</h4>
-        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-            <span aria-hidden="true" class="visually-hidden">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            <form 
-                [formGroup]="miFormulario" 
-                autocomplete="off">
-
-                <!-- Input Nombre -->
-            
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Nombre de la materia</mat-label>
-                    <input 
-                        type="text" 
-                        matInput 
-                        formControlName="name"
-                        placeholder="Ex. Física">
-                    <mat-error *ngIf="campoNoValido('name')">
-                      El campo de nombre es <strong>obligatorio</strong>
-                    </mat-error>
-                </mat-form-field>            
-            
-                <!-- Input carreras -->
-
-                <p-multiSelect 
-                    [options]="carreras" 
-                    formControlName="careers" 
-                    defaultLabel="Selecione las carreras"
-                    optionLabel="name"
-                    emptyFilterMessage="Ninguna carrera encontrada"
-                    [style]="{'width': '100%', 'margin-top': '0.5rem'}"
-                    display="chip">
-                </p-multiSelect>
-                <small 
-                    *ngIf="campoNoValido('careers')" 
-                    class="text text-danger">
-                    Seleccion al menos <strong>1</strong> carrera
-                </small>
-                        
-            </form>
-
-        </div>
-
-        <div class="modal-footer">
-            <button 
-                pButton 
-                (click)="closeModal()" 
-                label="Cancelar" 
-                icon="pi pi-times" 
-                iconPos="left" 
-                class="p-button-raised boton-cancelar">
-            </button>
-
-            <button 
-                pButton 
-                (click)="actualizarMateria()" 
-                [disabled]="disabled"
-                label="Actualizar" 
-                icon="pi pi-check" 
-                iconPos="right" 
-                class="p-button-raised">
-            </button>
-            
-        </div>
-    </ng-template>
-
     <!-- Tabla header -->
     <ng-template pTemplate="caption">
         <div class="tabla-header">
@@ -251,4 +106,149 @@
         </tr>
     </ng-template>
 </p-table>
+
+<!-- Modal para crear materia -->
+
+<ng-template #modalCrear>
+    <div class="modal-header">
+    <h4 class="modal-title pull-left">Agregar Materia</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form 
+            [formGroup]="miFormulario" 
+            autocomplete="off">
+
+            <!-- Input Nombre -->
+        
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Nombre de la materia</mat-label>
+                <input 
+                    type="text" 
+                    matInput 
+                    formControlName="name"
+                    placeholder="Ex. Física">
+                <mat-error *ngIf="campoNoValido('name')">
+                    El campo de nombre es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>
+        
+        
+            <!-- Input carreras -->
+
+            <p-multiSelect 
+                [options]="carreras" 
+                formControlName="careers" 
+                defaultLabel="Selecione las carreras"
+                optionLabel="name"
+                emptyFilterMessage="Ninguna carrera encontrada"
+                [style]="{'width': '100%', 'margin-top': '0.5rem'}"
+                display="chip">
+            </p-multiSelect>
+            <small 
+                *ngIf="campoNoValido('careers')" 
+                class="text text-danger">
+                Seleccion al menos <strong>1</strong> carrera
+            </small>
+                    
+        </form>
+
+    </div>
+
+    <div class="modal-footer">
+        <button 
+            pButton 
+            (click)="closeModal()" 
+            label="Cancelar" 
+            icon="pi pi-times" 
+            iconPos="left" 
+            class="p-button-raised boton-cancelar">
+        </button>
+
+        <button 
+            pButton 
+            (click)="agregarMateria()" 
+            label="Guardar" 
+            [disabled]="disabled"
+            icon="pi pi-check" 
+            iconPos="right" 
+            class="p-button-raised">
+        </button>
+        
+    </div>
+</ng-template>
+
+<!-- Modal para editar materia -->
+
+<ng-template #modalEditar>
+    <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar Materia</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form 
+            [formGroup]="miFormulario" 
+            autocomplete="off">
+
+            <!-- Input Nombre -->
+        
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Nombre de la materia</mat-label>
+                <input 
+                    type="text" 
+                    matInput 
+                    formControlName="name"
+                    placeholder="Ex. Física">
+                <mat-error *ngIf="campoNoValido('name')">
+                  El campo de nombre es <strong>obligatorio</strong>
+                </mat-error>
+            </mat-form-field>            
+        
+            <!-- Input carreras -->
+
+            <p-multiSelect 
+                [options]="carreras" 
+                formControlName="careers" 
+                defaultLabel="Selecione las carreras"
+                optionLabel="name"
+                emptyFilterMessage="Ninguna carrera encontrada"
+                [style]="{'width': '100%', 'margin-top': '0.5rem'}"
+                display="chip">
+            </p-multiSelect>
+            <small 
+                *ngIf="campoNoValido('careers')" 
+                class="text text-danger">
+                Seleccion al menos <strong>1</strong> carrera
+            </small>
+                    
+        </form>
+
+    </div>
+
+    <div class="modal-footer">
+        <button 
+            pButton 
+            (click)="closeModal()" 
+            label="Cancelar" 
+            icon="pi pi-times" 
+            iconPos="left" 
+            class="p-button-raised boton-cancelar">
+        </button>
+
+        <button 
+            pButton 
+            (click)="actualizarMateria()" 
+            [disabled]="disabled"
+            label="Actualizar" 
+            icon="pi pi-check" 
+            iconPos="right" 
+            class="p-button-raised">
+        </button>
+        
+    </div>
+</ng-template>
 

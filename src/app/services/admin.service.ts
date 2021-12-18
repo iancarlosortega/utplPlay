@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
 import { FileUpload } from '../admin/models/file-upload-model';
-import { Career, Course, Video } from '../interfaces/interfaces';
+import { Career, Course, User, Video } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,18 @@ export class AdminService {
 
   obtenerUsuarios() {
     return this.firestore.collection('users').get();
+  }
+
+  obtenerUsuarioPorId(id: string) {
+    const usuario = this.firestore.collection('users').doc(id);
+    return usuario.snapshotChanges()
+      .pipe(
+        map(a => {       
+          const data = a.payload.data() as User;
+            data.uid = a.payload.id;  
+            return data
+        })
+      )
   }
 
   // Carreras

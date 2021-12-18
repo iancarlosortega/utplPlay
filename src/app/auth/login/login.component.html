@@ -1,43 +1,66 @@
 <div class="login">
     <div class="formulario">
-        <form class="formulario-form" [formGroup]="miFormulario" (submit)="login()">
+        <form [formGroup]="miFormulario" (submit)="login()">
             <div class="logo">
                 <img src="./assets/logo.png" alt="">
             </div>
+
             <div class="campo">
-                <p class="label">Correo institucional:</p>
-                <input type="text" formControlName="email">
+                <input type="text" formControlName="email" placeholder="Correo electrónico">
                 <span 
                     class="text-error alert alert-danger" 
                     *ngIf="campoNoValido('email')"
-                    >El campo de nombres es  <b>obligatorio</b>
+                    >El correo electrónico es  <b>obligatorio</b>
                 </span>
             </div>
             <div class="campo">
-                <p class="label">Contraseña:</p>
-                <input type="password" formControlName="password">
+                <input type="password" formControlName="password" placeholder="Contraseña">
                 <span 
                     class="text-error alert alert-danger" 
                     *ngIf="campoNoValido('password')"
-                    >El campo de nombres es  <b>obligatorio</b>
+                    >La contraseña es  <b>obligatoria</b>
                 </span>
             </div>
 
             <div class="boton">
-                <button type="submit" mat-fab class="boton-submit">
+                <button type="submit" mat-button class="boton-submit">
+                    Iniciar Sesión
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button>
-                <!-- TODO: Activar botones de login de google y fb -->
-                <!-- <button (click)="loginGoogle()" class="boton-submit">
-                    <mat-icon>arrow_forward_ios</mat-icon>
-                    <p>Google</p>
-                </button> -->
+            </div>
+
+
+            <div class="separador">
+                <hr>
+                <div class="mid">
+                    <p>o</p>
+                </div>
+                <hr>
+            </div>
+
+
+            <div class="proveedores">
+
+                <div class="boton-oauth" (click)="loginMicrosoft()">
+                    <img src="/assets/auth/login/google.png" alt="Google">
+                    <p>Continuar con Google</p>
+                </div>
+                <div class="boton-oauth">
+                    <img src="/assets/auth/login/facebook.png" alt="Facebook">
+                    <p>Continuar con Facebook</p>
+                </div>
+                <div class="boton-oauth" (click)="loginMicrosoft()">
+                    <img src="/assets/auth/login/microsoft.png" alt="Microsoft">
+                    <p>Continuar con Microsoft</p>
+                </div>
+
             </div>
 
             <div class="formulario-footer">
-                <p>¿No tienes una cuenta aún?</p>
-                <p routerLink="../register" class="register">Regístrate</p>
+                <p>¿No tienes una cuenta?</p>
+                <p routerLink="../register" class="register">Crear Cuenta</p>
             </div>
+
         </form>
     </div>
 </div>

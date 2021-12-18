@@ -14,7 +14,7 @@
         [paginator]="true" 
         [scrollable]="scrollable" scrollDirection="both"
         currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} usuarios"
-        [globalFilterFields]="['name', 'last_name', 'email']">
+        [globalFilterFields]="['name', 'email', 'country', 'city', 'identification_card']">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -36,20 +36,32 @@
                         <p-sortIcon field="name"></p-sortIcon>
                     </div>
                 </th>
-                <th pSortableColumn="last_name" style="width: 200px">
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Apellidos
-                        <p-sortIcon field="last_name"></p-sortIcon>
-                    </div>
-                </th>
-                <th pSortableColumn="email" style="width: 250px">
+                <th pSortableColumn="email" style="width: 200px">
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Correo electronico
                         <p-sortIcon field="email"></p-sortIcon>
                     </div>
                 </th>
-                <th style="width: 150px">Hacer Admin</th>
-                <th style="width: 150px">Hacer Editor</th>
+                <th pSortableColumn="country" style="width: 100px">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        País
+                        <p-sortIcon field="country"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="city" style="width: 100px">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Ciudad
+                        <p-sortIcon field="city"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="identification_card" style="width: 100px">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        Cédula
+                        <p-sortIcon field="identification_card"></p-sortIcon>
+                    </div>
+                </th>
+                <th style="width: 100px">Hacer Admin</th>
+                <th style="width: 100px">Hacer Editor</th>
                 
             </tr>
             
@@ -59,21 +71,27 @@
                 <td style="width: 200px">
                     {{usuario.name}}
                 </td>
-                <td style="width: 200px">                   
-                    {{usuario.last_name}}
-                </td>
-                
-                <td style="width: 250px">
+                <td style="width: 200px">
                     {{usuario.email}}
                 </td>
-                <td style="width: 150px">
+                <td style="width: 100px">                   
+                    {{usuario.country}}
+                </td>
+                <td style="width: 100px">                   
+                    {{usuario.city}}
+                </td>
+                <td style="width: 100px">                   
+                    {{usuario.identification_card}}
+                </td>
+                
+                <td style="width: 100px">
                     <mat-checkbox 
                         (change)="prueba(usuario.email)" 
                         [value]="usuario.email" 
                         [checked]="usuario.email == 'juan@juan.com'">
                     </mat-checkbox>
                 </td>
-                <td style="width: 150px">
+                <td style="width: 100px">
                     <mat-checkbox 
                         (change)="prueba(usuario.email)" 
                         [value]="usuario.email" 
@@ -85,7 +103,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td class="sin-usuarios" colspan="5">Ningún usuario encontrado.</td>
+                <td class="sin-usuarios" colspan="9">Ningún usuario encontrado.</td>
             </tr>
         </ng-template>
     </p-table>

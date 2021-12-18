@@ -24,6 +24,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   id?: string;
   carreras: Career[] = [];
   carrera!: Career;
+  selectedValue: string = 'Holaaaa';
   areas: Area[] = [
 
     { name: 'Ciencias económicas y empresariales', value: 'economicas' },
@@ -33,14 +34,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
     { name: 'Ciencias exactas y naturales', value: 'exactas' },
     { name: 'Ciencias sociales, educación y humanidades', value: 'sociales' },
 
-  ]
-  
-  // areas: string[] = ['Ciencias economicas y empresariales',
-  //                   'Ciencias juridicas y politicas',
-  //                   'Ciencias de la salud',
-  //                   'Ingenierias y arquitectura',
-  //                   'Ciencias exactas y naturales',
-  //                   'Ciencias sociales, educacion y humanidades']
+  ];
   loading: boolean = true;
   disabled: boolean = false;
   scrollable: boolean = true;
@@ -64,6 +58,10 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
     this.modalRef?.hide();
     this.miFormulario.reset();
     this.formulario?.resetForm();
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1?.name === o2?.name && o1?.id === o2?.id;
   }
 
   applyFilterGlobal($event: any, stringVal: string) {
@@ -136,11 +134,12 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   obtenerCarrera(id: string) {
     this.openModalEditar();
     this.adminService.obtenerCarreraPorId(id).subscribe( (data: Career) => {
+      console.log(data);
       this.id = data.id;
       this.miFormulario.setValue({
         name: data.name,
         duration: data.duration,
-        area: data.area,
+        area: data.area
       });      
     })
   }

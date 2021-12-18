@@ -7,11 +7,13 @@ import { MaterialModule } from '../material/material.module';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { NuevoUsuarioComponent } from './nuevo-usuario/nuevo-usuario.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NuevoUsuarioComponent
   ],
   imports: [
     CommonModule,

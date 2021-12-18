@@ -4,8 +4,7 @@ export interface User {
     last_name?: string;
     email: string;
     password?: string;
-    //TODO: Agregar foto de perfil
-    // foto_perfil?: string;
+    photo_url?: string;
     education_level?: string;
     institution?: string;
     country?: string;

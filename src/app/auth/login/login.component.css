@@ -3,12 +3,18 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--separacion) 0;
+}
+
+@media (min-width: 768px){
+    .login {
+        height: 100vh;
+    }
 }
 
 @media (min-width : 1024px) {
@@ -29,17 +35,10 @@
     }
 }
 
-.formulario-form {
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
 .logo {
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
+    margin-bottom: 4rem;
 }
 
 .logo img{
@@ -50,6 +49,32 @@
     .logo img{
         width: 70%;
     }
+}
+
+.separador {
+    display: grid;
+    grid-template-columns: 45% 10% 45%;
+    text-align: center;
+}
+
+.mid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mid p {
+    margin: 0;
+    color: #47474793;
+    font-weight: 300;
+}
+
+.campo, .proveedores {
+    max-width: 500px;
+}
+
+.proveedores {
+    margin: 2rem 0;
 }
 
 .campo input {
@@ -66,7 +91,7 @@
 }
 
 .label{
-    color: var(--primario);
+    color: var(--blanco);
     font-weight: 400;
     margin: 0;
 }
@@ -86,21 +111,52 @@
     font-weight: bold;
 }
 
-.formulario-footer {
-    display: block;
-    color: var(--blanco);
-    font-weight: bold;
+.boton-oauth {
+    margin: 1rem 0;
+    height: 40px;
+    border-radius: 7px;
+    border: 1px solid #d0d0d0;
+    background-color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    font-size: 15px;
+    color: #6a6a6a;
+    padding-left: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (min-width : 400px) {
+.boton-oauth p {
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.formulario-footer {
+    text-align: center;
+    display: block;
+    color: var(--blanco);
+}
+
+@media (min-width : 768px) {
     .formulario-footer {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 }
 
 .register {
     cursor: pointer;
+    color: #161616b0;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.text-error {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    padding: 0.5rem;
 }
 
 
