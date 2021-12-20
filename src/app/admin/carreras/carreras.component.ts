@@ -8,6 +8,7 @@ import { Area, Career } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { FileUpload } from '../models/file-upload-model';
 
 @Component({
   selector: 'app-carreras',
@@ -20,11 +21,24 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   @ViewChild( FormGroupDirective ) formulario!: FormGroupDirective;
   @ViewChild ('modalCrear') modalCrear!: TemplateRef<any>;
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
-
-  id?: string;
   carreras: Career[] = [];
-  carrera!: Career;
-  selectedValue: string = 'Holaaaa';
+  carrera: Career = {
+    id: '',
+    name: '',
+    duration: 0,
+    area: {
+      name: '',
+      value: ''
+    },
+    views: 0
+  };
+  selectedFiles?: any;
+  currentFileUpload?: FileUpload;
+  url: any;
+  format: string = '';
+  tipo: string = 'agregar';
+  percentage = 0;
+  visible = true;
   areas: Area[] = [
 
     { name: 'Ciencias económicas y empresariales', value: 'economicas' },
@@ -44,7 +58,16 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
     name: [ '', [ Validators.required, Validators.minLength(3) ] ],
     duration: [ '', [ Validators.required, Validators.min(1) ] ],
     area: [ '', [ Validators.required ] ],
+    file: [ '' ],
   })
+
+  constructor( private fb: FormBuilder ,
+    private adminService: AdminService, 
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private observer: BreakpointObserver,
+    public  dialog: MatDialog
+) { }
  
   openModal() {
     this.modalRef = this.modalService.show(this.modalCrear);
@@ -72,19 +95,39 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
     return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
   }
 
-  constructor( private fb: FormBuilder ,
-               private adminService: AdminService, 
-               private modalService: BsModalService,
-               private toastr: ToastrService,
-               private observer: BreakpointObserver,
-               public  dialog: MatDialog
-  ) { }
+  selectFile(event: any): void {
+
+    const file = event.target.files && event.target.files[0];
+
+    //Previsualizacion de la imagen
+    if( file ) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      if(file.type.indexOf('image')> -1){
+        this.selectedFiles = event.target.files;
+        this.format = 'image';
+        reader.onload = (event) => {
+          this.url = (<FileReader>event.target).result;
+        }
+      } else {
+        this.selectedFiles = null;
+        this.url = null;
+        this.toastr.error('Por favor, solo subir archivos de formato imagen', 'Error')
+      }
+      
+    } else {
+      this.url = null;
+      this.selectedFiles = null;
+    }
+  }
 
   ngOnInit(): void {
 
     this.modalService.onHidden.subscribe( (_)=> {
       this.miFormulario.reset();
       this.formulario?.resetForm();
+      this.url = null;
     })
 
     this.adminService.obtenerCarreras().subscribe( carreras => {
@@ -113,62 +156,126 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.carrera = this.miFormulario.value;
+    
+    if( this.carrera.id ){
+      //Actualizar
+      console.log('Editar');
+      this.tipo = 'editar';
+      this.carrera = {...this.carrera, ...this.miFormulario.value };
 
-    this.disabled = true;
-    this.adminService.agregarCarrera(this.carrera)
-      .then( res => {
-        this.modalRef?.hide();
-        this.disabled = false;
-        this.miFormulario.reset();
-        this.formulario?.resetForm();
-        this.toastr.success(`La carrera ${this.carrera.name} fue registrada con éxito!`, 'Carrera Registrada');
-      })
-      .catch( err => {
-        this.toastr.error(`${err}`, 'Error al agregar la carrerar');
-        console.log('Error al agregar la carrera', err);
-      })
+      if (this.selectedFiles) {
+
+        this.adminService.eliminarCarreraStorage(this.carrera.photo_filename!)
+        
+        let filename: string = this.miFormulario.controls['file'].value;
+        filename = filename.split('\\').slice(-1)[0];
+        this.carrera.photo_filename = filename;
+        delete this.carrera.file;
+        
+        
+        const file: File | null = this.selectedFiles.item(0);
+        this.selectedFiles = undefined;
+  
+        if (file) {
+          this.disabled = true;
+          this.disableForm();
+          this.currentFileUpload = new FileUpload(file);
+          this.adminService.agregarCarrera(this.currentFileUpload, this.carrera, this.tipo).subscribe( percentage => {
+            this.percentage = Math.round(percentage ? percentage : 0);
+            if( this.percentage == 100 ){
+              setTimeout(() => {
+                this.toastr.info('La carrera fue actualizada con éxito!', 'Carrera Actualizada');
+                this.enableForm();
+                this.url = null;
+                this.visible = false;
+                this.percentage = 0;
+                this.disabled = false;
+                this.closeModal();
+              }, 500);
+            }
+          });
+        } else {
+          this.toastr.error('Por favor, seleccione una imagen para subir', 'Error')
+        }
+  
+      } else {
+
+        const { photo_filename, file, ...carreraData } = this.carrera; 
+
+        this.adminService.actualizarCarrera(carreraData)
+          .then( ( _ ) => {
+            this.closeModal();
+            this.toastr.info('La carrera fue actualizada con éxito', 'Carrera Actualizada')
+          })
+          .catch( err => {
+            console.log(err);
+            this.toastr.error(`err`, 'Error');
+          })
+      }
+
+
+    } else {
+
+      //Crear
+      
+      this.carrera = this.miFormulario.value;
+
+      if (this.selectedFiles) {
+
+        let filename: string = this.miFormulario.controls['file'].value;
+        filename = filename.split('\\').slice(-1)[0];
+        this.carrera.photo_filename = filename;
+        delete this.carrera.file;
+
+        const file: File | null = this.selectedFiles.item(0);
+        this.selectedFiles = undefined;
+  
+        if (file) {
+          this.disabled = true;
+          this.disableForm();
+          this.currentFileUpload = new FileUpload(file);
+          this.adminService.agregarCarrera(this.currentFileUpload, this.carrera, this.tipo).subscribe( percentage => {
+            this.percentage = Math.round(percentage ? percentage : 0);
+            if( this.percentage == 100 ){
+              setTimeout(() => {
+                this.toastr.success(`La carrera ${this.carrera.name} fue registrada con éxito!`, 'Carrera Registrada');
+                this.enableForm();
+                this.miFormulario.reset();
+                this.url = null;
+                this.visible = false;
+                this.percentage = 0;
+                this.disabled = false
+              }, 500);
+            }
+          });
+        } else {
+          this.toastr.error('Error', 'Error')
+        }
+  
+      } else {
+        this.toastr.error('Por favor, seleccione una imagen para subir', 'Error')
+      }
+
+    }
 
   }
 
   obtenerCarrera(id: string) {
     this.openModalEditar();
     this.adminService.obtenerCarreraPorId(id).subscribe( (data: Career) => {
-      console.log(data);
-      this.id = data.id;
+      this.carrera = data;
+      this.url = data.photo_url;
+      this.format = 'image';
       this.miFormulario.setValue({
         name: data.name,
         duration: data.duration,
-        area: data.area
+        area: data.area,
+        file: ''
       });      
     })
   }
 
-  actualizarCarrera() {
-
-    if( this.miFormulario.invalid ) {
-      this.miFormulario.markAllAsTouched();
-      return;
-    }
-
-    this.carrera = this.miFormulario.value;
-
-    this.disabled = true;
-    this.adminService.actualizarCarrera(this.id!, this.carrera )
-      .then( res => {
-        this.modalRef?.hide();
-        this.disabled = false;
-        this.miFormulario.reset();
-        this.formulario?.resetForm();
-        this.toastr.info(`La carrera ${this.carrera.name} fue actualizada con éxito`, 'Carrera actualizada!');
-      })
-      .catch( err => {
-        this.toastr.error(`${err}`, 'Error al actualizar la carrerar');
-        console.log('Error al actualizar la carrerar', err);
-      })
-  }
-
-  eliminarCarrera( id: string ) {
+  eliminarCarrera( carrera: Career ) {
     //Ventana modal para confirmar la eliminacion
     const dialog = this.dialog.open(EliminarComponent, {
       width: '400px'
@@ -176,10 +283,9 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
 
     dialog.afterClosed().subscribe( (result) => {
         if(result) {
-          this.adminService.eliminarCarrera(id)
+          this.adminService.eliminarCarrera(carrera)
           .then( res => {
-            console.log(res);
-            this.toastr.error('La carrera fue eliminada con éxito', 'Carrera eliminada!');
+            this.toastr.success('La carrera fue eliminada con éxito', 'Carrera eliminada!');
           })
           .catch( err => {
             this.toastr.error(`${err}`, 'Error al eliminar la carrerar');
@@ -190,6 +296,20 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
     )
 
     
+  }
+
+  enableForm(): void {
+    this.miFormulario.controls['name'].enable();
+    this.miFormulario.controls['duration'].enable();
+    this.miFormulario.controls['area'].enable();
+    this.miFormulario.controls['file'].enable();
+  }
+
+  disableForm(): void {
+    this.miFormulario.controls['name'].disable();
+    this.miFormulario.controls['duration'].disable();
+    this.miFormulario.controls['area'].disable();
+    this.miFormulario.controls['file'].disable();
   }
 
 }

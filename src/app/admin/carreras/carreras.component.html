@@ -47,43 +47,51 @@
 
     <ng-template pTemplate="header">
         <tr>
-            <th pSortableColumn="name" style="width: 300px">
+            <th pSortableColumn="name" style="width: 200px">
                 <div>
                     Nombre
                     <p-sortIcon field="name"></p-sortIcon>
                 </div>
             </th>
-            <th pSortableColumn="area.name" style="width: 300px">
+            <th style="width: 200px">
+                <div>
+                    Imagen
+                </div>
+            </th>
+            <th pSortableColumn="area.name" style="width: 200px">
                 <div>
                     Área
                     <p-sortIcon field="area.name"></p-sortIcon>
                 </div>
             </th>
-            <th pSortableColumn="duration" style="width: 300px">
+            <th pSortableColumn="duration" style="width: 200px">
                 <div>
                     Número de ciclos
                     <p-sortIcon field="duration"></p-sortIcon>
                 </div>
             </th>
-            <th style="width: 300px">Acciones</th>
+            <th style="width: 150px">Acciones</th>
             
         </tr>
         
     </ng-template>
     <ng-template pTemplate="body" let-carrera>
         <tr>
-            <td style="width: 300px">
+            <td style="width: 200px">
                 {{carrera.name}}
             </td>
-            <td style="width: 300px">
+            <td class="tabla-imagen" style="width: 200px">
+                <img [src]="carrera.photo_url" [alt]="carrera.name">
+            </td>
+            <td style="width: 200px">
                 {{carrera.area.name}}
             </td>
-            <td style="width: 300px">
+            <td style="width: 200px">
                 
                 {{carrera.duration}}
             </td>
             
-            <td style="width: 300px">
+            <td style="width: 150px">
 
                 <div class="acciones">
                     <!-- Botón de editar -->
@@ -102,7 +110,7 @@
                         icon="pi pi-trash" 
                         iconPos="right"
                         type="button" 
-                        (click)="eliminarCarrera(carrera.id)"
+                        (click)="eliminarCarrera(carrera)"
                         class="p-button-raised p-button-rounded p-button-danger">
                     </button>
                 </div> 
@@ -132,6 +140,63 @@
         #formulario
         #form="ngForm"
         autocomplete="off" >
+
+        <div class="foto-perfil">
+            <!-- Previsualizacion de la foto de carrera -->
+            <div class="imagen">
+
+                <img [src]="url" alt="Foto de carrera" *ngIf="format==='image' && url" >
+
+            </div>
+
+            <!-- Input File -->
+
+            <div class="custom-file">
+                <input 
+                    #inputFile
+                    type="file" 
+                    class="form-control"
+                    formControlName="file"
+                    accept="image/png, image/jpg, image/*"
+                    (change)="selectFile($event)">
+            </div>
+
+            
+
+            <!-- Barra de porcentaje -->
+            <div class="porcentaje" *ngIf="currentFileUpload && visible">
+                
+                <div class="alert alert-info loading">
+                    <p>Cargando imagen...</p>
+                    <p-progressSpinner 
+                        [style]="{width: '20px', height: '20px'}" 
+                        styleClass="custom-spinner" 
+                        strokeWidth="8"
+                        animationDuration=".5s">
+                    </p-progressSpinner>
+                </div>
+
+                <div class="progress mt-2">
+                    <div
+                        class="progress-bar progress-bar-striped"
+                        role="progressbar"
+                        attr.aria-valuenow="{{ percentage }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        [ngStyle]="{ width: percentage + '%' }"
+                        [ngClass]="{
+                            'bg-success': percentage > 70,
+                            'bg-info': percentage > 40 && percentage < 70,
+                            'bg-warning': percentage > 20 && percentage < 40,
+                            'bg-danger': percentage > 0 && percentage < 20
+                        }"
+                        >
+                        {{ percentage }}%
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
             <!-- Input Nombre -->
         
@@ -223,6 +288,63 @@
         #form="ngForm"
         autocomplete="off" >
 
+        <div class="foto-perfil">
+            <!-- Previsualizacion de la foto de carrera -->
+            <div class="imagen">
+
+                <img [src]="url" alt="Foto de carrera" *ngIf="format==='image' && url" >
+
+            </div>
+
+            <!-- Input File -->
+
+            <div class="custom-file">
+                <input 
+                    #inputFile
+                    type="file" 
+                    class="form-control"
+                    formControlName="file"
+                    accept="image/png, image/jpg, image/*"
+                    (change)="selectFile($event)">
+            </div>
+
+            
+
+            <!-- Barra de porcentaje -->
+            <div class="porcentaje" *ngIf="currentFileUpload && visible">
+                
+                <div class="alert alert-info loading">
+                    <p>Cargando imagen...</p>
+                    <p-progressSpinner 
+                        [style]="{width: '20px', height: '20px'}" 
+                        styleClass="custom-spinner" 
+                        strokeWidth="8"
+                        animationDuration=".5s">
+                    </p-progressSpinner>
+                </div>
+
+                <div class="progress mt-2">
+                    <div
+                        class="progress-bar progress-bar-striped"
+                        role="progressbar"
+                        attr.aria-valuenow="{{ percentage }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        [ngStyle]="{ width: percentage + '%' }"
+                        [ngClass]="{
+                            'bg-success': percentage > 70,
+                            'bg-info': percentage > 40 && percentage < 70,
+                            'bg-warning': percentage > 20 && percentage < 40,
+                            'bg-danger': percentage > 0 && percentage < 20
+                        }"
+                        >
+                        {{ percentage }}%
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
             <!-- Input Nombre -->
         
             <mat-form-field class="example-full-width" appearance="fill">
@@ -284,7 +406,7 @@
 
         <button 
             pButton 
-            (click)="actualizarCarrera()" 
+            (click)="agregarCarrera()" 
             [disabled]="disabled"
             label="Actualizar" 
             icon="pi pi-check" 

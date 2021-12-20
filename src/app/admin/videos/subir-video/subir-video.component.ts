@@ -47,6 +47,14 @@ export class SubirVideoComponent implements OnInit {
     file: [{ value: '', disabled: false }]
   })
 
+  constructor( private fb: FormBuilder,
+    private adminService: AdminService,
+    private toastr: ToastrService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+    
+) { }
+
   campoNoValido( campo: string) {
     return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
   }
@@ -54,14 +62,6 @@ export class SubirVideoComponent implements OnInit {
   compareObjects(o1: any, o2: any): boolean {
     return o1.name === o2.name && o1.id === o2.id;
   }
-
-  constructor( private fb: FormBuilder,
-               private adminService: AdminService,
-               private toastr: ToastrService,
-               private activatedRoute: ActivatedRoute,
-               private router: Router
-               
-    ) { }
 
   ngOnInit(): void {
 
@@ -114,6 +114,7 @@ export class SubirVideoComponent implements OnInit {
       
     } else {
       this.url = null;
+      this.selectedFiles = null;
     }
   }
 

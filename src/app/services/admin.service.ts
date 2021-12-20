@@ -13,6 +13,7 @@ export class AdminService {
 
   // Nombre de la carpeta donde se guardaran en el storage de firebase
   private basePath = '/videos';
+  private basePathCarreras = '/careers';
 
   constructor( private firestore: AngularFirestore,
                private storage: AngularFireStorage,
@@ -60,22 +61,59 @@ export class AdminService {
       .pipe(
         map(a => {       
           const data = a.payload.data() as Career;
-            data.id = a.payload.id;  
-            return data
+          data.id = a.payload.id;  
+          return data
         })
       )
   }
 
-  agregarCarrera( carrera: Career ) {
+  agregarCarrera(fileUpload: FileUpload, carreraData: Career, tipo: string) {
+
+    const filePath = `${this.basePathCarreras}/${fileUpload.file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, fileUpload.file);
+  
+    //Esperar a obtener el link de descarga del archivo subido
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe(downloadURL => {
+          carreraData.photo_url = downloadURL;
+
+          if( tipo === 'editar' ){
+            this.actualizarCarrera(carreraData);
+          } else {
+            this._agregarCarrera(carreraData);
+          }
+
+        });
+      })
+    ).subscribe();
+  
+    return uploadTask.percentageChanges();
+  }
+
+  private _agregarCarrera( carrera: Career ) {
     return this.firestore.collection('careers').add(carrera);
   }
 
-  actualizarCarrera(id: string, data: Career ) {
-    return this.firestore.collection('careers').doc(id).update(data);
+  actualizarCarrera(carrera: Career) {
+    return this.firestore.collection('careers').doc(carrera.id).update(carrera);
   }
 
-  eliminarCarrera( id: string ) {
-    return this.firestore.collection('careers').doc(id).delete();
+  eliminarCarrera(carrera: Career) {
+    return this.eliminarCarreraFirestore(carrera.id)
+      .then(() => {
+        this.eliminarCarreraStorage(carrera.photo_filename!);
+      })
+      .catch(error => console.log(error));
+  }
+
+  private eliminarCarreraFirestore(id: string): Promise<void> {
+    return this.firestore.collection('careers').doc(id).delete()
+  }
+
+  eliminarCarreraStorage(name: string) {
+    this.storage.ref(this.basePathCarreras).child(name).delete();
   }
 
   // Materias

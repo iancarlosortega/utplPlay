@@ -106,6 +106,7 @@ export class EditarPerfilComponent implements OnInit {
       
     } else {
       this.url = null;
+      this.selectedFiles = null;
     }
   }
 

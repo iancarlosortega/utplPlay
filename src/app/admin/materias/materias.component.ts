@@ -170,7 +170,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
           this.adminService.eliminarMateria(id)
           .then( res => {
             console.log(res);
-            this.toastr.error('La materia fue eliminada con éxito', 'Materia eliminada!');
+            this.toastr.success('La materia fue eliminada con éxito', 'Materia eliminada!');
           })
           .catch( err => {
             this.toastr.error(`${err}`, 'Error al eliminar la materia');

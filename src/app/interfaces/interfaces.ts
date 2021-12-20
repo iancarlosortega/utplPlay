@@ -17,7 +17,7 @@ export interface User {
 
 export interface Area {
     name: string,
-    value: string
+    value: string,
 }
 
 export interface Career {
@@ -26,16 +26,15 @@ export interface Career {
     duration: number;
     area: Area;
     views: number;
-    //TODO: Agregar foto de carrera
-    // img: string;
+    file?: string;
+    photo_url?: string;
+    photo_filename?: string;
 }
 
 export interface Course {
     id: string;
     name: string;
     careers?: Career[];
-    //TODO: Agregar foto de materia
-    // img: string;
 }
 
 export interface Video {
