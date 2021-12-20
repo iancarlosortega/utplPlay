@@ -23,16 +23,6 @@
                     </div>
 
                     <div class="campo">
-                        <p class="label">Apellidos:</p>
-                        <input formControlName="last_name" type="text">
-                        <span 
-                            class="text-error alert alert-danger" 
-                            *ngIf="campoNoValido('last_name')"
-                            >El campo de apellidos es  <b>obligatorio</b>
-                        </span>
-                    </div>
-
-                    <div class="campo">
                         <p class="label">Correo institucional:</p>
                         <input formControlName="email" type="text">
                         <span 
@@ -92,7 +82,7 @@
                     </div>
     
                     <div class="custom-select">
-                        <p class="label">Genero:</p>
+                        <p class="label">Género:</p>
                         <select formControlName="genre">
                             <option value="hombre">Hombre</option>
                             <option value="mujer">Mujer</option>
@@ -105,7 +95,7 @@
                     </div>
 
                     <div class="campo">
-                        <p class="label">Cedula:</p>
+                        <p class="label">Cédula:</p>
                         <input formControlName="identification_card" type="text">
                         <span 
                             class="text-error alert alert-danger" 

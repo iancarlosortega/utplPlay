@@ -5,6 +5,8 @@ export interface User {
     email: string;
     password?: string;
     photo_url?: string;
+    photo_filename?: string;
+    file?: string;
     education_level?: string;
     institution?: string;
     country?: string;

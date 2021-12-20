@@ -23,7 +23,6 @@ export class RegisterComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
     name: [ '', Validators.required ],
-    last_name: [ '', Validators.required ],
     email: [ '', [Validators.required, Validators.email] ],
     password: ['', [Validators.required, Validators.minLength(6)] ],
     password2: ['', [Validators.required] ],
@@ -75,13 +74,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const name = `${this.miFormulario.controls['name'].value} ${this.miFormulario.controls['last_name'].value}`
-
     this.usuario = this.miFormulario.value;
-
-    delete this.usuario.name;
-    delete this.usuario.last_name;
-    this.usuario.name = name;
 
     this.authService.register(this.usuario)
       .then( (userCredential: any)  => {

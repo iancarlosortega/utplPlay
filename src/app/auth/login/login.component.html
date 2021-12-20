@@ -41,7 +41,7 @@
 
             <div class="proveedores">
 
-                <div class="boton-oauth" (click)="loginMicrosoft()">
+                <div class="boton-oauth" (click)="loginGoogle()">
                     <img src="/assets/auth/login/google.png" alt="Google">
                     <p>Continuar con Google</p>
                 </div>
@@ -57,8 +57,10 @@
             </div>
 
             <div class="formulario-footer">
-                <p>¿No tienes una cuenta?</p>
-                <p routerLink="../register" class="register">Crear Cuenta</p>
+                <div class="pregunta">
+                    <p>¿No tienes una cuenta?</p>
+                </div>
+                <button routerLink="../register" class="register">Crear Cuenta</button>
             </div>
 
         </form>

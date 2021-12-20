@@ -59,7 +59,7 @@ export class ListadoVideosComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.observer.observe(['(min-width: 1140px)']).subscribe((res) => {
+      this.observer.observe(['(min-width: 1500px)']).subscribe((res) => {
         if (res.matches) {
           this.scrollable = false;
         } else {

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { VideosRoutingModule } from './videos-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
@@ -30,7 +31,8 @@ import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.componen
     VideosRoutingModule,
     SharedModule,
     PrimeNGModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class VideosModule { }

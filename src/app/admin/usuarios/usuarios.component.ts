@@ -38,7 +38,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.observer.observe(['(min-width: 1140px)']).subscribe((res) => {
+      this.observer.observe(['(min-width: 1400px)']).subscribe((res) => {
         if (res.matches) {
           this.scrollable = false;
         } else {

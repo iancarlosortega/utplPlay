@@ -7,11 +7,17 @@ import { Router } from '@angular/router';
 import { User } from '../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 import firebase from '@firebase/app-compat';
+import { FileUpload } from '../admin/models/file-upload-model';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  // Nombre de la carpeta donde se guardaran en el storage de firebase
+  private basePath = '/photos';
 
   //TODO: Cambiar las reglas de leer, escribir del firestore a futuro en produccion.
 
@@ -19,7 +25,8 @@ export class AuthService {
                private firestore: AngularFirestore,
                private functions: AngularFireFunctions,
                private router: Router,
-               private http: HttpClient
+               private http: HttpClient,
+               private storage: AngularFireStorage,
   ) {}
 
   //TODO: Manejo de errores del firebase en el registro.
@@ -82,99 +89,31 @@ export class AuthService {
       })
   }
 
-  // AuthLogin(provider, path, dataProvider: any) {
-  //   return this.afAuth.auth
-  //     .signInWithPopup(provider)
-  //     .then((result) => {
-  //       this.ngZone.run(async () => {
-  //         this.userAuth = result.additionalUserInfo.profile as User, getCircularReplacer();
-          
-  //         if (result.additionalUserInfo.isNewUser === false) {
-  //           const userCollection = await this.userService.getTeacher(result.user.uid)
-  //           userCollection.subscribe(user => {
-  //             this.userAuth = user.data() as User, getCircularReplacer();
-  //             this.userService.getTeacherProfile(this.userAuth.mail).subscribe(userProfile => {
-  //               const profile = userProfile as UserProfile;
-  //               if (
-  //                 profile == undefined ||
-  //                 profile.area == undefined ||
-  //                 profile.section == undefined ||
-  //                 profile.department == undefined ||
-  //                 profile.ci == undefined
-  //               ) {
-  //                 this.getDataUserUTPL(this.userAuth.mail).then(data => {
-  //                   data.subscribe(user => {
-  //                     const userRRHH = user.result.items[0] as UserRRHH;
-  //                     this.userService.addUserProfile({
-  //                       ci: userRRHH.identificacion,
-  //                     })
-  //                   })
-  //                 })
-
-  //                 const dialogRef = this.dialog.open(UpdateProfileComponent, {
-  //                   width: '60vw',
-  //                   height: '60vh',
-  //                   data: this.userAuth,
-  //                 });
-
-  //               } else
-  //                 if (
-  //                   this.userAuth.role === "Teacher" ||
-  //                   this.userAuth.role === "Administrative" ||
-  //                   this.userAuth.role === "Review-project" ||
-  //                   this.userAuth.role === "Root"
-  //                 ) {
-  //                   if (path == 'sign-in') {
-  //                     return this.router.navigate(["portal"]);
-  //                   }
-  //                   if (path == 'portal') {
-  //                     return this.router.navigate(["portal"]);
-  //                   }
-  //                   if (path == 'tools') {
-  //                     return this.router.navigate(["portal"]);
-  //                   }
-  //                   if (path == 'postulate') {
-  //                     this.router.navigate(['/portal/innovation/postulate']);
-
-  //                   } if (path == 'survey') {
-  //                     window.location.reload();
-  //                   }
-  //                   if (path == 'training') {
-  //                     /* Swal.fire({
-  //                       title: '⚠️ Mantenimiento ⚠️ ',
-  //                       text: 'La plataforma se encuentra en mantenimiento, por favor intentar el día martes 6 de abril.',
-  //                       icon: 'error',
-  //                       confirmButtonText: 'Aceptar'
-  //                     }) */
-  //                     this.inscriptionCourse(this.userAuth.mail || this.userAuth.email, dataProvider)
-  //                   }
-
-  //                 }
-  //             })
-  //           })
-  //         } else if (result.additionalUserInfo.isNewUser === true) {
-  //           if (result.additionalUserInfo.profile["jobTitle"] === null) {
-  //             this.SetUserData(result, "Student");
-  //           } else if (
-  //             result.additionalUserInfo.profile["jobTitle"].includes("Docente") ||
-  //             result.additionalUserInfo.profile["jobTitle"].includes("DOCENTE")
-  //           ) {
-  //             this.SetUserData(result, "Teacher");
-  //           } else if (result.additionalUserInfo.profile["jobTitle"]) {
-  //             this.SetUserData(result, "Administrative");
-  //           }
-  //         }
-
-  //       });
-  //     })
-  // }
-
   async logout() {
     await this.afAuth.signOut();
   }
 
   agregarUsuario( usuario: User ) {
     return this.firestore.collection('users').doc( usuario.uid ).set( usuario );
+  }
+
+  editarPerfil(fileUpload: FileUpload, usuarioData: User) {
+
+    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, fileUpload.file);
+  
+    //Esperar a obtener el link de descarga del archivo subido
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe(downloadURL => {
+          usuarioData.photo_url = downloadURL;
+          this.actualizarUsuario(usuarioData);
+        });
+      })
+    ).subscribe();
+  
+    return uploadTask.percentageChanges();
   }
 
   actualizarUsuario( usuario: User ) {
@@ -187,6 +126,10 @@ export class AuthService {
 
   obtenerClaims() {
     return this.afAuth.idTokenResult;
+  }
+
+  eliminarImagenStorage(name: string) {
+    this.storage.ref(this.basePath).child(name).delete();
   }
 
 }

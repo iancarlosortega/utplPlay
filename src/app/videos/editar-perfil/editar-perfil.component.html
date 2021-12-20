@@ -1,1 +1,164 @@
-<p>editar-perfil works!</p>
+<div class="register">
+    <app-header></app-header>
+    
+    <div class="formulario">
+
+        <p class="titulo">Editar Perfil</p>
+
+        <form class="formulario-form" [formGroup]="miFormulario" (submit)="actualizarPerfil()">
+
+            <div class="row">
+
+                <div class="foto-perfil">
+                    <!-- Previsualizacion de la foto de perfil -->
+                    <div class="imagen">
+
+                        <img [src]="url" alt="Foto de perfil" *ngIf="format==='image' && url" >
+
+                    </div>
+
+                    <!-- Input File -->
+
+                    <div class="custom-file">
+                        <input 
+                            #inputFile
+                            type="file" 
+                            class="form-control"
+                            formControlName="file"
+                            accept="image/png, image/jpg, image/*"
+                            (change)="selectFile($event)">
+                    </div>
+
+                    
+
+                    <!-- Barra de porcentaje -->
+                    <div class="porcentaje" *ngIf="currentFileUpload && visible">
+                        
+                        <div class="alert alert-info loading">
+                            <p>Cambiando imagen...</p>
+                            <p-progressSpinner 
+                                [style]="{width: '20px', height: '20px'}" 
+                                styleClass="custom-spinner" 
+                                strokeWidth="8"
+                                animationDuration=".5s">
+                            </p-progressSpinner>
+                        </div>
+
+                        <div class="progress mt-2">
+                            <div
+                                class="progress-bar progress-bar-striped"
+                                role="progressbar"
+                                attr.aria-valuenow="{{ percentage }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                [ngStyle]="{ width: percentage + '%' }"
+                                [ngClass]="{
+                                    'bg-success': percentage > 70,
+                                    'bg-info': percentage > 40 && percentage < 70,
+                                    'bg-warning': percentage > 20 && percentage < 40,
+                                    'bg-danger': percentage > 0 && percentage < 20
+                                }"
+                                >
+                                {{ percentage }}%
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 flex-end">
+                    <div class="campo">
+                        <p class="label">Nombres:</p>
+                        <input formControlName="name" type="text">
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('name')"
+                            >El campo de nombres es  <b>obligatorio</b>
+                        </span>
+                    </div>   
+                    
+                    <div class="custom-select">
+                        <p class="label">Nacionalidad:</p>
+                        <select formControlName="country">
+                            <option value="" disabled> --Seleccione Pais --</option>
+                            <option *ngFor="let pais of paises">{{ pais }}</option>
+                        </select>
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('country')"
+                            >El campo de nacionalidad es  <b>obligatorio</b>
+                        </span>
+                    </div>
+
+                    <div class="custom-select">
+                        <p class="label">Ciudad de origen:</p>
+                        <select formControlName="city">
+                            <option value="" disabled> --Seleccione Ciudad --</option>
+                            <option *ngFor="let ciudad of ciudades">{{ ciudad }}</option>
+                        </select>
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('city')"
+                            >El campo de ciudad de origen es  <b>obligatorio</b>
+                        </span>
+                    </div>
+    
+                    <div class="custom-select">
+                        <p class="label">Género:</p>
+                        <select formControlName="genre">
+                            <option value="hombre">Hombre</option>
+                            <option value="mujer">Mujer</option>
+                        </select>
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('genre')"
+                            >El campo de genero es  <b>obligatorio</b>
+                        </span>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-lg-6">
+                
+                    <div class="campo">
+                        <p class="label">Cédula:</p>
+                        <input formControlName="identification_card" type="text">
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('identification_card')"
+                            >El campo de cedula es  <b>obligatorio</b>
+                        </span>
+                    </div>
+
+                    <div class="campo">
+                        <p class="label">Nivel educativo:</p>
+                        <input formControlName="education_level" type="text">
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('education_level')"
+                            >El campo de nivel educativo es  <b>obligatorio</b>
+                        </span>
+                    </div>
+                    
+                    <div class="campo">
+                        <p class="label">Establecimiento educativo:</p>
+                        <input formControlName="institution" type="text">
+                        <span 
+                            class="text-error alert alert-danger" 
+                            *ngIf="campoNoValido('institution')"
+                            >El campo del establecimiento es  <b>obligatorio</b>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="boton">
+                <button type="submit" mat-button class="boton-submit">
+                    Actualizar perfil
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                </button>
+            </div>
+    
+        </form>
+    </div>
+</div>
