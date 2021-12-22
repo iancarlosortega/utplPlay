@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
 import { FileUpload } from '../admin/models/file-upload-model';
-import { Career, Course, User, Video } from '../interfaces/interfaces';
+import { Area, Career, Course, User, Video } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +63,23 @@ export class AdminService {
           const data = a.payload.data() as Career;
           data.id = a.payload.id;  
           return data
+        })
+      )
+  }
+
+  obtenerCarrerasPorArea(area: Area){
+
+
+    const carrerasCollection = this.firestore.collection('careers', ref => ref.where('area', '==' , area));
+
+    return carrerasCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Career;
+            data.id = a.payload.doc.id;  
+            return data
+          });
         })
       )
   }

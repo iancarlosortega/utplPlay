@@ -15,8 +15,8 @@ const routes: Routes = [
   { 
     path: 'play', 
     loadChildren: () => import('./videos/videos.module').then( m => m.VideosModule ), 
-    canActivate: [AuthGuard], 
-    canLoad: [AuthGuard] 
+    // canActivate: [AuthGuard], 
+    // canLoad: [AuthGuard] 
   },
   { 
     path: 'admin', 

@@ -15,7 +15,17 @@ export const environment = {
     messagingSenderId: "30358049886",
     appId: "1:30358049886:web:65263609e0508dd1afd0cf",
     measurementId: "G-NXZPDVZDKQ"
-  }
+  },
+  areas: [
+
+    { name: 'Ciencias económicas y empresariales', value: 'economicas' },
+    { name: 'Ciencias jurídicas y políticas', value: 'juridicas' },
+    { name: 'Ciencias de la salud', value: 'salud' },
+    { name: 'Ingenierías y arquitectura', value: 'ingenierias' },
+    { name: 'Ciencias exactas y naturales', value: 'exactas' },
+    { name: 'Ciencias sociales, educación y humanidades', value: 'sociales' },
+
+  ]
 };
 
 /*

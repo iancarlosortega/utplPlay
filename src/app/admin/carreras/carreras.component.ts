@@ -221,7 +221,6 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
       this.carrera = this.miFormulario.value;
 
       if (this.selectedFiles) {
-
         let filename: string = this.miFormulario.controls['file'].value;
         filename = filename.split('\\').slice(-1)[0];
         this.carrera.photo_filename = filename;
@@ -234,6 +233,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
           this.disabled = true;
           this.disableForm();
           this.currentFileUpload = new FileUpload(file);
+          this.visible = true;
           this.adminService.agregarCarrera(this.currentFileUpload, this.carrera, this.tipo).subscribe( percentage => {
             this.percentage = Math.round(percentage ? percentage : 0);
             if( this.percentage == 100 ){

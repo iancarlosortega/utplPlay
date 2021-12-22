@@ -1,14 +1,23 @@
-<swiper 
-    [spaceBetween]="50"
-    [slidesPerView]="3"
-    class="mySwiper"
-  >
-    <ng-template swiperSlide>
-      <div class="card" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="...">
+<div class="slider">
+  <div class="titulo">
+    <h5>{{titulo}}</h5>
+  </div>
+  <swiper 
+      [config]="config"
+      [spaceBetween]="10"
+      [slidesPerView]="1.2"
+      [pagination]="true"
+      [navigation]="true"
+      class="mySwiper"
+    >
+    <ng-template swiperSlide *ngFor="let carrera of carreras">
+      <div class="card" [routerLink]="['/play/carrera',carrera.id]">
+        <img [src]="carrera.photo_url" class="card-img-top" [alt]="carrera.name">
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
+          <p class="card-title">{{carrera.name}}</p>
         </div>
       </div>
     </ng-template>
-  </swiper>
+  </swiper>  
+</div>
+

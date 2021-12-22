@@ -1,6 +1,14 @@
 <div>
     <app-header></app-header>
-    <app-slider></app-slider>
+
+    <div class="container">
+
+        <app-slider [carreras]="ingenierias" titulo="Ingenierias y Arquitectura" area="ingenierias"></app-slider>
+        <app-slider [carreras]="ingenierias" titulo="Ciencias de la Salud" area="salud"></app-slider>
+        <app-slider [carreras]="ingenierias" titulo="Ciencias jurídicas y políticas" area="juridicas"></app-slider>
+
+    </div>
+
 </div>
 
 

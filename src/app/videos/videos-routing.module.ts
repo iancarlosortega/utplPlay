@@ -8,6 +8,7 @@ import { ElegirMateriasComponent } from './elegir-materias/elegir-materias.compo
 import { HistorialComponent } from './historial/historial.component';
 import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.component';
 import { VerCarreraComponent } from './ver-carrera/ver-carrera.component';
+import { VerMateriaComponent } from './ver-materia/ver-materia.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'carreras', component: ElegirCarrerasComponent },
       { path: 'carrera/:id', component: VerCarreraComponent },
       { path: 'materias', component: ElegirMateriasComponent },
+      { path: 'materia/:id', component: VerMateriaComponent },
       { path: 'perfil', component: EditarPerfilComponent },
       { path: 'historial', component: HistorialComponent },
       { path: 'nosotros', component: SobreNosotrosComponent },

@@ -11,9 +11,10 @@
     /* Colores */
     --blanco: #FFFFFF;
     --negro: #000000;
+    --amarillo: #FDCB14;
     --gris-bordes: #a7a7a7;
     --primario: #00345E;
-    --gradiente1: #E3C1D2;
+    --gradiente1: #e3c1d2;
     --gradiente2: #BEBFCD;
     /* Separación */
     --separacion: 5rem;
@@ -53,4 +54,114 @@
 .hvr-underline-from-center:hover:before, .hvr-underline-from-center:focus:before, .hvr-underline-from-center:active:before {
     left: 0;
     right: 0;
+}
+
+
+/* IMAGEHOVER CSS */
+[class^="imghvr-"],
+[class*=" imghvr-"] {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    max-width: 100%;
+    border-radius: 10px;
+    background-color: rgba(107, 107, 107, 0.384);
+    color: #fff;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+}
+
+[class^="imghvr-"] > img,
+[class*=" imghvr-"] > img {
+    vertical-align: top;
+    max-width: 100%;
+}
+
+[class^="imghvr-"] figcaption,
+[class*=" imghvr-"] figcaption {
+    cursor: pointer;
+    background-color: #20202071;
+    padding: 30px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+}
+
+[class^="imghvr-"] figcaption h1,
+[class^="imghvr-"] figcaption h2,
+[class^="imghvr-"] figcaption h3,
+[class^="imghvr-"] figcaption h4,
+[class^="imghvr-"] figcaption h5,
+[class^="imghvr-"] figcaption h6,
+[class*=" imghvr-"] figcaption h1,
+[class*=" imghvr-"] figcaption h2,
+[class*=" imghvr-"] figcaption h3,
+[class*=" imghvr-"] figcaption h4,
+[class*=" imghvr-"] figcaption h5,
+[class*=" imghvr-"] figcaption h6 {
+    color: rgb(216, 216, 216);
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+[class^="imghvr-"] a,
+[class*=" imghvr-"] a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+[class^="imghvr-"],
+[class*=" imghvr-"],
+[class^="imghvr-"]:before,
+[class^="imghvr-"]:after,
+[class*=" imghvr-"]:before,
+[class*=" imghvr-"]:after,
+[class^="imghvr-"] *,
+[class*=" imghvr-"] *,
+[class^="imghvr-"] *:before,
+[class^="imghvr-"] *:after,
+[class*=" imghvr-"] *:before,
+[class*=" imghvr-"] *:after {
+    box-sizing: border-box;
+    transition: all 0.35s ease;
+}
+
+/* imghvr-fade-*
+   ----------------------------- */
+[class^="imghvr-fade"] figcaption,
+[class*=" imghvr-fade"] figcaption {
+    opacity: 0;
+}
+
+[class^="imghvr-fade"]:hover figcaption,
+[class*=" imghvr-fade"]:hover figcaption {
+    opacity: 1;
+}
+
+[class^="imghvr-fade"]:hover > img,
+[class^="imghvr-fade"]:hover figcaption,
+[class*=" imghvr-fade"]:hover > img,
+[class*=" imghvr-fade"]:hover figcaption {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+}
+
+/* imghvr-fade
+   ----------------------------- */
+/* imghvr-fade-in-up
+   ----------------------------- */
+.imghvr-fade-in-up figcaption {
+    -webkit-transform: translate(0, 15%);
+            transform: translate(0, 15%);
 }
