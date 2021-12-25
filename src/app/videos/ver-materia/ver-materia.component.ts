@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { Course, Video } from 'src/app/interfaces/interfaces';
+import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-ver-materia',
@@ -7,9 +11,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerMateriaComponent implements OnInit {
 
-  constructor() { }
+  materia!: Course;
+  videos!: Video[];
+
+  constructor( private adminService: AdminService,
+               private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
+
+    this.activatedRoute.params
+      .pipe(
+        switchMap( ({id}) => this.adminService.obtenerMateriaPorId(id) )
+      )
+      .subscribe( materia => {
+        this.materia = materia;
+        this.adminService.obtenerVideosPorMateria(this.materia).subscribe( videos => {
+          this.videos = videos;
+        })
+      });
+
   }
 
 }

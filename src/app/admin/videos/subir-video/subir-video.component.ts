@@ -23,7 +23,8 @@ export class SubirVideoComponent implements OnInit {
     teacher : '',
     course : {
       id: '',
-      name: ''
+      name: '',
+      description: '',
     },
     views : 0,
     url : '',
@@ -60,7 +61,7 @@ export class SubirVideoComponent implements OnInit {
   }
 
   compareObjects(o1: any, o2: any): boolean {
-    return o1.name === o2.name && o1.id === o2.id;
+    return o1?.name === o2?.name && o1?.id === o2?.id;
   }
 
   ngOnInit(): void {
@@ -94,6 +95,7 @@ export class SubirVideoComponent implements OnInit {
   selectFile(event: any): void {
 
     const file = event.target.files && event.target.files[0];
+    console.log(file);
 
     //Previsualizacion del video
     if( file ) {
@@ -154,6 +156,7 @@ export class SubirVideoComponent implements OnInit {
             if( this.percentage == 100 ){
               setTimeout(() => {
                 this.toastr.info('El video fue subido con éxito!', 'Video Subido');
+                this.router.navigateByUrl('/admin/videos');
                 this.enableForm();
                 this.url = null;
                 this.visible = false;
@@ -172,7 +175,8 @@ export class SubirVideoComponent implements OnInit {
 
         this.adminService.actualizarVideo(videoData)
           .then( ( _ ) => {
-            this.toastr.info('El video fue actualizado con éxito', 'Video Actualizado')
+            this.toastr.info('El video fue actualizado con éxito', 'Video Actualizado');
+            this.router.navigateByUrl('/admin/videos');
           })
           .catch( err => {
             console.log(err);

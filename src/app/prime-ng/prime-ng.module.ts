@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import {ButtonModule} from 'primeng/button';
 import {CheckboxModule} from 'primeng/checkbox';
+import {ChipsModule} from 'primeng/chips';
 import {InputTextModule} from 'primeng/inputtext';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -19,6 +20,7 @@ import {TreeSelectModule} from 'primeng/treeselect';
   exports:[
     ButtonModule,
     CheckboxModule,
+    ChipsModule,
     InputTextModule,
     MessageModule,
     MessagesModule,

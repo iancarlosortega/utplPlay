@@ -64,3 +64,11 @@ mat-form-field {
     width: 100%;
     text-align: center !important;
 }
+
+.chips {
+    margin: 0.5rem 0;
+}
+
+.chips label {
+    display: block;
+}

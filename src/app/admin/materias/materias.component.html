@@ -53,7 +53,16 @@
                     <p-sortIcon field="nombre"></p-sortIcon>
                 </div>
             </th>
-            <th style="width: 400px">
+            <th style="width: 250px">
+                Descripción
+            </th>
+            <th style="width: 200px">
+                Palabras Clave
+            </th>
+            <th style="width: 200px">
+                Objetivos
+            </th>
+            <th style="width: 200px">
                 Carreras
             </th>
             <th style="width: 200px">Acciones</th>
@@ -66,10 +75,17 @@
             <td style="width: 200px">
                 {{materia.name}}
             </td>
-            <td style="width: 400px">
-                <p *ngFor="let item of materia.careers" class="carreras-nombre">
-                    {{item.name}}
-                </p>
+            <td style="width: 250px">
+                {{materia.description}}
+            </td>
+            <td style="width: 200px">
+                {{materia.keywords | space }}
+            </td>
+            <td style="width: 200px">
+                {{materia.purposes | space }}
+            </td>
+            <td style="width: 200px">
+                {{materia.careers | carreras | space}}
             </td>
             
             <td style="width: 200px">
@@ -134,8 +150,23 @@
                     El campo de nombre es <strong>obligatorio</strong>
                 </mat-error>
             </mat-form-field>
-        
-        
+
+            <!-- Input Descripción -->
+
+            
+
+            <textarea 
+                class="form-control" 
+                placeholder="Descripción de la materia"
+                formControlName="description"
+                [ngClass]="{'is-invalid': campoNoValido('description')}">
+            </textarea>
+            <small 
+                *ngIf="campoNoValido('description')" 
+                class="text text-danger">
+                La descripción de la materia es <strong>obligatoria</strong>
+            </small>
+
             <!-- Input carreras -->
 
             <p-multiSelect 
@@ -152,6 +183,24 @@
                 class="text text-danger">
                 Seleccion al menos <strong>1</strong> carrera
             </small>
+
+            <!-- Keywords -->
+
+            <div class="chips">
+                <label for="keywords">Palabras claves</label>
+                <p-chips
+                    formControlName="keywords">
+                </p-chips>
+            </div>
+
+            <!-- Purposes -->
+
+            <div class="chips">
+                <label for="purposes">Objetivos de la materia</label>
+                <p-chips
+                    formControlName="purposes">
+                </p-chips>
+            </div>
                     
         </form>
 
@@ -206,7 +255,21 @@
                 <mat-error *ngIf="campoNoValido('name')">
                   El campo de nombre es <strong>obligatorio</strong>
                 </mat-error>
-            </mat-form-field>            
+            </mat-form-field>      
+            
+            <!-- Input Descripción -->
+
+            <textarea 
+                class="form-control" 
+                placeholder="Descripción de la materia"
+                formControlName="description"
+                [ngClass]="{'is-invalid': campoNoValido('description')}">
+            </textarea>
+            <small 
+                *ngIf="campoNoValido('description')" 
+                class="text text-danger">
+                La descripción de la materia es <strong>obligatoria</strong>
+            </small>
         
             <!-- Input carreras -->
 
@@ -224,6 +287,24 @@
                 class="text text-danger">
                 Seleccion al menos <strong>1</strong> carrera
             </small>
+
+            <!-- Keywords -->
+
+            <div class="chips">
+                <label for="keywords">Palabras claves</label>
+                <p-chips
+                    formControlName="keywords">
+                </p-chips>
+            </div>
+
+            <!-- Purposes -->
+
+            <div class="chips">
+                <label for="purposes">Objetivos de la materia</label>
+                <p-chips
+                    formControlName="purposes">
+                </p-chips>
+            </div>
                     
         </form>
 
@@ -251,4 +332,3 @@
         
     </div>
 </ng-template>
-

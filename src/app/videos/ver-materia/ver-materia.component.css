@@ -1,0 +1,81 @@
+.materia {
+    margin: 2.5rem 0;
+}
+
+.titulo {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.descripcion {
+    margin: 1.5rem 0;
+    color: #555555;
+}
+
+
+.texto-negrita {
+    font-weight: bold;
+}
+
+.tags {
+    font-size: 0.8rem;
+    background-color: #9b59b6;
+    color: #FFFFFF;
+    margin: 0 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    line-height: 45px;
+}
+
+.tags-carreras {
+    background-color: #34495e;
+}
+
+.objetivos, .videos {
+    background-color: var(--blanco);
+    border: 1px solid #c7c7c7;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.objetivos h5, .videos h5 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.objetivos-listado {
+    list-style: none;
+    display: grid;
+    gap: 1rem; 
+}
+
+@media (min-width: 768px){
+    .objetivos-listado {
+        grid-template-columns: repeat( auto-fill, minmax(25rem, 1fr) );
+    }
+}
+  
+.objetivos-listado li:before {
+    content: '✓';
+}
+
+.videos-listado {
+    list-style: none;
+    padding: 0;
+}
+
+.videos-listado li {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.videos-listado li:last-child {
+    border-bottom: none;
+}
+
+.videos-listado li mat-icon {
+    margin-right: 0.5rem;
+}

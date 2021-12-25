@@ -168,7 +168,6 @@ export class AdminService {
 
   obtenerMateriasPorCarrera(carrera: Career){
 
-
     const materiasCollection = this.firestore.collection('courses', ref => ref.where('careers', 'array-contains' , carrera));
 
     return materiasCollection.snapshotChanges()
@@ -177,8 +176,8 @@ export class AdminService {
           return actions.map(a => {
             const data = a.payload.doc.data() as Course;
             data.id = a.payload.doc.id;  
-            delete data.careers;
-            return data
+            const {careers, keywords, purposes, ...materia} = data
+            return materia;
           });
         })
       )
@@ -188,15 +187,20 @@ export class AdminService {
     return this.firestore.collection('courses').add(materia);
   }
 
-  getMateriaById(id: string) {
-    return this.firestore.collection('courses').doc(id).snapshotChanges();
+  obtenerMateriaPorId(id: string) {
+    const carrera = this.firestore.collection('courses').doc(id);
+    return carrera.snapshotChanges()
+      .pipe(
+        map(a => {       
+          const data = a.payload.data() as Course;
+          data.id = a.payload.id;  
+          return data
+        })
+      )
   }
 
-  actualizarMateria(id: string, data: Course ) {
-    return this.firestore.collection('courses').doc(id).update( {
-      name: data.name,
-      careers: data.careers
-    });
+  actualizarMateria(data: Course ) {
+    return this.firestore.collection('courses').doc(data.id).update( data );
   }
 
   eliminarMateria( id: string ) {
@@ -228,6 +232,24 @@ export class AdminService {
           const data = a.payload.data() as Video;
             data.id = a.payload.id;  
             return data
+        })
+      )
+  }
+
+  obtenerVideosPorMateria(materia: Course){
+
+    console.log(materia);
+
+    const videosCollection = this.firestore.collection('videos', ref => ref.where('course.id', '==' , materia.id));
+
+    return videosCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Video;
+            data.id = a.payload.doc.id; 
+            return data
+          });
         })
       )
   }

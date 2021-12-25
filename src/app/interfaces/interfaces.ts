@@ -34,6 +34,9 @@ export interface Career {
 export interface Course {
     id: string;
     name: string;
+    description: string;
+    keywords?: string[];
+    purposes?: string[];
     careers?: Career[];
 }
 

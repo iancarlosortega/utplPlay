@@ -32,7 +32,10 @@ export class MateriasComponent implements OnInit, AfterViewInit {
 
   miFormulario: FormGroup = this.fb.group({
     name: [ '', [ Validators.required, Validators.minLength(3) ] ],
-    careers: [ '', [ Validators.required, Validators.minLength(1) ] ],
+    description: [ '', [ Validators.required, Validators.minLength(10) ] ],
+    keywords: [ '' ],
+    purposes: [ '' ],
+    careers: [ '', [ Validators.required ] ],
   })
  
   openModal() {
@@ -85,7 +88,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.observer.observe(['(min-width: 1140px)']).subscribe((res) => {
+      this.observer.observe(['(min-width: 1400px)']).subscribe((res) => {
         if (res.matches) {
           this.scrollable = false;
         } else {
@@ -99,7 +102,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
 
     if( this.miFormulario.invalid ) {
       this.miFormulario.markAllAsTouched();
-      this.miFormulario.controls['carreras'].markAsDirty();
+      this.miFormulario.controls['careers'].markAsDirty();
       return;
     }
 
@@ -123,12 +126,15 @@ export class MateriasComponent implements OnInit, AfterViewInit {
 
   obtenerMateria(id: string) {
     this.openModalEditar();
-    this.adminService.getMateriaById(id).subscribe( (data: any) => {
+    this.adminService.obtenerMateriaPorId(id).subscribe( (data: any) => {
       if( data.type != 'removed' ) {
-        this.id = data.payload.id;
+        this.materia = data;
         this.miFormulario.setValue({
-          name: data.payload.data()['name'],
-          careers: data.payload.data()['careers'],
+          name: data.name,
+          description: data.description || '',
+          keywords: data.keywords || '',
+          purposes: data.purposes || '',
+          careers: data.careers,
         });
       }
       
@@ -142,10 +148,10 @@ export class MateriasComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.materia = this.miFormulario.value;
+    this.materia = {...this.materia, ...this.miFormulario.value};
 
     this.disabled = true;
-    this.adminService.actualizarMateria(this.id!, this.materia )
+    this.adminService.actualizarMateria( this.materia )
       .then( res => {
         this.modalRef?.hide();
         this.disabled = false;

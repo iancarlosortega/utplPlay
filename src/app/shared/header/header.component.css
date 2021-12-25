@@ -1,5 +1,5 @@
 .navbar {
-    padding: 1.7rem 3rem;
+    padding: 0 3rem;
     width: 100%;
     min-width: 400px;
     margin: auto;
@@ -9,20 +9,20 @@
 
 @media (min-width: 1400px){
     .navbar {
-        padding: 1.7rem 7rem;
+        padding: 0 7rem;
         grid-template-rows: repeat(3, 1fr);
     }
 }
 
 .gradiente {
-    background: var(--gradiente1); /* Old browsers */
-    background: -moz-linear-gradient(top,  var(--gradiente1) 0%, var(--gradiente2) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  var(--gradiente1) 0%,var(--gradiente2) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: var(--gradiente1);
+    background: -moz-linear-gradient(top,  var(--gradiente1) 0%, var(--gradiente2) 100%); 
+    background: -webkit-linear-gradient(top,  var(--gradiente1) 0%,var(--gradiente2) 100%);
     background: linear-gradient(to bottom,  var(--gradiente1) 0%,var(--gradiente2) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3c1d2', endColorstr='#bebfcd',GradientType=0 ); /* IE6-9 */
-    -webkit-box-shadow: 0px 3px 7px 2px rgba(128,126,128,0.61);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3c1d2', endColorstr='#bebfcd',GradientType=0 );
+    /* -webkit-box-shadow: 0px 3px 7px 2px rgba(128,126,128,0.61);
     -moz-box-shadow: 0px 3px 7px 2px rgba(128,126,128,0.61);
-    box-shadow: 0px 3px 7px 2px rgba(128,126,128,0.61);
+    box-shadow: 0px 3px 7px 2px rgba(128,126,128,0.61); */
 }
 
 .navbar2 {
@@ -68,12 +68,16 @@
     }
 }
 
+.logo {
+    padding: 1rem;
+}
+
 .logo img {
     width: 100%;
 }
 
 .nav-item, .nav-item2 {
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     text-decoration: none;
     cursor: pointer;
     margin: 0 1rem;
@@ -98,7 +102,7 @@
 
 .link-activo {
     color: var(--primario);
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .buscador {

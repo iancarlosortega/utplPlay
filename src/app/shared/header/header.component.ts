@@ -18,32 +18,32 @@ export class HeaderComponent implements OnInit  {
   menuItems = [
     {
       titulo: 'Home',
-      route: '../home',
+      route: '/play/home',
       icono: 'home'
     },
     {
       titulo: 'Carreras',
-      route: '../carreras',
+      route: '/play/carreras',
       icono: 'data_usage'
     },
     {
       titulo: 'Materias',
-      route: '../materias',
+      route: '/play/materias',
       icono: 'library_books'
     },
     {
       titulo: 'Historial',
-      route: '../historial',
+      route: '/play/historial',
       icono: 'history'
     },
     {
       titulo: 'Editar Perfil',
-      route: '../perfil',
+      route: '/play/perfil',
       icono: 'account_box'
     },
     {
       titulo: 'Sobre Nosotros',
-      route: '../nosotros',
+      route: '/play/nosotros',
       icono: 'supervised_user_circle'
     }
   ];
