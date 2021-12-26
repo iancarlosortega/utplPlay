@@ -3,18 +3,18 @@
     <main class="materia">
         <h1 class="titulo">{{materia?.name}}</h1>
         <p class="descripcion">{{materia?.description}}</p>
-        <p class="texto-negrita">Palabras clave: 
+        <p class="texto-negrita" *ngIf="materia?.keywords!.length > 0">Palabras clave: 
             <span class="tags tags-keywords" *ngFor="let keyword of materia?.keywords">
                 {{keyword}}
             </span>
         </p>
-        <p class="texto-negrita">Carreras: 
+        <p class="texto-negrita" *ngIf="materia?.careers!.length > 0">Carreras: 
             <span class="tags tags-carreras" *ngFor="let carrera of materia?.careers">
                 {{carrera?.name}}
             </span>
         </p>
 
-        <article class="objetivos">
+        <article class="objetivos" *ngIf="materia?.purposes!.length > 0">
             <h5>Lo que aprenderás</h5>
             <ul class="objetivos-listado">
                 <li *ngFor="let objetivo of materia?.purposes">
@@ -23,10 +23,10 @@
             </ul>
         </article>
 
-        <article class="videos">
+        <article class="videos" *ngIf="videos.length > 0">
             <h5>Listado de videos</h5>
             <ul class="videos-listado">
-                <li *ngFor="let video of videos">
+                <li *ngFor="let video of videos" [routerLink]="['/play/video', video.id]">
                     <mat-icon>play_circle</mat-icon>
                     {{video.title}}
                 </li>

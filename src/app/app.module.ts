@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,10 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+//Cambiar el locale de la app
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common'
+registerLocaleData(localeEs);
 @NgModule({
   declarations: [
     AppComponent
@@ -32,7 +36,9 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID , useValue: 'es' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

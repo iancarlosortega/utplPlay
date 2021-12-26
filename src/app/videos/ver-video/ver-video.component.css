@@ -1,0 +1,68 @@
+.contenedor {
+    margin: 2.5rem 0;
+}
+
+@media (min-width: 992px){
+    .contenedor {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 70% 30%;
+    }
+}
+
+.titulo {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    background-color: var(--primario);
+    color: var(--blanco);
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.video video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: #000000;
+}
+
+.videos-listado {
+    list-style: none;
+    padding: 0;
+}
+
+.videos, .informacion {
+    background-color: var(--blanco);
+    border: 1px solid #c7c7c7;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.informacion {
+    padding: 1rem 2rem;
+}
+
+.videos h5 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.videos-listado li {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.videos-listado li:last-child {
+    border-bottom: none;
+}
+
+.videos-listado li mat-icon {
+    margin-right: 0.5rem;
+}
+
+.texto-negrita {
+    font-weight: bold;
+}

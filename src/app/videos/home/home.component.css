@@ -1,6 +1,6 @@
 .home {
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e3c1d2+0,bebfcd+100 */
-    background-image: url('/assets/videos/home_gradient.png');
+    background-image: url('/assets/videos/home_gradient.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -34,12 +34,40 @@
     font-weight: 500;
     color: #FFFFFF;
     text-align: center;
+    animation: 1.3s ease left-right;
+}
+
+@keyframes left-right {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%);
+        left: 100%;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+        left: 0%;
+    }
+}
+
+@keyframes right-left {
+    0% {
+        opacity: 0;
+        transform: translateX(50%);
+        left: 100%;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+        left: 0%;
+    }
 }
 
 .subtitulo {
     font-size: 0.8rem;
     color: #FFFFFF;
     text-align: center;
+    animation: 1.3s ease right-left;
 }
 
 @media (min-width: 540px){
@@ -96,7 +124,7 @@
     transform: 
         rotate(var(--az)) 
         translate(var(--r))
-        rotate(calc(-1*var(--az)))
+        rotate(calc(-1*var(--az)));
 }
   
 .container a img { 

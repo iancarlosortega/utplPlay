@@ -10,6 +10,7 @@ mat-form-field, .custom-file {
     margin: 1rem 0;
     width: 100%;
     min-width: 400px;
+    aspect-ratio: 16/9;
 }
 
 .select-input {

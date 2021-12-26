@@ -44,7 +44,8 @@ mat-form-field {
 }
 
 .tabla-imagen img{
-    height: 80px;
+    object-fit: cover;
+    aspect-ratio: 16/9;
     width: 100%;
 }
 

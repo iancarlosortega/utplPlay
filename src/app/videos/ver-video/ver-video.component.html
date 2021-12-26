@@ -1,0 +1,24 @@
+<app-header></app-header>
+<div class="container">
+    <div class="contenedor">
+        <div>
+            <main class="video">
+                <video [src]="video?.url" controls></video>
+                <p class="titulo">{{video?.title}}</p>
+                <div class="informacion">
+                    <p><span class="texto-negrita">Profesor: </span>{{video?.teacher}}</p>
+                    <p><span class="texto-negrita">Fecha de publicación: </span>{{video?.publication_date.toDate() | date:'longDate' }}</p>
+    
+                </div>
+            </main>
+        </div>
+        <aside class="videos">
+            <h5>Videos Relacionados</h5>
+            <ul class="videos-listado">
+                <li *ngFor="let video of videos" [routerLink]="['/play/video', video.id]">
+                    <mat-icon>play_circle</mat-icon>
+                    {{video.title}}
+                </li>
+            </ul>
+        </aside>
+</div>

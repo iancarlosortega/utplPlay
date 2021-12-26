@@ -11,13 +11,20 @@
 }
 
 .informacion {
-    margin: 0 auto;
-    width: 100%;
+    background-color: var(--blanco);
+    border: 1px solid #c7c7c7;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .titulo, .carreras-relacionadas {
     font-family: 'Poppins', sans-serif;
     text-align: center;
+}
+
+.titulo {
+    text-transform: uppercase;
+    font-weight: 300;
 }
 
 .carreras-relacionadas {
@@ -38,7 +45,6 @@
 }
 
 .informacion-imagen img {
-    border-radius: 7px;
     width: 100%;
     height: 250px;
     object-fit: cover;

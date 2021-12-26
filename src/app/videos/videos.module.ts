@@ -15,6 +15,7 @@ import { VerCarreraComponent } from './ver-carrera/ver-carrera.component';
 import { HistorialComponent } from './historial/historial.component';
 import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.component';
 import { VerMateriaComponent } from './ver-materia/ver-materia.component';
+import { VerVideoComponent } from './ver-video/ver-video.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { VerMateriaComponent } from './ver-materia/ver-materia.component';
     HistorialComponent,
     SobreNosotrosComponent,
     VerMateriaComponent,
+    VerVideoComponent,
   ],
   imports: [
     CommonModule,

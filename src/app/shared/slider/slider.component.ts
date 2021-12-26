@@ -38,14 +38,6 @@ export class SliderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.carreras);
-  }
-
-  onSwiper(swiper: any) {
-    console.log(swiper);
-  }
-  onSlideChange() {
-    console.log('slide change');
   }
 
 }

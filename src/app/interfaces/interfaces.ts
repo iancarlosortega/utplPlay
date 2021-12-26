@@ -46,7 +46,7 @@ export interface Video {
     teacher: string;
     course: Course;
     views: number;
-    publication_date: Date | null;
+    publication_date: any | null;
     url: string;
     file?: string;
     filename?: string;

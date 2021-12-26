@@ -1,29 +1,35 @@
 <app-header></app-header>
 <div class="container">
     <div class="grid">
+        <div>
+            <main class="informacion">
 
-        <main class="informacion">
+                <h3 class="titulo">{{carrera?.name}}</h3>
+    
+                <div class="informacion-imagen">
+                    <img [src]="carrera?.photo_url" [alt]="carrera?.name">
+                </div>
+                
+                <hr>
 
-            <h3 class="titulo">{{carrera?.name}}</h3>
-
-            <div class="informacion-imagen">
-                <img [src]="carrera?.photo_url" [alt]="carrera?.name">
-            </div>
-
-            <div class="area-duration">
-                <p><span class="texto-negrita">Área: </span>{{carrera?.area?.name}}</p>
-                <p><span class="texto-negrita">Número de ciclos: </span>{{carrera?.duration}}</p>
-            </div>
-
-            <p class="texto-negrita">Listado de materias:</p>
-            <ul class="listado-materias">
-                <li *ngFor="let materia of materias" [routerLink]="['/play/materia', materia.id]">
-                    {{materia.name}}
-                    <mat-icon>arrow_right</mat-icon>
-                </li>
-            </ul>
-
-        </main>
+                <div class="area-duration">
+                    <p><span class="texto-negrita">Área: </span>{{carrera?.area?.name}}</p>
+                    <p><span class="texto-negrita">Número de ciclos: </span>{{carrera?.duration}}</p>
+                </div>
+                
+                <div *ngIf="materias.length > 0">
+                    <p class="texto-negrita">Listado de materias:</p>
+                    <ul class="listado-materias">
+                        <li *ngFor="let materia of materias" [routerLink]="['/play/materia', materia.id]">
+                            {{materia.name}}
+                            <mat-icon>arrow_right</mat-icon>
+                        </li>
+                    </ul>
+                </div>
+                
+            </main>
+        </div>
+        
 
         <aside class="relacionadas">
             <p class="carreras-relacionadas">Carreras Relacionadas</p>
