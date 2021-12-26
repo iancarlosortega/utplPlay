@@ -12,7 +12,7 @@ import { AdminService } from 'src/app/services/admin.service';
 export class VerCarreraComponent implements OnInit {
 
   carrera!: Career;
-  materias!: Course[]
+  materias: Course[] = [];
   carrerasRelacionadas!: Career[];
 
   constructor( private activatedRoute: ActivatedRoute,

@@ -3,18 +3,18 @@
     <main class="materia">
         <h1 class="titulo">{{materia?.name}}</h1>
         <p class="descripcion">{{materia?.description}}</p>
-        <p class="texto-negrita" *ngIf="materia?.keywords!.length > 0">Palabras clave: 
+        <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
             <span class="tags tags-keywords" *ngFor="let keyword of materia?.keywords">
                 {{keyword}}
             </span>
         </p>
-        <p class="texto-negrita" *ngIf="materia?.careers!.length > 0">Carreras: 
+        <p class="texto-negrita" *ngIf="materia?.careers">Carreras: 
             <span class="tags tags-carreras" *ngFor="let carrera of materia?.careers">
                 {{carrera?.name}}
             </span>
         </p>
 
-        <article class="objetivos" *ngIf="materia?.purposes!.length > 0">
+        <article class="objetivos" *ngIf="materia?.purposes">
             <h5>Lo que aprenderás</h5>
             <ul class="objetivos-listado">
                 <li *ngFor="let objetivo of materia?.purposes">

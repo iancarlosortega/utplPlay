@@ -7,6 +7,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {PaginatorModule} from 'primeng/paginator';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {SidebarModule} from 'primeng/sidebar';
 import {TableModule} from 'primeng/table';
@@ -22,14 +23,12 @@ import {TreeSelectModule} from 'primeng/treeselect';
     CheckboxModule,
     ChipsModule,
     InputTextModule,
-    MessageModule,
-    MessagesModule,
     MultiSelectModule,
+    PaginatorModule,
     ProgressSpinnerModule,
     SidebarModule,
     TableModule,
     TooltipModule,
-    TreeSelectModule
   ]
 })
 export class PrimeNGModule { }

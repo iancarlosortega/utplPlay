@@ -12,7 +12,7 @@ import { AdminService } from 'src/app/services/admin.service';
 export class VerMateriaComponent implements OnInit {
 
   materia!: Course;
-  videos!: Video[];
+  videos: Video[] = [];
 
   constructor( private adminService: AdminService,
                private activatedRoute: ActivatedRoute

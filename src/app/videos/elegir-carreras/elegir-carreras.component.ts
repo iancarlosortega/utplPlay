@@ -21,15 +21,32 @@ export class ElegirCarrerasComponent implements OnInit {
   ngOnInit(): void {
 
     this.adminService.obtenerCarreras().subscribe( carreras => {
-      this.ingenierias = carreras.filter( carrera => carrera.area.value === 'ingenierias' )
-      this.juridicas = carreras.filter( carrera => carrera.area.value === 'juridicas' )
-      this.salud = carreras.filter( carrera => carrera.area.value === 'salud' )
-      this.economicas = carreras.filter( carrera => carrera.area.value === 'economicas' )
-      this.exactas = carreras.filter( carrera => carrera.area.value === 'exactas' )
-      this.sociales = carreras.filter( carrera => carrera.area.value === 'sociales' )
-      console.log(this.ingenierias);
+      this.ingenierias = this.shuffle(carreras.filter( carrera => carrera.area.value === 'ingenierias' )); 
+      this.juridicas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'juridicas' )); 
+      this.salud = this.shuffle(carreras.filter( carrera => carrera.area.value === 'salud' )); 
+      this.economicas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'economicas' )); 
+      this.exactas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'exactas' )); 
+      this.sociales = this.shuffle(carreras.filter( carrera => carrera.area.value === 'sociales' )); 
     });
 
+  }
+
+  shuffle(array: any) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
   }
 
 }

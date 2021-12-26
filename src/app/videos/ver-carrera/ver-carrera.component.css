@@ -70,17 +70,15 @@
     padding: 0.5rem 2rem;
     border-radius: 10px;
     cursor: pointer;
+    margin-bottom: 0.5rem;
 }
 
 .listado-materias li:nth-child(odd) {
     background-color: var(--primario);
     color: var(--blanco);
-    margin-bottom: 0.5rem;
 }
 
 .listado-materias li:nth-child(even) {
-    /* background-color: #065B75; */
-    /* background-color: #9451F0; */
     background-color: #CDCDCD;
     color: var(--negro);
 }

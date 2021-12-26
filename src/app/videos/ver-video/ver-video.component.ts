@@ -27,6 +27,7 @@ export class VerVideoComponent implements OnInit {
         this.video = video;
         this.adminService.obtenerVideosPorMateria(this.video.course).subscribe( videos => {
           this.videos = videos;
+          this.videos = this.videos.filter( video => video.id != this.video.id );
         })
       });
 
