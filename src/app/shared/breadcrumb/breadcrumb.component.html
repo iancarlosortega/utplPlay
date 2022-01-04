@@ -1,0 +1,6 @@
+<ul class="listado"> 
+  <li class="listado-item" *ngFor="let breadcrumb of (breadcrumbs$ | async)"> 
+    <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+    <i class="arrow right"></i>
+  </li> 
+</ul>

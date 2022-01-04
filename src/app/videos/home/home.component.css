@@ -72,8 +72,9 @@
 
 @media (min-width: 540px){
     .titulo {
-        font-size: 3rem;
+        font-size: 3.5rem;
         text-align: left;
+        width: 70%;
     }
     
     .subtitulo {

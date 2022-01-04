@@ -1,4 +1,12 @@
 <app-header></app-header>
+<main class="breadcrumb">
+    <div class="container">
+      <div class="title">
+        <p>Listado de materias</p>
+      </div>
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+</main>
 <div class="container">
     <main class="materias">
         <div class="card" *ngFor="let materia of materias">
@@ -6,7 +14,7 @@
                 <h5 class="card-title">{{materia.name}}</h5>
                 <p class="card-text" >
                     {{materia.description | slice:0:120}}...
-                    <a class="link" [routerLink]="['../materia', materia.id]">Ver Más</a>
+                    <a class="link" [routerLink]="['../materias', materia.id]">Ver Más</a>
                 </p>
                 <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
                     <span class="tags" *ngFor="let keyword of materia?.keywords">

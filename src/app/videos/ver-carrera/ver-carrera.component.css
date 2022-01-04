@@ -112,3 +112,25 @@
     height: 200px;
     object-fit: cover;
 }
+
+.breadcrumb {
+    background-image:url('/assets/videos/breadcrumb.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    width: 100%;
+    height: 15rem;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    border-left: 5px solid var(--blanco);
+}
+
+.title p {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    padding-left: 1.5rem;
+}

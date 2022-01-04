@@ -14,16 +14,29 @@ import { VerVideoComponent } from './ver-video/ver-video.component';
 const routes: Routes = [
   {
     path: '',
+    data: { breadcrumb: 'Home' },
     children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'carreras', component: ElegirCarrerasComponent },
-      { path: 'carrera/:id', component: VerCarreraComponent },
-      { path: 'materias', component: ElegirMateriasComponent },
-      { path: 'materia/:id', component: VerMateriaComponent },
-      { path: 'video/:id', component: VerVideoComponent },
-      { path: 'perfil', component: EditarPerfilComponent },
-      { path: 'historial', component: HistorialComponent },
-      { path: 'nosotros', component: SobreNosotrosComponent },
+      { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
+      { 
+        path: 'carreras', 
+        data: { breadcrumb: 'Carreras' },
+        children: [
+          { path: '', component: ElegirCarrerasComponent, data: { breadcrumb: '' } },
+          { path: ':id', component: VerCarreraComponent, data: { breadcrumb: 'Ver Carrera' } },
+        ]
+      },
+      { 
+        path: 'materias', 
+        data: { breadcrumb: 'Materias' },
+        children: [
+          { path: '', component: ElegirMateriasComponent, data: { breadcrumb: '' } },
+          { path: ':id', component: VerMateriaComponent, data: { breadcrumb: 'Ver Materia' } },
+        ]
+      },
+      { path: 'video/:id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },
+      { path: 'perfil', component: EditarPerfilComponent, data: { breadcrumb: 'Editar Perfil' } },
+      { path: 'historial', component: HistorialComponent, data: { breadcrumb: 'Historial' } },
+      { path: 'nosotros', component: SobreNosotrosComponent, data: { breadcrumb: 'Sobre Nosotros' } },
       { path: '**', redirectTo: 'home' },
     ]
   }

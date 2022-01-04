@@ -11,6 +11,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { VideoComponent } from './video/video.component';
 import { BuscadorComponent } from './buscador/buscador.component';
 import { SliderComponent } from './slider/slider.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 
 
@@ -21,7 +22,8 @@ import { SliderComponent } from './slider/slider.component';
     NavbarComponent,
     VideoComponent,
     BuscadorComponent,
-    SliderComponent
+    SliderComponent,
+    BreadcrumbComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { SliderComponent } from './slider/slider.component';
     NavbarComponent,
     VideoComponent,
     BuscadorComponent,
-    SliderComponent
+    SliderComponent,
+    BreadcrumbComponent
   ]
 })
 export class SharedModule { }

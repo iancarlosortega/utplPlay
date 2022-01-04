@@ -1,4 +1,12 @@
 <app-header></app-header>
+<main class="breadcrumb">
+    <div class="container">
+      <div class="title">
+        <p>{{carrera?.name}}</p>
+      </div>
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+</main>
 <div class="container">
     <div class="grid">
         <div>
@@ -20,7 +28,7 @@
                 <div *ngIf="materias.length > 0">
                     <p class="texto-negrita">Listado de materias:</p>
                     <ul class="listado-materias">
-                        <li *ngFor="let materia of materias" [routerLink]="['/play/materia', materia.id]">
+                        <li *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.id]">
                             {{materia.name}}
                             <mat-icon>arrow_right</mat-icon>
                         </li>
@@ -35,7 +43,7 @@
             <p class="carreras-relacionadas">Carreras Relacionadas</p>
             <ul>
                 <li *ngFor="let carrera of carrerasRelacionadas">
-                    <div class="carrera" [routerLink]="['/play/carrera', carrera.id]">
+                    <div class="carrera" [routerLink]="['/play/carreras', carrera.id]">
                         <figure class="imghvr-fade-up">
                             <img [src]="carrera.photo_url" [alt]="carrera.name">
                             <figcaption class="">

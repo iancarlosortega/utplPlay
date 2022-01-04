@@ -1,15 +1,19 @@
-<div>
-    <app-header></app-header>
-
+<app-header></app-header>
+<main class="breadcrumb">
     <div class="container">
-
-        <app-slider *ngIf="salud.length > 0" [carreras]="salud" titulo="Ciencias de la Salud" area="salud"></app-slider>
-        <app-slider *ngIf="ingenierias.length > 0" [carreras]="ingenierias" titulo="Ingenierías y Arquitectura" area="ingenierias"></app-slider>
-        <app-slider *ngIf="juridicas.length > 0" [carreras]="juridicas" titulo="Ciencias jurídicas y políticas" area="juridicas"></app-slider>
-        <app-slider *ngIf="economicas.length > 0" [carreras]="economicas" titulo="Ciencias económicas y empresariales" area="economicas"></app-slider>
-        <app-slider *ngIf="exactas.length > 0" [carreras]="exactas" titulo="Ciencias exacatas y naturales" area="exactas"></app-slider>
-        <app-slider *ngIf="sociales.length > 0" [carreras]="sociales" titulo="Ciencias sociales, educación y humanidades" area="sociales"></app-slider>
-
+      <div class="title">
+        <p>Oferta académica</p>
+      </div>
+      <app-breadcrumb></app-breadcrumb>
     </div>
+</main>
+
+<div class="container">
+    <app-slider *ngIf="salud.length > 0" [carreras]="salud" titulo="Ciencias de la Salud" area="salud"></app-slider>
+    <app-slider *ngIf="ingenierias.length > 0" [carreras]="ingenierias" titulo="Ingenierías y Arquitectura" area="ingenierias"></app-slider>
+    <app-slider *ngIf="juridicas.length > 0" [carreras]="juridicas" titulo="Ciencias jurídicas y políticas" area="juridicas"></app-slider>
+    <app-slider *ngIf="economicas.length > 0" [carreras]="economicas" titulo="Ciencias económicas y empresariales" area="economicas"></app-slider>
+    <app-slider *ngIf="exactas.length > 0" [carreras]="exactas" titulo="Ciencias exacatas y naturales" area="exactas"></app-slider>
+    <app-slider *ngIf="sociales.length > 0" [carreras]="sociales" titulo="Ciencias sociales, educación y humanidades" area="sociales"></app-slider>
 
 </div>

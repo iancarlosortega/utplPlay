@@ -11,7 +11,7 @@
       class="mySwiper"
     >
     <ng-template swiperSlide *ngFor="let carrera of carreras">
-      <div class="card" [routerLink]="['/play/carrera',carrera.id]">
+      <div class="card" [routerLink]="['/play/carreras',carrera.id]">
         <img [src]="carrera.photo_url" class="card-img-top" [alt]="carrera.name">
         <div class="card-body">
           <p class="card-title">{{carrera.name}}</p>
