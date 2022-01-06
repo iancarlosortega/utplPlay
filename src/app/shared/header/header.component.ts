@@ -63,7 +63,6 @@ export class HeaderComponent implements OnInit  {
     this.authService.obtenerClaims().subscribe( idTokenResult => {
       const claims = idTokenResult?.claims;
       this.claims = claims;
-      console.log('obtener claims',claims);
     });
     
   }

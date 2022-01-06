@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs';
-import { Video } from 'src/app/interfaces/interfaces';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs';
+import { Records, Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-ver-video',
@@ -11,26 +12,61 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class VerVideoComponent implements OnInit {
 
+
   video!: Video;
+  played: boolean = false;
   videos!: Video[];
+  record!: Records;
 
   constructor( private adminService: AdminService,
-               private activatedRoute: ActivatedRoute ) { }
+               private activatedRoute: ActivatedRoute,
+               private authService: AuthService,
+               private router: Router ) { 
 
-  ngOnInit(): void {
+  }
+
+  ngOnInit() {
 
     this.activatedRoute.params
       .pipe(
-        switchMap( ({id}) => this.adminService.obtenerVideoPorId(id) )
+        switchMap( ({id}) => this.adminService.obtenerVideoPorId(id) ),
+        tap( video => {
+          this.video = video;
+          this.record = {
+            id: this.video.id,
+            name: this.video.title
+          }
+        }),
+        switchMap( video => this.adminService.obtenerVideosPorMateria(video.course) )
       )
-      .subscribe( video => {
-        this.video = video;
-        this.adminService.obtenerVideosPorMateria(this.video.course).subscribe( videos => {
+      .subscribe(videos => {
           this.videos = videos;
           this.videos = this.videos.filter( video => video.id != this.video.id );
-        })
-      });
+        }
+      )
 
+  }
+
+  cambiarVideo( id: string ){
+    this.router.navigate(['/play/video', id]);
+    this.played = false;
+  }
+  
+  historial(event: any){
+    const currentTime = event.target.currentTime;
+    if ( currentTime > 10 && currentTime < 15) {
+
+      if( !this.played ){
+
+        this.authService.obtenerClaims().subscribe( res => {
+
+          const uid = res?.claims['user_id'];
+          this.adminService.actualizarHistorialUsuario(uid, this.record);
+    
+        })
+      } 
+      this.played = true;   
+    };    
   }
 
 }

@@ -13,6 +13,12 @@ export interface User {
     city?: string;
     genre?: string;
     identification_card?: string;
+    search_history?: Records[];
+}
+
+export interface Records {
+    id: string;
+    name: string;
 }
 
 export interface Area {

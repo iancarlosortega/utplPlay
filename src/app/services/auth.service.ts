@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
-import { User } from '../interfaces/interfaces';
+import { Records, User } from '../interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 import firebase from '@firebase/app-compat';
 import { FileUpload } from '../admin/models/file-upload-model';

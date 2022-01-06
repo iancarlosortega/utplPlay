@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
+import firebase from '@firebase/app-compat';
 import { FileUpload } from '../admin/models/file-upload-model';
-import { Area, Career, Course, User, Video } from '../interfaces/interfaces';
+import { Area, Career, Course, Records, User, Video } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,23 @@ export class AdminService {
         })
       )
   }
+
+  actualizarHistorialUsuario(uid: string, record: Records ){
+    
+    this.firestore.collection('users', ref => ref.where('search_history', "array-contains", record)).get().subscribe(res => {
+      if (res.docs.length > 0){
+        this.firestore.collection('users').doc(uid).update({
+          search_history: firebase.firestore.FieldValue.arrayRemove(record)
+        });
+      }
+      this.firestore.collection('users').doc(uid).update({
+        search_history: firebase.firestore.FieldValue.arrayUnion(record)
+      });
+    });
+
+  }
+
+  //TODO: Agregar eliminar historial y views
 
   // Carreras
 
@@ -237,8 +255,6 @@ export class AdminService {
   }
 
   obtenerVideosPorMateria(materia: Course){
-
-    console.log(materia);
 
     const videosCollection = this.firestore.collection('videos', ref => ref.where('course.id', '==' , materia.id));
 

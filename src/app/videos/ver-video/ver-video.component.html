@@ -2,7 +2,7 @@
 <main class="breadcrumb">
     <div class="container">
       <div class="title">
-        <p>Oferta académica</p>
+        <p>{{video?.title}}</p>
       </div>
       <app-breadcrumb></app-breadcrumb>
     </div>
@@ -11,7 +11,7 @@
     <div class="contenedor">
         <div>
             <main class="video">
-                <video [src]="video?.url" controls></video>
+                <video (timeupdate)="historial($event)" [src]="video?.url" controls></video>
                 <p class="titulo">{{video?.title}}</p>
                 <div class="informacion">
                     <p><span class="texto-negrita">Profesor: </span>{{video?.teacher}}</p>
@@ -23,7 +23,7 @@
         <aside class="videos">
             <h5>Videos Relacionados</h5>
             <ul class="videos-listado">
-                <li *ngFor="let video of videos" [routerLink]="['/play/video', video.id]">
+                <li *ngFor="let video of videos" (click)="cambiarVideo(video.id)">
                     <mat-icon>play_circle</mat-icon>
                     {{video.title}}
                 </li>
