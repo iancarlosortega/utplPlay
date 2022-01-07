@@ -250,8 +250,7 @@ export class SubirVideoComponent implements OnInit {
 
   
   filtrarMaterias($event: any) {
-    let valor: string = $event.target.value;
-    valor = valor.toLowerCase().trim();
+    let valor: string = $event.target.value.toLowerCase().trim();
 
     this.materias = this.materiasAux
     this.materias = this.materias.filter((materia: Course) => {

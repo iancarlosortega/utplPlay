@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit  {
       icono: 'data_usage'
     },
     {
-      titulo: 'Materias',
+      titulo: 'Asignaturas',
       route: '/play/materias',
       icono: 'library_books'
     },

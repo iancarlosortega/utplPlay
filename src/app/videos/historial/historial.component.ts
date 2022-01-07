@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { switchMap } from 'rxjs';
+import { Records } from 'src/app/interfaces/interfaces';
+import { AdminService } from 'src/app/services/admin.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-historial',
@@ -7,9 +11,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistorialComponent implements OnInit {
 
-  constructor() { }
+  videos: Records[] = [];
+  videosAux: Records[] = [];
+
+  constructor( private authService: AuthService,
+               private adminService: AdminService ) { }
 
   ngOnInit(): void {
+
+    this.authService.obtenerClaims()
+      .pipe(
+        switchMap( idTokenResult => this.adminService.obtenerUsuarioPorId(idTokenResult?.claims['user_id']) )
+      )
+      .subscribe( user => {
+        this.videosAux = user.search_history || [];
+        this.videosAux = this.videosAux.reverse(); //Mostrar los más recientes
+        this.videos = this.videosAux;
+      });
+
+  }
+
+  buscar( event: any ){
+
+    const value = event.target.value.trim().toLowerCase();
+    this.videos = this.videosAux;
+    this.videos = this.videos.filter( video => video.name.toLowerCase().includes(value) );
+
   }
 
 }

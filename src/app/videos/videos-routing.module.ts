@@ -27,10 +27,10 @@ const routes: Routes = [
       },
       { 
         path: 'materias', 
-        data: { breadcrumb: 'Materias' },
+        data: { breadcrumb: 'Asignaturas' },
         children: [
           { path: '', component: ElegirMateriasComponent, data: { breadcrumb: '' } },
-          { path: ':id', component: VerMateriaComponent, data: { breadcrumb: 'Ver Materia' } },
+          { path: ':id', component: VerMateriaComponent, data: { breadcrumb: 'Ver Asignatura' } },
         ]
       },
       { path: 'video/:id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },

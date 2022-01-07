@@ -54,7 +54,7 @@ export class VerVideoComponent implements OnInit {
   
   historial(event: any){
     const currentTime = event.target.currentTime;
-    if ( currentTime > 10 && currentTime < 15) {
+    if ( currentTime > 1) {
 
       if( !this.played ){
 

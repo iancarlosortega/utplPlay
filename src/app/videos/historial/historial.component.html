@@ -7,3 +7,29 @@
         <app-breadcrumb></app-breadcrumb>
     </div>
 </main>
+<div class="container">
+
+    <!-- Buscador -->
+    <div class="buscador">
+        <mat-icon>search</mat-icon>
+        <input (keyup)="buscar($event)" type="text" placeholder="Buscar...">
+    </div>
+
+    <article class="videos" *ngIf="videos.length > 0">
+        <h5>Historial de videos</h5>
+        <ul class="videos-listado">
+            <li *ngFor="let video of videos" [routerLink]="['/play/video', video.id]">
+                <mat-icon>play_circle</mat-icon>
+                {{video.name}}
+            </li>
+        </ul>
+    </article>
+    <article class="videos" *ngIf="videos.length == 0">
+        <h5>Historial de videos</h5>
+        <ul class="videos-listado">
+            <li>
+                No se encontró ningún resultado...
+            </li>
+        </ul>
+    </article>
+</div>
