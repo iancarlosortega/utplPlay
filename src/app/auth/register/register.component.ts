@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   usuario!: User;
   paises: string[] = [];
   ciudades: any[] = [];
+  formSubmitted: boolean = false;
 
 
   //TODO: Validaciones de confirmar contrasenia, cedula y selects 
@@ -64,10 +65,12 @@ export class RegisterComponent implements OnInit {
   }
 
   campoNoValido( campo: string) {
-    return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
+    return this.miFormulario.get(campo)?.invalid && this.formSubmitted;
   }
 
   register() {
+
+    this.formSubmitted = true;
 
     if( this.miFormulario.invalid ) {
       this.miFormulario.markAllAsTouched();

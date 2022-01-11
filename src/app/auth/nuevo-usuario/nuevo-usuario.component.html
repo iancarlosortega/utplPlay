@@ -86,15 +86,18 @@
             </div>
 
             <div class="boton">
-                <button mat-fab class="boton-submit">
+                <button type="submit" mat-button class="boton-submit">
+                    Registrarse
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button>
             </div>
     
         </form>
         <div class="formulario-footer">
-            <p class="me-3">¿Ya tienes una cuenta?</p>
-            <p routerLink="auth/login" class="login">Inicia sesion</p>
+            <div class="pregunta">
+                <p>¿Ya tienes una cuenta?</p>
+            </div>
+            <button routerLink="/auth/login" class="login">Iniciar Sesión</button>
         </div>
     </div>
 </div>

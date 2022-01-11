@@ -12,11 +12,11 @@ export class LoginComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
     'email': [ '', [Validators.required, Validators.email] ],
-    // 'email': [ 'juan@juan.com', [Validators.required, Validators.email] ],
-    // 'email': [ 'icortega@utpl.edu.ec', [Validators.required, Validators.email] ],
-    // 'password': [ '123456', [Validators.required, Validators.minLength(6)] ]
     'password': [ '', [Validators.required, Validators.minLength(6)] ]
   })
+
+  error: boolean = false;
+  formSubmitted: boolean = false;
 
   constructor( private authService: AuthService ,
                private fb: FormBuilder,
@@ -27,10 +27,12 @@ export class LoginComponent implements OnInit {
   }
 
   campoNoValido( campo: string) {
-    return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
+    return this.miFormulario.get(campo)?.invalid && this.formSubmitted;
   }
 
   login() {
+
+    this.formSubmitted = true;
 
     if( this.miFormulario.invalid ) {
       this.miFormulario.markAllAsTouched();
@@ -42,11 +44,13 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginEmailPassword( email, password )
       .then( res => {
-        console.log('Login exitoso', res);
         this.router.navigateByUrl('/play');
 
       }).catch( error => {
-        console.log('Login error', error);
+        this.error = true;
+        setTimeout(() => {
+          this.error = false;
+        }, 3500);
       })
   }
 

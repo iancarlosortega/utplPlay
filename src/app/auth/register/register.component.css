@@ -67,7 +67,7 @@
 }
 
 @media (min-width:992px){
-    .campo input, .custom-select {
+    .campo, .custom-select {
         width: 25rem;
     }
 }
@@ -146,7 +146,7 @@
 }
 
 .text-error {
-    display: inline-block;
+    display: block;
     font-size: 0.8rem;
     font-weight: 400;
     padding: 0.5rem;

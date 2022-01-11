@@ -17,6 +17,7 @@ export class NuevoUsuarioComponent implements OnInit {
   usuario!: User;
   paises: string[] = [];
   ciudades: any[] = [];
+  formSubmitted: boolean = false;
 
   miFormulario: FormGroup = this.fb.group({
     education_level: [ '', Validators.required ],
@@ -42,7 +43,6 @@ export class NuevoUsuarioComponent implements OnInit {
         switchMap( ({id}) => this.adminService.obtenerUsuarioPorId(id) )
       )
       .subscribe( (usuario: User) => {
-        console.log('hey',usuario);
         if(usuario == null) {
           this.router.navigateByUrl('auth/login');
         } else {
@@ -70,10 +70,12 @@ export class NuevoUsuarioComponent implements OnInit {
   }
 
   campoNoValido( campo: string) {
-    return this.miFormulario.get(campo)?.invalid && this.miFormulario.get(campo)?.touched;
+    return this.miFormulario.get(campo)?.invalid && this.formSubmitted;
   }
 
   register() {
+
+    this.formSubmitted = true;
 
     if( this.miFormulario.invalid ) {
       this.miFormulario.markAllAsTouched();

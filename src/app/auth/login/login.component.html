@@ -22,6 +22,12 @@
                 </span>
             </div>
 
+            <span 
+                class="text-error alert alert-danger" 
+                *ngIf="error"
+                >El correo electrónico o la contraseña son <b>incorrectos</b>
+            </span>
+
             <div class="boton">
                 <button type="submit" mat-button class="boton-submit">
                     Iniciar Sesión
