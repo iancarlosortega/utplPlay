@@ -72,3 +72,15 @@ mat-form-field {
 .chips label {
     display: block;
 }
+
+.label {
+    color: #646464;
+}
+
+.textarea {
+    height: 10rem;
+}
+
+.descripcion {
+    margin: 0.5rem 0;
+}

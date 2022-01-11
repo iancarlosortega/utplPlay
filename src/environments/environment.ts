@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://localhost:5000/utpl-play/us-central1/',
+  baseURL: 'http://localhost:5000/utpl-play/us-central1',
   clientId: 'f99950bd-e2f1-47b9-8e83-ffc681374197',
   redirectUri: 'https://localhost:4200',
   firebaseConfig: {

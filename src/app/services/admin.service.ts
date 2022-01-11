@@ -23,8 +23,19 @@ export class AdminService {
 
   // Usuarios
 
-  obtenerUsuarios() {
-    return this.firestore.collection('users').get();
+  obtenerUsuarios(){
+    const usuariosCollection = this.firestore.collection('users');
+
+    return usuariosCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as User;
+            data.uid = a.payload.doc.id;
+            return data;
+          });
+        })
+      )
   }
 
   obtenerUsuarioPorId(id: string) {

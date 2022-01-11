@@ -18,9 +18,6 @@ export class NuevoUsuarioComponent implements OnInit {
   paises: string[] = [];
   ciudades: any[] = [];
 
-
-  //TODO: Validaciones de confirmar contrasenia, cedula y selects 
-
   miFormulario: FormGroup = this.fb.group({
     education_level: [ '', Validators.required ],
     institution: [ '', Validators.required ],

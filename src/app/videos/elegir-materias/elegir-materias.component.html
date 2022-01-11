@@ -8,23 +8,35 @@
     </div>
 </main>
 <div class="container">
-    <main class="materias">
-        <div class="card" *ngFor="let materia of materias">
-            <div class="card-body">
-                <h5 class="card-title">{{materia.name}}</h5>
-                <p class="card-text" >
-                    {{materia.description | slice:0:120}}...
-                    <a class="link" [routerLink]="['../materias', materia.id]">Ver Más</a>
-                </p>
-                <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
-                    <span class="tags" *ngFor="let keyword of materia?.keywords">
-                        {{keyword}}
-                    </span>
-                </p>
-            </div>
-        </div>
-    </main>
-    <div class="paginator">
-        <p-paginator [rows]="5" [totalRecords]="materiasAux.length" [rowsPerPageOptions]="[9,24,30]" (onPageChange)="paginate($event)"></p-paginator>
+    <!-- Buscador -->
+    <div class="buscador">
+        <mat-icon>search</mat-icon>
+        <input (keyup)="buscar($event)" type="text" placeholder="Buscar...">
     </div>
+    <div *ngIf="materias.length == 0" class="alert alert-secondary" role="alert">
+        No se encontraron resultados!
+    </div>
+    <div *ngIf="materias.length > 0">   
+        <main class="materias">
+            <div class="card" *ngFor="let materia of materias">
+                <div class="card-body">
+                    <h5 class="card-title">{{materia.name}}</h5>
+                    <p class="card-text" >
+                        {{materia.description | slice:0:120}}...
+                        <a class="link" [routerLink]="['../materias', materia.id]">Ver Más</a>
+                    </p>
+                    <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
+                        <span class="tags" *ngFor="let keyword of materia?.keywords">
+                            {{keyword}}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </main>
+        
+        <div class="paginator">
+            <p-paginator [rows]="5" [totalRecords]="length" [rowsPerPageOptions]="[9,24,30]" (onPageChange)="paginate($event)"></p-paginator>
+        </div>
+    </div>
+    
 </div>

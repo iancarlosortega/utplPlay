@@ -9,7 +9,9 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class ElegirMateriasComponent implements OnInit {
 
+  length: number = 0;
   materias: Course[] = [];
+  materiasTotales: Course[] = [];
   materiasAux: Course[] = [];
 
   constructor( private adminService: AdminService ) { }
@@ -18,7 +20,7 @@ export class ElegirMateriasComponent implements OnInit {
 
     this.adminService.obtenerMaterias().subscribe( materias => {
       //Devolver las materias ordenadas por el nombre
-      this.materiasAux = materias.sort( (a, b) => {
+      this.materiasTotales = materias.sort( (a, b) => {
         if (a.name > b.name) {
           return 1;
         }
@@ -28,7 +30,9 @@ export class ElegirMateriasComponent implements OnInit {
         // a must be equal to b
         return 0;
       });
-      this.materias = this.materiasAux.slice(0,9);
+      this.materias = this.materiasTotales.slice(0,9);
+      this.materiasAux = this.materiasTotales;
+      this.length = this.materiasTotales.length;
     })
 
   }
@@ -38,5 +42,15 @@ export class ElegirMateriasComponent implements OnInit {
     const ultimo = primero + event.rows;
     this.materias = this.materiasAux.slice( primero, ultimo );
   }   
+
+  buscar( event: any ){
+
+    const value = event.target.value.trim().toLowerCase();
+    this.materias = this.materiasTotales.filter( video => video.name.toLowerCase().includes(value) );
+    this.length = this.materias.length;
+    this.materiasAux = this.materias;
+    this.materias = this.materias.slice(0,9);
+
+  }
 
 }

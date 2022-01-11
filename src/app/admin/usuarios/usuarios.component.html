@@ -86,16 +86,18 @@
                 
                 <td style="width: 100px">
                     <mat-checkbox 
-                        (change)="prueba(usuario.email)" 
+                        [disabled]="adminCheck"
+                        (change)="agregarRolAdmin($event ,usuario.email)" 
                         [value]="usuario.email" 
-                        [checked]="usuario.email == 'juan@juan.com'">
+                        [checked]="usuario.admin">
                     </mat-checkbox>
                 </td>
                 <td style="width: 100px">
                     <mat-checkbox 
-                        (change)="prueba(usuario.email)" 
+                        [disabled]="editorCheck"
+                        (change)="agregarRolEditor($event ,usuario.email)" 
                         [value]="usuario.email" 
-                        [checked]="usuario.email == 'juan@juan.com'">
+                        [checked]="usuario.editor">
                     </mat-checkbox>
                 </td>
                 

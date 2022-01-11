@@ -14,11 +14,17 @@ export interface User {
     genre?: string;
     identification_card?: string;
     search_history?: Records[];
+    claims?: Claim;
 }
 
 export interface Records {
     id: string;
     name: string;
+}
+
+export interface Claim {
+    admin?: boolean;
+    editor?: boolean;
 }
 
 export interface Area {

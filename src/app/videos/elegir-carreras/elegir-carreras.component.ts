@@ -9,6 +9,8 @@ import { Career } from 'src/app/interfaces/interfaces';
 })
 export class ElegirCarrerasComponent implements OnInit {
 
+  carrerasTotales: Career[] = [];
+  carreras: Career[] = [];
   economicas: Career[] = []; 
   juridicas: Career[] = []; 
   salud: Career[] = []; 
@@ -21,14 +23,20 @@ export class ElegirCarrerasComponent implements OnInit {
   ngOnInit(): void {
 
     this.adminService.obtenerCarreras().subscribe( carreras => {
-      this.ingenierias = this.shuffle(carreras.filter( carrera => carrera.area.value === 'ingenierias' )); 
-      this.juridicas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'juridicas' )); 
-      this.salud = this.shuffle(carreras.filter( carrera => carrera.area.value === 'salud' )); 
-      this.economicas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'economicas' )); 
-      this.exactas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'exactas' )); 
-      this.sociales = this.shuffle(carreras.filter( carrera => carrera.area.value === 'sociales' )); 
+      this.carrerasTotales = carreras;
+      this.carreras = carreras;
+      this.filtrar(carreras);
     });
 
+  }
+
+  filtrar(carreras: Career[]) {
+    this.ingenierias = this.shuffle(carreras.filter( carrera => carrera.area.value === 'ingenierias' )); 
+    this.juridicas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'juridicas' )); 
+    this.salud = this.shuffle(carreras.filter( carrera => carrera.area.value === 'salud' )); 
+    this.economicas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'economicas' )); 
+    this.exactas = this.shuffle(carreras.filter( carrera => carrera.area.value === 'exactas' )); 
+    this.sociales = this.shuffle(carreras.filter( carrera => carrera.area.value === 'sociales' )); 
   }
 
   shuffle(array: any) {
@@ -47,6 +55,14 @@ export class ElegirCarrerasComponent implements OnInit {
     }
   
     return array;
+  }
+
+  buscar( event: any ){
+
+    const value = event.target.value.trim().toLowerCase();
+    this.carreras = this.carrerasTotales.filter( carrera => carrera.name.toLowerCase().includes(value) );
+    this.filtrar(this.carreras)
+
   }
 
 }
