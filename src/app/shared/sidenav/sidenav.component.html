@@ -13,7 +13,7 @@
       </mat-expansion-panel-header>
       <ul class="listado">
         <li *ngFor="let subitem of item.subItems">
-          <a class="nav-item" [routerLink]="subitem.route">
+          <a class="nav-item" [routerLink]="subitem.route" *ngIf="subitem.available">
             <div class="listado-item">
               <mat-icon routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">{{subitem.icono}}</mat-icon>
               <div class="item-nombre" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">

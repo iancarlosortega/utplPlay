@@ -152,23 +152,24 @@
             </mat-form-field>
 
             <!-- Input Descripción -->
-
+            <div class="descripcion">
+                <label class="label" for="descripcion">Descripción de la materia</label>
+                <textarea 
+                    class="form-control textarea"
+                    formControlName="description"
+                    id="descripcion"
+                    rows="10"
+                    [ngClass]="{'is-invalid': campoNoValido('description')}">
+                </textarea>
+                <small 
+                    *ngIf="campoNoValido('description')" 
+                    class="text text-danger">
+                    La descripción de la materia es <strong>obligatoria</strong>
+                </small>
+            </div>     
             
-
-            <textarea 
-                class="form-control" 
-                placeholder="Descripción de la materia"
-                formControlName="description"
-                [ngClass]="{'is-invalid': campoNoValido('description')}">
-            </textarea>
-            <small 
-                *ngIf="campoNoValido('description')" 
-                class="text text-danger">
-                La descripción de la materia es <strong>obligatoria</strong>
-            </small>
-
             <!-- Input carreras -->
-
+            <label for="careers">Carreras</label>
             <p-multiSelect 
                 [options]="carreras" 
                 formControlName="careers" 
@@ -192,6 +193,11 @@
                     formControlName="keywords">
                 </p-chips>
             </div>
+            <small 
+                *ngIf="campoNoValido('keywords')" 
+                class="text text-danger">
+                Escriba por lo menos <strong>1</strong> palabra clave
+            </small>
 
             <!-- Purposes -->
 
@@ -258,21 +264,24 @@
             </mat-form-field>      
             
             <!-- Input Descripción -->
-
-            <textarea 
-                class="form-control" 
-                placeholder="Descripción de la materia"
-                formControlName="description"
-                [ngClass]="{'is-invalid': campoNoValido('description')}">
-            </textarea>
-            <small 
-                *ngIf="campoNoValido('description')" 
-                class="text text-danger">
-                La descripción de la materia es <strong>obligatoria</strong>
-            </small>
-        
+            <div class="descripcion">
+                <label class="label" for="descripcion">Descripción de la materia</label>
+                <textarea 
+                    class="form-control textarea"
+                    formControlName="description"
+                    id="descripcion"
+                    rows="10"
+                    [ngClass]="{'is-invalid': campoNoValido('description')}">
+                </textarea>
+                <small 
+                    *ngIf="campoNoValido('description')" 
+                    class="text text-danger">
+                    La descripción de la materia es <strong>obligatoria</strong>
+                </small>
+            </div>  
+            
             <!-- Input carreras -->
-
+            <label for="careers">Carreras</label>
             <p-multiSelect 
                 [options]="carreras" 
                 formControlName="careers" 
@@ -296,6 +305,11 @@
                     formControlName="keywords">
                 </p-chips>
             </div>
+            <small 
+                *ngIf="campoNoValido('keywords')" 
+                class="text text-danger">
+                Escriba por lo menos <strong>1</strong> palabra clave
+            </small>
 
             <!-- Purposes -->
 

@@ -21,7 +21,7 @@
         <mat-menu 
             #menu="matMenu" 
             xPosition="before">
-            <button *ngIf="claims?.admin" mat-menu-item routerLink="/admin">
+            <button *ngIf="claims?.admin || claims?.editor" mat-menu-item routerLink="/admin">
                 <mat-icon>admin_panel_settings</mat-icon>
                 <span>Dashboard</span>
             </button>
@@ -69,7 +69,7 @@
             </div>
           </a>
         </li>
-        <li *ngIf="claims?.admin">
+        <li *ngIf="claims?.admin || claims?.editor">
             <a class="nav-item2" routerLink="/admin">
               <div class="listado-item">
                 <mat-icon>admin_panel_settings</mat-icon>

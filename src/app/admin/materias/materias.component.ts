@@ -33,7 +33,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
   miFormulario: FormGroup = this.fb.group({
     name: [ '', [ Validators.required, Validators.minLength(3) ] ],
     description: [ '', [ Validators.required, Validators.minLength(10) ] ],
-    keywords: [ '' ],
+    keywords: [ '', [ Validators.required ] ],
     purposes: [ '' ],
     careers: [ '', [ Validators.required ] ],
   })

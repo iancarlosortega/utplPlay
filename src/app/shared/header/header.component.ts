@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,8 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit  {
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  obs!: Subscription;
   visibleSidebar: boolean = false;
   toolBar: boolean = false;
   hidden: boolean = false;
@@ -53,6 +55,9 @@ export class HeaderComponent implements OnInit  {
                private router: Router,
                private observer: BreakpointObserver
 ) {}
+  ngOnDestroy(): void {
+    this.obs.unsubscribe();
+  }
 
   ngOnInit(): void {
 
@@ -60,9 +65,10 @@ export class HeaderComponent implements OnInit  {
       this.hidden = true;
     }
 
-    this.authService.obtenerClaims().subscribe( idTokenResult => {
+    this.obs = this.authService.obtenerClaims().subscribe( idTokenResult => {
       const claims = idTokenResult?.claims;
       this.claims = claims;
+      console.log(this.claims);
     });
     
   }

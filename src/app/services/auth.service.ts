@@ -119,10 +119,22 @@ export class AuthService {
   actualizarUsuario( usuario: User ) {
     return this.firestore.collection('users').doc(usuario.uid).update(usuario);
   }
-  //TODO: Agregar con el plan avanzado de firebase con Cloud Functions
-  // agregarRolAdmin( email: string ) {
-  //   return this.http.post(`${ environment.baseURL }/api/addAdminRole`, { email });
-  // }
+
+  agregarRolAdmin( email: string ) {
+    return this.http.post(`${ environment.baseURL }/api/addAdminRole`, { email });
+  }
+
+  removerRolAdmin( email: string ) {
+    return this.http.post(`${ environment.baseURL }/api/removeAdminRole`, { email });
+  }
+
+  agregarRolEditor( email: string ) {
+    return this.http.post(`${ environment.baseURL }/api/addEditorRole`, { email });
+  }
+
+  removerRolEditor( email: string ) {
+    return this.http.post(`${ environment.baseURL }/api/removeEditorRole`, { email });
+  }
 
   obtenerClaims() {
     return this.afAuth.idTokenResult;
