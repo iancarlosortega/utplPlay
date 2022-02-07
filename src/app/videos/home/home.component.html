@@ -61,19 +61,19 @@
         <div class="servicio">
             <img src="assets/videos/video-icon.svg" alt="Icono de video">
             <h4>Mejores Recursos</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>Recursos en formato de video cortos, precios y eficientes.</p>
         </div>
 
         <div class="servicio">
             <img src="assets/videos/profesor-icon.svg" alt="Icono de profesor">
             <h4>Mejores Tutores</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>Los profesores con la mejor capacitación y enseñanza.</p>
         </div>
 
         <div class="servicio">
             <img src="assets/videos/educacion-icon.svg" alt="Icono de educacion">
             <h4>La mejor educación</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>La Universidad Técnica Particular de Loja brinda excelente educación.</p>
         </div>
 
     </section>
@@ -86,7 +86,9 @@
     <section class="carreras-populares">
 
         <div class="card" *ngFor="let carrera of carreras" [routerLink]="['/play/carreras', carrera.id]">
-            <img [src]="carrera.photo_url" class="card-img-top" [alt]="carrera.name">
+            <div class="carrera-imagen">
+                <img [src]="carrera.photo_url" class="card-img-top" [alt]="carrera.name">
+            </div>
             <div class="card-body">
               <h5 class="card-title">{{ carrera.name }}</h5>
             </div>

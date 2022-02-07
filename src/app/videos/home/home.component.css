@@ -208,12 +208,29 @@
 
 .card {
     cursor: pointer;
+    transition: ease .2s;
+}
+
+.card:hover {
+    border: none;
+    background-color: #0f151b;
+    color: #FFFFFF;
+}
+
+.carrera-imagen {
+    display: inline-block; /* change the default display type to inline-block */
+    overflow: hidden;
+}
+
+.card:hover img {
+    transform: scale(1.5);
 }
 
 .card img {
     object-fit: cover;
     aspect-ratio: 16/9;
     width: 100%;
+    transition: ease .5s;
 }
 
 .estudiantes {
