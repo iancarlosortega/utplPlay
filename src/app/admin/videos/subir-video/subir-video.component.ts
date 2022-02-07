@@ -25,6 +25,7 @@ export class SubirVideoComponent implements OnInit {
       id: '',
       name: '',
       description: '',
+      views: 0
     },
     views : 0,
     url : '',

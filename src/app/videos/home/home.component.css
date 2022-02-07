@@ -11,7 +11,6 @@
 .contenido {
     margin: auto;
     width: 80%;
-    min-width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,6 +26,11 @@
 
 .cursos, .carreras {
     margin: 2.5rem 0;
+}
+
+.carreras {
+    display: flex;
+    justify-content: center;
 }
 
 .titulo {
@@ -73,8 +77,7 @@
 @media (min-width: 540px){
     .titulo {
         font-size: 3.5rem;
-        text-align: left;
-        width: 70%;
+        text-align: center;
     }
     
     .subtitulo {
@@ -83,9 +86,17 @@
     }
 }
 
+@media (min-width:992px){
+    .titulo {
+        width: 70%;
+        text-align: left;
+    }
+}
+
 .buscador {
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 100%;
+    gap: 1rem;
 }
 
 .buscador input {
@@ -95,6 +106,15 @@
 .buscador button {
     background-color: var(--primario);
     border-color: var(--primario);
+}
+
+@media (min-width: 500px){
+
+    .buscador {
+        grid-template-columns: 80% 20%;
+        gap: 0rem;
+    }
+
 }
 
 @media (min-width: 992px){
@@ -107,16 +127,17 @@
     }
 }
 
-.container {
+.facultades {
     --d: 6em; /* image size */
     --rel: 1; /* how much extra space we want between images, 1 = one image size */
     --r: calc(.5*(1 + var(--rel))*var(--d)/var(--tan)); /* circle radius */
-    --s: calc(2*var(--r) + var(--d)); /* container size */
+    --s: calc(2*var(--r) + var(--d)); /* facultades size */
     position: relative;
-    width: var(--s); height: var(--s);
+    width: var(--s);
+    height: var(--s);
 }
   
-.container a {
+.facultades a {
     position: absolute;
     top: 50%; left: 50%;
     margin: calc(-.5*var(--d));
@@ -128,6 +149,148 @@
         rotate(calc(-1*var(--az)));
 }
   
-.container a img { 
+.facultades a img { 
     max-width: 100%;
+}
+
+.header {
+    margin: 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header p {
+    font-size: 3rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+}
+
+.header .linea {
+    height: 5px;
+    width: 70px;
+    background-color: var(--primario);
+}
+
+.card-title {
+    text-align: center;
+}
+
+.servicios {
+    margin: 2.5rem 0;
+    padding: 1.5rem 0;
+    display: grid; 
+    gap: 2.5rem; 
+    grid-template-columns: repeat( auto-fill, minmax(20rem, 1fr) );
+}
+
+.servicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.servicio img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    width: 5rem;
+    height: 5rem;
+}
+
+.carreras-populares {
+    display: grid; 
+    gap: 1rem; 
+    grid-template-columns: repeat( auto-fill, minmax(20rem, 1fr) );
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card img {
+    object-fit: cover;
+    aspect-ratio: 16/9;
+    width: 100%;
+}
+
+.estudiantes {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 2.5rem;
+}
+
+@media (min-width:768px){
+    .estudiantes {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+.estudiantes .img {
+    background: black;
+    overflow: hidden;
+}
+
+.estudiantes .img img {
+    width: 100%;
+    opacity: 0.4;
+    transform: scaleX(-1);
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.estudiantes .informacion {
+    padding: 3.5rem;
+    background-color: #0f151b;
+    color: var(--blanco);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.informacion h4 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.informacion button {
+    background-color: transparent;
+    border: 1px solid var(--blanco);
+    color: var(--blanco);
+    padding: 0.5rem 3rem;
+    
+}
+
+.informacion button:hover {
+    background-color: var(--blanco);
+    border: 1px solid var(--blanco);
+    color: #0f151b;
+    transition: 0.5s ease;
+}
+
+.blanco {
+    background-color: var(--blanco);
+}
+
+.colaboradores {
+    padding: 2.5rem 0;
+    display: grid;
+    grid-template-columns: 1fr; 
+    place-items: center;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px){
+    .colaboradores {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+.colaboradores img{
+    width: 10rem;
 }

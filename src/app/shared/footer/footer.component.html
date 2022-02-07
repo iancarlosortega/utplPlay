@@ -1,0 +1,36 @@
+<footer class="footer">
+    <div class="container">
+
+        <div class="logo">
+            <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="../home">
+        </div>
+
+        <div class="contactos">
+            <header class="header">
+                <p>Contactos</p>
+            </header>
+            <ul class="listado">
+                <li class="listado-item" *ngFor="let contacto of contactos">
+                    <mat-icon>{{contacto.icon}}</mat-icon>
+                    <p>{{contacto.contacto}}</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="links">
+            <header class="header">
+                <p>Links de interes</p>
+            </header>
+            <ul class="listado">
+                <li class="listado-item" *ngFor="let link of links" [routerLink]="link.route">
+                    <mat-icon>arrow_right_alt</mat-icon>
+                    <p>{{link.link}}</p>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+<div class="copyright">
+    <p>©{{year}} UTPL Play</p>
+</div>  

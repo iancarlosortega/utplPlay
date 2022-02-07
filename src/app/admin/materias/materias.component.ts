@@ -107,6 +107,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
     }
 
     this.materia = this.miFormulario.value;
+    this.materia.views = 0;
 
     this.disabled = true;
     this.adminService.agregarMateria(this.materia)

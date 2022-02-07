@@ -6,6 +6,7 @@ import { PrimeNGModule } from '../prime-ng/prime-ng.module';
 import { SwiperModule } from 'swiper/angular';
 
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -17,6 +18,7 @@ import { VideoComponent } from './video/video.component';
 @NgModule({
   declarations: [
     BreadcrumbComponent,
+    FooterComponent,
     HeaderComponent,
     NavbarComponent,
     SidenavComponent,
@@ -32,6 +34,7 @@ import { VideoComponent } from './video/video.component';
   ],
   exports: [
     BreadcrumbComponent,
+    FooterComponent,
     HeaderComponent,
     NavbarComponent,
     SidenavComponent,

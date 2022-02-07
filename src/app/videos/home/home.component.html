@@ -12,7 +12,7 @@
             <div class="buscador">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Busca carreras, materias o temáticas">         
+                    <input type="text" pInputText placeholder="Busca carreras, asignaturas o temáticas">         
                 </span>
                 <button 
                     type="button" 
@@ -23,8 +23,8 @@
             </div>
         </div>
         <div class="carreras">
-
-            <div class="container" style="--m: 5; --tan: 0.73">
+            
+            <div class="facultades" style="--m: 5; --tan: 0.73">
                 <a pTooltip="Ciencias de la salud">
                     <img src="/assets/areas/ciencias_salud.png" alt="alt text"/>
                 </a>
@@ -46,5 +46,94 @@
             </div>
         </div>
     </main>
+</div>
+
+
+<div class="container">
+
+    <header class="header">
+        <p>Servicios</p>
+        <div class="linea"></div>
+    </header>
+
+    <section class="servicios">
+
+        <div class="servicio">
+            <img src="assets/videos/video-icon.svg" alt="Icono de video">
+            <h4>Mejores Recursos</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+
+        <div class="servicio">
+            <img src="assets/videos/profesor-icon.svg" alt="Icono de profesor">
+            <h4>Mejores Tutores</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+
+        <div class="servicio">
+            <img src="assets/videos/educacion-icon.svg" alt="Icono de educacion">
+            <h4>La mejor educación</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </div>
+
+    </section>
+
+    <header class="header">
+        <p>Carreras más populares</p>
+        <div class="linea"></div>
+    </header>
+
+    <section class="carreras-populares">
+
+        <div class="card" *ngFor="let carrera of carreras" [routerLink]="['/play/carreras', carrera.id]">
+            <img [src]="carrera.photo_url" class="card-img-top" [alt]="carrera.name">
+            <div class="card-body">
+              <h5 class="card-title">{{ carrera.name }}</h5>
+            </div>
+          </div>
+
+    </section>
+
+    <header class="header">
+        <p>Asignaturas más populares</p>
+        <div class="linea"></div>
+    </header>
+
+    <section class="carreras-populares">
+
+        <div class="card" *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.id]"> 
+            <div class="card-body">
+              <h5 class="card-title">{{ materia.name }}</h5>
+            </div>
+          </div>
+
+    </section>
 
 </div>
+
+<div class="estudiantes">
+
+    <div class="img">
+        <img src="assets/videos/estudiantes-utpl.jpg" alt="Estudiantes UTPL">
+    </div>
+
+    <div class="informacion">
+
+        <h4>Nunca dejes de aprender</h4>
+        <p>Gracias a los contenidos de alta calidad por parte de UTPL, puedes preparte de la manera más profesional posible</p>
+        <button routerLink="/play/materias">Encontrar cursos</button>
+    </div>
+
+</div>
+<div class="blanco">
+    <div class="container">
+        <div class="colaboradores">
+            <img src="assets/videos/ascendere-colaborador.png" alt="Ascendere">
+            <img src="assets/videos/utpl-colaborador.png" alt="UTPL">
+            <img src="assets/videos/liid-colaborador.png" alt="LiiD">
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>
+

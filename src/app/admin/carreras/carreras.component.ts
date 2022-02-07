@@ -219,6 +219,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
       //Crear
       
       this.carrera = this.miFormulario.value;
+      this.carrera.views = 0;
 
       if (this.selectedFiles) {
         let filename: string = this.miFormulario.controls['file'].value;

@@ -50,6 +50,7 @@ export interface Course {
     keywords?: string[];
     purposes?: string[];
     careers?: Career[];
+    views: number;
 }
 
 export interface Video {

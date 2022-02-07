@@ -13,6 +13,10 @@
         flex-direction: column;
         align-items: flex-end;
     }
+
+    .register {
+        height: 100vh;
+    }
 }
 
 .logo img{
