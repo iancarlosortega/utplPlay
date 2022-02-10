@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -18,7 +17,6 @@ export class AdminService {
 
   constructor( private firestore: AngularFirestore,
                private storage: AngularFireStorage,
-               private http: HttpClient
   ) { }
 
   // Usuarios
