@@ -1,12 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Table } from 'primeng/table';
-import { Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
+import { Table } from 'primeng/table';
+import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../../eliminar/eliminar.component';
+import { Video } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-listado-videos',

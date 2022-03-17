@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SidenavComponent implements OnInit, OnDestroy {
 
+  @Output() onCloseSidenav: EventEmitter<any> = new EventEmitter();
+
   panelOpenState = true;
   claims: any;
   admin: boolean = false;
@@ -17,6 +19,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   menuItems: any = [];
 
   constructor( private authService: AuthService ) { }
+
   ngOnDestroy(): void {
     this.obs.unsubscribe();
   }
@@ -26,13 +29,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.obs = this.authService.obtenerClaims().subscribe( idTokenResult => {
 
       this.claims = idTokenResult?.claims;
-      console.log(this.claims);
       if( this.claims.admin ){
         this.admin = true;
       };
       const menuItems = [
         {
-          titulo: 'Administracion',
+          titulo: 'Administración',
           subItems: [
             {
               subtitulo: 'Dashboard',
@@ -41,7 +43,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
               available: this.admin
             },
             {
-              subtitulo: 'Gestion de roles',
+              subtitulo: 'Gestión de roles',
               route: './usuarios',
               icono: 'supervised_user_circle',
               available: this.admin
@@ -85,5 +87,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
+  cerrarSidenav() {
+    this.onCloseSidenav.emit();
+  }
 
 }

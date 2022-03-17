@@ -12,10 +12,17 @@
             <div class="buscador">
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Busca carreras, asignaturas o temáticas">         
+                    <input 
+                        [(ngModel)]="busqueda"
+                        (keyup.enter)="buscar()"
+                        type="text" 
+                        pInputText 
+                        placeholder="Busca carreras, asignaturas o temáticas"
+                    >         
                 </span>
                 <button 
                     type="button" 
+                    (click)="buscar()"
                     pButton 
                     pRipple 
                     label="Buscar"

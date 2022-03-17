@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import firebase from '@firebase/app-compat';
 import { FileUpload } from '../admin/models/file-upload-model';
 import { Area, Career, Course, Records, User, Video } from '../interfaces/interfaces';
@@ -65,7 +66,7 @@ export class AdminService {
 
   }
 
-  //TODO: Agregar eliminar historial y views
+  //TODO: Agregar eliminar historial
 
   // Carreras
 
@@ -328,6 +329,10 @@ export class AdminService {
 
   eliminarVideoStorage(name: string) {
     this.storage.ref(this.basePath).child(name).delete();
+  }
+
+  aumentarVisualizacionVideo( id: string) {
+    return this.http.post(`${ environment.functionsURL }/api/videos/${id}`, {});
   }
 
 }

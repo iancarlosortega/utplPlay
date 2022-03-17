@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 import { ElegirCarrerasComponent } from './elegir-carreras/elegir-carreras.component';
 import { ElegirMateriasComponent } from './elegir-materias/elegir-materias.component';
 import { HistorialComponent } from './historial/historial.component';
+import { HomeComponent } from './home/home.component';
 import { SobreNosotrosComponent } from './sobre-nosotros/sobre-nosotros.component';
 import { VerCarreraComponent } from './ver-carrera/ver-carrera.component';
 import { VerMateriaComponent } from './ver-materia/ver-materia.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'perfil', component: EditarPerfilComponent, data: { breadcrumb: 'Editar Perfil' } },
       { path: 'historial', component: HistorialComponent, data: { breadcrumb: 'Historial' } },
       { path: 'nosotros', component: SobreNosotrosComponent, data: { breadcrumb: 'Sobre Nosotros' } },
+      { path: 'buscar/:id', component: BusquedaComponent, data: { breadcrumb: 'Búsqueda' } },
       { path: '**', redirectTo: 'home' },
     ]
   }

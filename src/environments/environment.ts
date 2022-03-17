@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://localhost:5000/utpl-play/us-central1',
+  functionsURL: 'http://localhost:5000/utpl-play/us-central1',
+  paisesURL: 'https://countriesnow.space/api/v0.1',
   clientId: 'f99950bd-e2f1-47b9-8e83-ffc681374197',
   redirectUri: 'https://localhost:4200',
   firebaseConfig: {

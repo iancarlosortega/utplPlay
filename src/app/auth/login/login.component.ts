@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/play');
 
       }).catch( error => {
+        console.log(error);
         this.error = true;
         setTimeout(() => {
           this.error = false;
@@ -56,6 +57,10 @@ export class LoginComponent implements OnInit {
 
   loginGoogle() {
     this.authService.loginGoogle()
+  }
+
+  loginFacebook() {
+    this.authService.loginFacebook()
   }
 
   loginMicrosoft() {

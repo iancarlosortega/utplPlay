@@ -1,0 +1,55 @@
+<app-header></app-header>
+<main class="breadcrumb">
+    <div class="container">
+      <div class="title">
+        <p>Búsqueda</p>
+      </div>
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+</main>
+<div class="container">
+
+  <!-- Buscador -->
+  <div class="buscador">
+      <mat-icon>search</mat-icon>
+      <input (keyup)="buscar($event)" type="text" placeholder="Buscar...">
+  </div>
+
+  <article class="resultados" *ngIf="videos_aux.length > 0">
+      <h5>Videos relacionados</h5>
+      <ul class="listado">
+          <li *ngFor="let video of videos_aux" [routerLink]="['/play/video', video.id]">
+              <mat-icon>play_circle</mat-icon>
+              {{video.title}}
+          </li>
+      </ul>
+  </article>
+  <article class="resultados" *ngIf="carreras_aux.length > 0">
+      <h5>Carreras relacionadas</h5>
+      <ul class="listado">
+          <li *ngFor="let carrera of carreras_aux" [routerLink]="['/play/carreras', carrera.id]">
+              <mat-icon>play_circle</mat-icon>
+              {{carrera.name}}
+          </li>
+      </ul>
+  </article>
+  <article class="resultados" *ngIf="asignaturas_aux.length > 0">
+      <h5>Materias relacionadas</h5>
+      <ul class="listado">
+          <li *ngFor="let asignatura of asignaturas_aux" [routerLink]="['/play/materias', asignatura.id]">
+              <mat-icon>play_circle</mat-icon>
+              {{asignatura.name}}
+          </li>
+      </ul>
+  </article>
+  <!-- <article class="videos" *ngIf="videos.length == 0">
+      <h5>Historial de videos</h5>
+      <ul class="videos-listado">
+          <li>
+              No se encontró ningún resultado...
+          </li>
+      </ul>
+  </article> -->
+</div>
+
+<app-footer></app-footer>

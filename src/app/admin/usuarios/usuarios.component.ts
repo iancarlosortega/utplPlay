@@ -1,11 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
-import { Table } from 'primeng/table';
-import { User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
+import { Table } from 'primeng/table';
 import { ToastrService } from 'ngx-toastr';
-import { switchMap, tap } from 'rxjs';
+import { User } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-usuarios',

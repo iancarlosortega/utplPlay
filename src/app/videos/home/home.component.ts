@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Career, Course } from 'src/app/interfaces/interfaces';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { Career, Course } from 'src/app/interfaces/interfaces';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,8 +11,10 @@ export class HomeComponent implements OnInit {
 
   carreras: Career[] = [];
   materias: Course[] = [];
+  busqueda: string = "";
 
-  constructor( private adminService: AdminService ) { }
+  constructor( private adminService: AdminService,
+               private router:Router ) { }
 
   ngOnInit(): void {
 
@@ -23,6 +26,10 @@ export class HomeComponent implements OnInit {
       this.materias = materias.sort((a,b) => (a.views < b.views) ? 1 : ((b.views < a.views) ? -1 : 0)).slice( 0,6 );
     })
 
+  }
+
+  buscar() {
+    this.router.navigate(['/play/buscar', this.busqueda]);
   }
 
 }

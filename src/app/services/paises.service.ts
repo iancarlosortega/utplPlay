@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,11 +8,12 @@ import { Injectable } from '@angular/core';
 export class PaisesService {
 
   paises: string[] = [];
+  baseUrl: string = environment.paisesURL;
 
   constructor( private http: HttpClient ) { }
 
   obtenerPaises() {
-    this.http.get('https://countriesnow.space/api/v0.1/countries/iso').subscribe( (res: any) => {
+    this.http.get(`${this.baseUrl}/countries/iso`).subscribe( (res: any) => {
       res['data'].forEach( (element: any) => {
         this.paises.push( element.name );
       });
@@ -20,7 +22,7 @@ export class PaisesService {
   }
 
   obtenerCiudadesSegunPais( pais: string ) {
-    return this.http.post('https://countriesnow.space/api/v0.1/countries/cities', { country : pais });
+    return this.http.post(`${this.baseUrl}/countries/cities`, { country : pais });
   }
 
 }

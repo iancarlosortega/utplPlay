@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
-import { Records, Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Records, Video } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-ver-video',
@@ -14,7 +14,8 @@ export class VerVideoComponent implements OnInit {
 
 
   video!: Video;
-  played: boolean = false;
+  videoHistorial: boolean = false;
+  videoView: boolean = false;
   videos!: Video[];
   record!: Records;
 
@@ -49,14 +50,16 @@ export class VerVideoComponent implements OnInit {
 
   cambiarVideo( id: string ){
     this.router.navigate(['/play/video', id]);
-    this.played = false;
+    this.videoHistorial = false;
+    this.videoView = false;
   }
   
+
   historial(event: any){
     const currentTime = event.target.currentTime;
     if ( currentTime > 1) {
 
-      if( !this.played ){
+      if( !this.videoHistorial ){
 
         this.authService.obtenerClaims().subscribe( res => {
 
@@ -65,8 +68,20 @@ export class VerVideoComponent implements OnInit {
     
         })
       } 
-      this.played = true;   
+      this.videoHistorial = true;   
     };    
+
+    if ( currentTime > 30) {
+
+      if( !this.videoView ){
+
+        this.adminService.aumentarVisualizacionVideo(this.video.id).subscribe();
+
+      } 
+      this.videoView = true;   
+    };
+
+
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { last, switchMap, tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/interfaces/interfaces';
 import { AuthService } from 'src/app/services/auth.service';
 import { PaisesService } from 'src/app/services/paises.service';
@@ -18,9 +18,6 @@ export class RegisterComponent implements OnInit {
   paises: string[] = [];
   ciudades: any[] = [];
   formSubmitted: boolean = false;
-
-
-  //TODO: Validaciones de confirmar contrasenia, cedula y selects 
 
   miFormulario: FormGroup = this.fb.group({
     name: [ '', Validators.required ],
