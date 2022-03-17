@@ -32,9 +32,7 @@ export class DashboardGuard implements CanActivate, CanLoad {
     this.afAuth.idTokenResult.subscribe((idTokenResult) => {
       const claims = idTokenResult?.claims;
       if (claims) {
-        if (claims!['admin']) {
-          this.router.navigateByUrl('/admin/dashboard');
-        } else {
+        if (!claims!['admin']) {
           this.router.navigateByUrl('/admin/carreras');
         }
       }
@@ -52,9 +50,7 @@ export class DashboardGuard implements CanActivate, CanLoad {
     this.afAuth.idTokenResult.subscribe((idTokenResult) => {
       const claims = idTokenResult?.claims;
       if (claims) {
-        if (claims!['admin']) {
-          this.router.navigateByUrl('/admin/dashboard');
-        } else {
+        if (!claims!['admin']) {
           this.router.navigateByUrl('/admin/carreras');
         }
       }
