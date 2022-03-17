@@ -1,12 +1,8 @@
 <nav class="navbar">
-    <div class="logo">
-        <a routerLink="/play"><img src="/assets/logo.png" alt="UTPL Play logo"></a>
-    </div>
     <div class="logout">
         <div class="username">
-            <p>Bienvenido usuario!</p>
+            <p>{{username}}</p>
         </div>
-        |<mat-icon >people</mat-icon>
         |<mat-icon routerLink="/play" >logout</mat-icon>
     </div>
 </nav>

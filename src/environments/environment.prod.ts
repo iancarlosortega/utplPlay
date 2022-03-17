@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
+  functionsURL: 'https://us-central1-utpl-play.cloudfunctions.net',
+  paisesURL: 'https://countriesnow.space/api/v0.1',
   firebaseConfig: {
     apiKey: "AIzaSyAfqq_hhBozYVXzQtcIitCDsjprno4u63A",
     authDomain: "utpl-play.firebaseapp.com",

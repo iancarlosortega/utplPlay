@@ -25,22 +25,6 @@ body {
     --separacion: 5rem;
 }
 
-/* .ui-chips {
-    display: block !important;
-}
-
-
-.ui-chips ul {
-    border:2px dashed green !important;
-}
-
-.ui-chips > ul.ui-inputtext .ui-chips-token {
-    font-size: 14px;
-    background: green !important;
-    border:1px solid #005555;
-    box-shadow: 0 0 25px #ccc;
-} */
-
 /* Fix mat-select and modal */
 .cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 9999!important; }
 

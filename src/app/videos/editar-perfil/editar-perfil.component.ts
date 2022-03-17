@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { switchMap, tap } from 'rxjs/operators';
-import { FileUpload } from 'src/app/admin/models/file-upload-model';
-import { User } from 'src/app/interfaces/interfaces';
+import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { PaisesService } from 'src/app/services/paises.service';
+import { FileUpload } from 'src/app/admin/models/file-upload-model';
+import { User } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-editar-perfil',

@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
-import { Career, Course } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { Career, Course } from 'src/app/interfaces/interfaces';
 @Component({
   selector: 'app-materias',
   templateUrl: './materias.component.html',

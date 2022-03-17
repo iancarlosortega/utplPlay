@@ -11,8 +11,8 @@ const routes: Routes = [
   { 
     path: 'play', 
     loadChildren: () => import('./videos/videos.module').then( m => m.VideosModule ), 
-    // canActivate: [AuthGuard], 
-    // canLoad: [AuthGuard]
+    canActivate: [AuthGuard], 
+    canLoad: [AuthGuard]
   },
   { 
     path: 'admin', 
@@ -24,7 +24,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    useHash: true
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

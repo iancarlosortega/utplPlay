@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import firebase from '@firebase/app-compat';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Router } from '@angular/router';
-import { Records, User } from '../interfaces/interfaces';
-import { environment } from 'src/environments/environment';
-import firebase from '@firebase/app-compat';
-import { FileUpload } from '../admin/models/file-upload-model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { FileUpload } from '../admin/models/file-upload-model';
+import { User } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -19,17 +18,13 @@ export class AuthService {
   // Nombre de la carpeta donde se guardaran en el storage de firebase
   private basePath = '/photos';
 
-  //TODO: Cambiar las reglas de leer, escribir del firestore a futuro en produccion.
-
   constructor( private afAuth: AngularFireAuth,
                private firestore: AngularFirestore,
-               private functions: AngularFireFunctions,
                private router: Router,
                private http: HttpClient,
                private storage: AngularFireStorage,
   ) {}
 
-  //TODO: Manejo de errores del firebase en el registro.
   register(usuario: User) {
     return this.afAuth.createUserWithEmailAndPassword( usuario.email, usuario.password! );
   }
@@ -41,6 +36,11 @@ export class AuthService {
   loginGoogle() {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     this.loginProvider( googleAuthProvider );
+  }
+
+  loginFacebook() {
+    const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
+    this.loginProvider( facebookAuthProvider );
   }
 
   loginMicrosoft() {
@@ -56,11 +56,10 @@ export class AuthService {
     this.loginProvider(microsoftAuthProvider);
   }
 
-  loginProvider( provider: any ) {
+  async loginProvider( provider: any ) {
     return this.afAuth.signInWithPopup( provider )
       .then( response => {
         
-        // this.router.navigate([ 'auth/register/', 123 ])
         if(response.additionalUserInfo?.isNewUser === true) {
 
           const usuario: User = {
@@ -121,19 +120,19 @@ export class AuthService {
   }
 
   agregarRolAdmin( email: string ) {
-    return this.http.post(`${ environment.baseURL }/api/addAdminRole`, { email });
+    return this.http.post(`${ environment.functionsURL }/api/addAdminRole`, { email });
   }
 
   removerRolAdmin( email: string ) {
-    return this.http.post(`${ environment.baseURL }/api/removeAdminRole`, { email });
+    return this.http.post(`${ environment.functionsURL }/api/removeAdminRole`, { email });
   }
 
   agregarRolEditor( email: string ) {
-    return this.http.post(`${ environment.baseURL }/api/addEditorRole`, { email });
+    return this.http.post(`${ environment.functionsURL }/api/addEditorRole`, { email });
   }
 
   removerRolEditor( email: string ) {
-    return this.http.post(`${ environment.baseURL }/api/removeEditorRole`, { email });
+    return this.http.post(`${ environment.functionsURL }/api/removeEditorRole`, { email });
   }
 
   obtenerClaims() {

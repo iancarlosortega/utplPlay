@@ -1,11 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminService } from 'src/app/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap } from 'rxjs';
-import { Course, Video } from 'src/app/interfaces/interfaces';
-import { AdminService } from 'src/app/services/admin.service';
 import { FileUpload } from '../../models/file-upload-model';
+import { Course, Video } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-subir-video',

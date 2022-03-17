@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { switchMap } from 'rxjs';
 import { Records } from 'src/app/interfaces/interfaces';
-import { AdminService } from 'src/app/services/admin.service';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-historial',

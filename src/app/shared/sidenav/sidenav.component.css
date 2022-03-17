@@ -1,3 +1,8 @@
+.logo img {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
 .listado {
     list-style-type: none;
     padding: 0;
@@ -22,5 +27,19 @@
 
 .activo {
     font-weight: bold;
+    color: var(--primario);
+}
+
+.boton {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.boton-submit {
+    background-color: var(--blanco);
+}
+
+.boton-submit mat-icon {
     color: var(--primario);
 }

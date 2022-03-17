@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor( private authService: AuthService,
                private router: Router,
                private observer: BreakpointObserver
-) {}
+  ) {}
   ngOnDestroy(): void {
     this.obs.unsubscribe();
   }
@@ -68,7 +68,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     this.obs = this.authService.obtenerClaims().subscribe( idTokenResult => {
       const claims = idTokenResult?.claims;
       this.claims = claims;
-      console.log(this.claims);
     });
     
   }
@@ -85,11 +84,8 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 0)
   }
 
-  
-
   logout() {
     this.authService.logout();
-    console.log('logout');
   }
 
 }

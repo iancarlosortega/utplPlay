@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
-import { Area, Career } from 'src/app/interfaces/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { FileUpload } from '../models/file-upload-model';
+import { Area, Career } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-carreras',
@@ -159,7 +159,6 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
     
     if( this.carrera.id ){
       //Actualizar
-      console.log('Editar');
       this.tipo = 'editar';
       this.carrera = {...this.carrera, ...this.miFormulario.value };
 

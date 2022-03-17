@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AdminService } from 'src/app/services/admin.service';
 import { switchMap } from 'rxjs';
 import { Career, Course } from 'src/app/interfaces/interfaces';
-import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-ver-carrera',
@@ -35,9 +35,6 @@ export class VerCarreraComponent implements OnInit {
         })
       });
 
-    
-
   }
-
 
 }

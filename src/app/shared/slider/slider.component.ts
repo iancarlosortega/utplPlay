@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Career } from 'src/app/interfaces/interfaces';
 
 // import Swiper core and required modules
@@ -12,7 +12,7 @@ SwiperCore.use([Navigation, Pagination]);
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent {
 
   @Input() area!: string;
   @Input() carreras!: Career[];
@@ -34,10 +34,5 @@ export class SliderComponent implements OnInit {
       }
   }
   };
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

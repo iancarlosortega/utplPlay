@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -6,12 +6,9 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './eliminar.component.html',
   styleUrls: ['./eliminar.component.css']
 })
-export class EliminarComponent implements OnInit {
+export class EliminarComponent {
 
   constructor( private dialogRef: MatDialogRef<EliminarComponent> ) { }
-
-  ngOnInit(): void {
-  }
 
   borrar() {
     //Confirmar la eliminacion enviando el valor de true

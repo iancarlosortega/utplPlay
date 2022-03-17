@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Career, Course, Video } from 'src/app/interfaces/interfaces';
 import { AdminService } from 'src/app/services/admin.service';
+import { Career, Course, Video } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-busqueda',

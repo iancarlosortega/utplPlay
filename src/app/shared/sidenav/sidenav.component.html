@@ -1,28 +1,35 @@
 <mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel 
-      [expanded]="true"
-      (opened)="panelOpenState = true" 
-      (closed)="panelOpenState = false" 
-      *ngFor="let item of menuItems">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <h5>{{item.titulo}}</h5>
-        </mat-panel-title>
-        <mat-panel-description>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <ul class="listado">
-        <li *ngFor="let subitem of item.subItems">
-          <a class="nav-item" [routerLink]="subitem.route" *ngIf="subitem.available">
-            <div class="listado-item">
-              <mat-icon routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">{{subitem.icono}}</mat-icon>
-              <div class="item-nombre" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
-                <p>{{subitem.subtitulo}}</p>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </mat-expansion-panel>
-</mat-accordion>
+  <div class="logo">
+    <a routerLink="/play"><img src="/assets/logo.png" alt="UTPL Play logo"></a>
+  </div>
 
+  <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+    *ngFor="let item of menuItems">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h5>{{item.titulo}}</h5>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ul class="listado">
+      <li *ngFor="let subitem of item.subItems">
+        <a class="nav-item" [routerLink]="subitem.route" *ngIf="subitem.available" (click)="cerrarSidenav()">
+          <div class="listado-item">
+            <mat-icon routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">{{subitem.icono}}</mat-icon>
+            <div class="item-nombre" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
+              <p>{{subitem.subtitulo}}</p>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </mat-expansion-panel>
+
+  <div class="boton">
+    <button type="button" mat-button class="boton-submit" (click)="logout()">
+        Cerrar Sesión
+        <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</mat-accordion>
