@@ -72,3 +72,7 @@ mat-form-field, .custom-file {
         stroke-dashoffset: -124px;
     }
 }
+
+.none {
+    display: none;
+}

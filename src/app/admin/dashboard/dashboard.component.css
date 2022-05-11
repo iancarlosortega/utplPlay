@@ -1,0 +1,22 @@
+.tarjetas { 
+    display: grid; 
+    gap: 1rem;
+}
+
+@media (min-width:768px){
+    .tarjetas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width:992px){
+    .tarjetas {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.graficas {
+    margin: 1.5rem 0;
+    display: grid;
+    gap: 2rem;
+}

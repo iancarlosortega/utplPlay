@@ -96,7 +96,6 @@ export class SubirVideoComponent implements OnInit {
   selectFile(event: any): void {
 
     const file = event.target.files && event.target.files[0];
-    console.log(file);
 
     //Previsualizacion del video
     if( file ) {
@@ -149,6 +148,7 @@ export class SubirVideoComponent implements OnInit {
         this.selectedFiles = undefined;
   
         if (file) {
+          this.visible = true;
           this.disabled = true;
           this.disableForm();
           this.currentFileUpload = new FileUpload(file);
@@ -205,6 +205,7 @@ export class SubirVideoComponent implements OnInit {
         this.selectedFiles = undefined;
   
         if (file) {
+          this.visible = true;
           this.disabled = true;
           this.disableForm();
           this.currentFileUpload = new FileUpload(file);
@@ -220,6 +221,7 @@ export class SubirVideoComponent implements OnInit {
                 this.visible = false;
                 this.percentage = 0;
                 this.disabled = false
+                this.selectedFiles = null;
               }, 500);
             }
           });

@@ -9,6 +9,7 @@ import { ListadoVideosComponent } from './videos/listado-videos/listado-videos.c
 import { MateriasComponent } from './materias/materias.component';
 import { SubirVideoComponent } from './videos/subir-video/subir-video.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -29,7 +30,12 @@ const routes: Routes = [
         canActivate: [DashboardGuard],
         canLoad: [DashboardGuard]
       },
-      { path: 'carreras', component: CarrerasComponent },
+      { 
+        path: 'carreras', 
+        component: CarrerasComponent,
+        canActivate: [AdminGuard],
+        canLoad: [AdminGuard]
+      },
       { path: 'materias', component: MateriasComponent },
       { path: 'subir/videos', component: SubirVideoComponent },
       { path: 'editar/video/:id', component: SubirVideoComponent },

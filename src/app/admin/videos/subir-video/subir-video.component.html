@@ -84,7 +84,7 @@
         </div>
 
         <!-- Previsualizacion del video -->
-        <div class="video">
+        <div class="video" [ngClass]="{none: !url}">
             <video 
                 [src]="url" 
                 *ngIf="format==='video' && url" 

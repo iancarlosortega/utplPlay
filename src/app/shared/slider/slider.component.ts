@@ -32,7 +32,7 @@ export class SliderComponent {
       992: {
           slidesPerView: 4.2,
       }
-  }
+    }
   };
 
 }

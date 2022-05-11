@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { CanActivate, CanLoad, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,7 @@ export class AuthGuard implements CanActivate, CanLoad {
                private router:Router 
   ) {}
 
-  async canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<boolean | UrlTree>  {
+  async canActivate(): Promise<boolean>  {
     this.afAuth.authState.subscribe( user => {
       if( user == null ) {
         this.router.navigate(['/auth']);
@@ -21,9 +19,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     })
     return true;
   }
-  async canLoad(
-    route: Route,
-    segments: UrlSegment[]): Promise<boolean | UrlTree> {
+  async canLoad(): Promise<boolean> {
       this.afAuth.authState.subscribe( user => {
         if( user == null ) {
           this.router.navigate(['/auth']);

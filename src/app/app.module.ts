@@ -16,7 +16,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 //Cambiar el locale de la app
 import localeEs from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common'
+import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs);
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ registerLocaleData(localeEs);
       preventDuplicates: true
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
   ],
   providers: [
     { provide: LOCALE_ID , useValue: 'es' }

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { CanActivate, CanLoad, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,33 +19,34 @@ export class AdminGuard implements CanActivate, CanLoad, OnDestroy {
     this.obs2.unsubscribe()
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): boolean {
 
       this.obs1 = this.afAuth.idTokenResult.subscribe( idTokenResult => {
         const claims = idTokenResult?.claims;
+        console.log('Can Activate');
         if( claims ){
-          if( claims!['admin'] ||  claims!['editor'] ) {
-            this.router.navigateByUrl('/admin')
-          } else {
+          if( claims!['admin'] === null ||  claims!['editor'] === null ) {
+            console.log('not admin');
             this.router.navigateByUrl('/play')
           }
         }
       });
       return true;
   }
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canLoad(): boolean {
       this.obs2 = this.afAuth.idTokenResult.subscribe( idTokenResult => {
         const claims = idTokenResult?.claims;
+        console.log('Can Load');
         if( claims ){
-          if( claims!['admin'] ||  claims!['editor'] ) {
-            this.router.navigateByUrl('/admin')
-          } else {
+          if( claims!['admin'] === null || claims!['editor'] === null ) {
+            console.log('not admin');
             this.router.navigateByUrl('/play')
           }
+          // if( claims!['admin'] ||  claims!['editor'] ) {
+          //   this.router.navigateByUrl('/admin')
+          // } else {
+          //   this.router.navigateByUrl('/play')
+          // }
         }
       });
       return true;

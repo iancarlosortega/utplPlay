@@ -1,0 +1,7 @@
+.grafica {
+    padding: 1rem;
+}
+
+.grafica canvas {
+    width: 100% !important;
+}

@@ -1,1 +1,14 @@
-<p>dashboard works!</p>
+<div class="container">
+    <section class="tarjetas">
+        <app-tarjeta titulo="Usuarios" src="assets/dashboard/usuarios.png" [contador]="usuariosContador"></app-tarjeta>
+        <app-tarjeta titulo="Videos" src="assets/dashboard/videos.png" [contador]="videosContador"></app-tarjeta>
+        <app-tarjeta titulo="Carreras" src="assets/dashboard/carreras.png" [contador]="carrerasContador"></app-tarjeta>
+        <app-tarjeta titulo="Materias" src="assets/dashboard/materias.png" [contador]="materiasContador"></app-tarjeta>
+    </section>
+    <section class="graficas">
+        <app-grafica titulo="Videos Más Populares" [data]="videosData"></app-grafica>
+        <app-grafica titulo="Carreras Más Populares" [data]="carrerasData"></app-grafica>
+        <app-grafica titulo="Materias Más Populares" [data]="materiasData"></app-grafica>
+    </section>
+</div>
+
