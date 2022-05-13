@@ -5,8 +5,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import firebase from '@firebase/app-compat';
-import { FileUpload } from '../admin/models/file-upload-model';
 import { Area, Career, Course, Records, User, Video } from '../interfaces/interfaces';
+import { FileUpload } from '../admin/models/file-upload-model';
 
 @Injectable({
   providedIn: 'root'
@@ -282,57 +282,16 @@ export class AdminService {
       )
   }
 
-  subirVideo(fileUpload: FileUpload, videoData: Video, tipo: string) {
-
-    const filePath = `${this.basePath}/${fileUpload.file.name}`;
-    const storageRef = this.storage.ref(filePath);
-    const uploadTask = this.storage.upload(filePath, fileUpload.file);
-  
-    //Esperar a obtener el link de descarga del archivo subido
-    uploadTask.snapshotChanges().pipe(
-      finalize(() => {
-        storageRef.getDownloadURL().subscribe(downloadURL => {
-          videoData.url = downloadURL;
-
-          if( tipo === 'editar' ){
-            this.actualizarVideo(videoData);
-          } else {
-            this.agregarVideo(videoData);
-          }
-
-        });
-      })
-    ).subscribe();
-  
-    return uploadTask.percentageChanges();
+  agregarVideo(video: Video) {
+    return this.firestore.collection('videos').add(video);
   }
 
-  private agregarVideo(video: any) {
-    this.firestore.collection('videos').add(video);
-  }
-
-  actualizarVideo(video: any) {
+  actualizarVideo(video: Video) {
     return this.firestore.collection('videos').doc(video.id).update(video);
   }
 
-  eliminarVideo(video: Video) {
-    return this.eliminarVideoFirestore(video.id)
-      .then(() => {
-        this.eliminarVideoStorage(video.filename!);
-      })
-      .catch(error => console.log(error));
-  }
-
-  private eliminarVideoFirestore(id: string): Promise<void> {
+  eliminarVideo(id: string): Promise<void> {
     return this.firestore.collection('videos').doc(id).delete()
-  }
-
-  eliminarVideoStorage(name: string) {
-    this.storage.ref(this.basePath).child(name).delete();
-  }
-
-  aumentarVisualizacionVideo( id: string) {
-    return this.http.post(`${ environment.functionsURL }/api/videos/${id}`, {});
   }
 
 }

@@ -11,10 +11,9 @@
     <div class="contenedor">
         <div>
             <main class="video">
-                <video (timeupdate)="historial($event)" [src]="video?.url" controls></video>
+                <app-video [url]="video?.url || ''"></app-video>
                 <p class="titulo">{{video?.title}}</p>
                 <div class="informacion">
-                    <p><span class="texto-negrita">Profesor: </span>{{video?.teacher}}</p>
                     <p><span class="texto-negrita">Fecha de publicación: </span>{{video?.publication_date.toDate() | date:'longDate' }}</p>
     
                 </div>

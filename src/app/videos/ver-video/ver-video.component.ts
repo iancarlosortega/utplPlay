@@ -56,31 +56,6 @@ export class VerVideoComponent implements OnInit {
   
 
   historial(event: any){
-    const currentTime = event.target.currentTime;
-    if ( currentTime > 1) {
-
-      if( !this.videoHistorial ){
-
-        this.authService.obtenerClaims().subscribe( res => {
-
-          const uid = res?.claims['user_id'];
-          this.adminService.actualizarHistorialUsuario(uid, this.record);
-    
-        })
-      } 
-      this.videoHistorial = true;   
-    };    
-
-    if ( currentTime > 30) {
-
-      if( !this.videoView ){
-
-        this.adminService.aumentarVisualizacionVideo(this.video.id).subscribe();
-
-      } 
-      this.videoView = true;   
-    };
-
 
   }
 

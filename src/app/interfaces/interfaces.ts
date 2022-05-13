@@ -56,11 +56,7 @@ export interface Course {
 export interface Video {
     id: string;
     title: string;
-    teacher: string;
     course: Course;
-    views: number;
     publication_date: any | null;
     url: string;
-    file?: string;
-    filename?: string;
 }

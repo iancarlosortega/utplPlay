@@ -1,11 +1,11 @@
-<h3>{{ !video.id ? 'Subir' : 'Actualizar' }} video</h3>
+<h3>{{ video?.id ? 'Actualizar' : 'Subir' }} video</h3>
 <hr>
 
 <div class="formulario">
     <form 
         [formGroup]="miFormulario" 
         #formulario
-        (submit)="subirVideo()"
+        (submit)="agregarVideo()"
         autocomplete="off" >
 
         <!-- Input título -->
@@ -22,17 +22,17 @@
             </mat-error>
         </mat-form-field>
 
-        <!-- Input Tutor -->
+        <!-- Input URL Youtube -->
 
         <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Tutor</mat-label>
+            <mat-label>Enlace de Youtube</mat-label>
             <input 
                 type="text" 
                 matInput 
-                formControlName="teacher"
-                placeholder="Ex. Juan Maldonado">
-            <mat-error *ngIf="campoNoValido('teacher')">
-                El campo del tutor es <strong>obligatorio</strong>
+                formControlName="url"
+                placeholder="https://www.youtube.com/watch?v=mOMcoXp1GRw">
+            <mat-error *ngIf="campoNoValido('url')">
+                El campo del url es <strong>obligatorio</strong>
             </mat-error>
         </mat-form-field>
 
@@ -70,69 +70,13 @@
                 El campo de materia es <strong>obligatorio</strong>
             </mat-error>
         </mat-form-field>
-
-        <!-- Input File -->
-
-        <div class="custom-file">
-            <input 
-                #inputFile
-                type="file" 
-                class="form-control" 
-                formControlName="file"
-                accept="video/mp4,video/x-m4v,video/*"
-                (change)="selectFile($event)">
-        </div>
-
-        <!-- Previsualizacion del video -->
-        <div class="video" [ngClass]="{none: !url}">
-            <video 
-                [src]="url" 
-                *ngIf="format==='video' && url" 
-                controls>
-            </video> <br/>
-        </div>
-
-        <!-- Barra de porcentaje -->
-        <div *ngIf="currentFileUpload && visible">
-            
-            <div class="alert alert-info loading">
-                <p>Por favor espere a que el video se termine de subir</p>
-                <p-progressSpinner 
-                    [style]="{width: '20px', height: '20px'}" 
-                    styleClass="custom-spinner" 
-                    strokeWidth="8"
-                    animationDuration=".5s">
-                </p-progressSpinner>
-            </div>
-
-            <div class="progress mt-2">
-                <div
-                    class="progress-bar progress-bar-striped"
-                    role="progressbar"
-                    attr.aria-valuenow="{{ percentage }}"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    [ngStyle]="{ width: percentage + '%' }"
-                    [ngClass]="{
-                        'bg-success': percentage > 70,
-                        'bg-info': percentage > 40 && percentage < 70,
-                        'bg-warning': percentage > 20 && percentage < 40,
-                        'bg-danger': percentage > 0 && percentage < 20
-                    }"
-                    >
-                    {{ percentage }}%
-                </div>
-            </div>
-
-        </div>
         
         <div class="boton-upload">
 
             <button 
                 pButton 
-                type="submit" 
-                [disabled]="disabled"
-                [label]="!video.id ? 'Subir video' : 'Actualizar video'" 
+                type="submit"
+                [label]="video?.id ? 'Actualizar video' : 'Subir video'" 
                 icon="pi pi-cloud-upload" 
                 iconPos="left" 
                 class="p-button-raised">

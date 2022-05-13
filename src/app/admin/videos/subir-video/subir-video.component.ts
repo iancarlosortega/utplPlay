@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
-import { switchMap } from 'rxjs';
-import { FileUpload } from '../../models/file-upload-model';
 import { Course, Video } from 'src/app/interfaces/interfaces';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-subir-video',
@@ -17,36 +16,16 @@ export class SubirVideoComponent implements OnInit {
   @ViewChild(FormGroupDirective) formulario!: FormGroupDirective;
   @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
 
-  video: Video = {
-    id : '',
-    title : '',
-    teacher : '',
-    course : {
-      id: '',
-      name: '',
-      description: '',
-      views: 0
-    },
-    views : 0,
-    url : '',
-    publication_date: null
-  }
-  tipo: string = 'agregar';
+  video!: Video;
   materias!: Course[];
   materiasAux!: any[];
-  selectedFiles?: any;
-  currentFileUpload?: FileUpload;
-  url: any;
-  format: string = '';
-  percentage = 0;
-  visible = true;
-  disabled = false;
+
+  youtubeLinkRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
 
   miFormulario: FormGroup = this.fb.group({
-    title: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
-    teacher: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
-    course: [ { value: '', disabled: false }, [ Validators.required, Validators.minLength(3) ] ],
-    file: [{ value: '', disabled: false }]
+    title: [ '', [ Validators.required, Validators.minLength(3) ] ],
+    url: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(this.youtubeLinkRegExp) ] ],
+    course: [ , [ Validators.required ] ],
   })
 
   constructor( private fb: FormBuilder,
@@ -84,8 +63,6 @@ export class SubirVideoComponent implements OnInit {
       .subscribe( (video: Video) => {
         //Rellenar el formulario con la informacion obtenida
         this.video = video;
-        this.format = 'video';
-        this.url = video.url;
         this.miFormulario.reset({
           ...this.video
         });
@@ -93,164 +70,51 @@ export class SubirVideoComponent implements OnInit {
 
   }
 
-  selectFile(event: any): void {
-
-    const file = event.target.files && event.target.files[0];
-
-    //Previsualizacion del video
-    if( file ) {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      if(file.type.indexOf('video')> -1){
-        this.selectedFiles = event.target.files;
-        this.format = 'video';
-        reader.onload = (event) => {
-          this.url = (<FileReader>event.target).result;
-        }
-      } else {
-        this.miFormulario.controls['file'].setValue(null);
-        this.selectedFiles = null;
-        this.url = null;
-        this.toastr.error('Por favor, solo subir archivos de formato video', 'Error')
-      }
-      
-    } else {
-      this.url = null;
-      this.selectedFiles = null;
-    }
-  }
-
-  subirVideo() {
-
-    if( this.miFormulario.invalid ) {
+  agregarVideo() {
+    if( this.miFormulario.invalid ){
       this.miFormulario.markAllAsTouched();
       return;
     }
 
-    
     if( this.video.id ){
-      //Actualizar
-      console.log('Editar');
-      this.tipo = 'editar';
-      this.video = {...this.video, ...this.miFormulario.value };
 
-      if (this.selectedFiles) {
-
-        this.adminService.eliminarVideoStorage(this.video.filename!)
-        
-        let filename: string = this.miFormulario.controls['file'].value;
-        filename = filename.split('\\').slice(-1)[0];
-        this.video.filename = filename;
-        delete this.video.file;
-        
-        
-        const file: File | null = this.selectedFiles.item(0);
-        this.selectedFiles = undefined;
-  
-        if (file) {
-          this.visible = true;
-          this.disabled = true;
-          this.disableForm();
-          this.currentFileUpload = new FileUpload(file);
-          this.adminService.subirVideo(this.currentFileUpload, this.video, this.tipo).subscribe( percentage => {
-            this.percentage = Math.round(percentage ? percentage : 0);
-            if( this.percentage == 100 ){
-              setTimeout(() => {
-                this.toastr.info('El video fue subido con éxito!', 'Video Subido');
-                this.router.navigateByUrl('/admin/videos');
-                this.enableForm();
-                this.url = null;
-                this.visible = false;
-                this.percentage = 0;
-                this.disabled = false
-              }, 500);
-            }
-          });
-        } else {
-          this.toastr.error('Por favor, seleccione un video para subir', 'Error')
-        }
-  
-      } else {
-
-        const { filename, file, ...videoData } = this.video; 
-
-        this.adminService.actualizarVideo(videoData)
-          .then( ( _ ) => {
-            this.toastr.info('El video fue actualizado con éxito', 'Video Actualizado');
-            this.router.navigateByUrl('/admin/videos');
-          })
-          .catch( err => {
-            console.log(err);
-            this.toastr.error(`err`, 'Error');
-          })
+      // Actualizar Video
+      this.video = {
+        ...this.video,
+        ...this.miFormulario.value,
       }
+
+      this.adminService.actualizarVideo( this.video )
+        .then( res => {
+          this.toastr.info('El video fue actualizado con éxito', 'Video Actualizado');
+          this.router.navigateByUrl('/admin/videos');
+        })
+        .catch( err => {
+          console.log(err);
+          this.toastr.error('Error al actualizar el video', 'Error');
+        })
 
 
     } else {
 
-      //Crear
-      
-      this.video = this.miFormulario.value;
-      this.video.views = 0;
-      this.video.publication_date = new Date();
-
-      if (this.selectedFiles) {
-
-        let filename: string = this.miFormulario.controls['file'].value;
-        filename = filename.split('\\').slice(-1)[0];
-        this.video.filename = filename;
-        delete this.video.file;
-
-        const file: File | null = this.selectedFiles.item(0);
-        this.selectedFiles = undefined;
-  
-        if (file) {
-          this.visible = true;
-          this.disabled = true;
-          this.disableForm();
-          this.currentFileUpload = new FileUpload(file);
-          this.adminService.subirVideo(this.currentFileUpload, this.video, this.tipo).subscribe( percentage => {
-            this.percentage = Math.round(percentage ? percentage : 0);
-            if( this.percentage == 100 ){
-              setTimeout(() => {
-                this.toastr.success('El video fue subido con éxito!', 'Video Subido');
-                this.miFormulario.reset();
-                this.formulario.resetForm();
-                this.enableForm();
-                this.url = null;
-                this.visible = false;
-                this.percentage = 0;
-                this.disabled = false
-                this.selectedFiles = null;
-              }, 500);
-            }
-          });
-        } else {
-          this.toastr.error('Error', 'Error')
-        }
-  
-      } else {
-        this.toastr.error('Por favor, seleccione un video para subir', 'Error')
+      // Crear Video
+      this.video = {
+        ...this.miFormulario.value,
+        publication_date: new Date()
       }
+  
+      this.adminService.agregarVideo( this.video )
+        .then( res => {
+          this.toastr.success('El video fue subido con éxito!', 'Video Subido');
+        })
+        .catch( err => {
+          console.log(err);
+          this.toastr.error('Error al subir el video', 'Error');
+        })
 
     }
 
   }
-
-  enableForm(): void {
-    this.miFormulario.controls['title'].enable();
-    this.miFormulario.controls['teacher'].enable();
-    this.miFormulario.controls['course'].enable();
-    this.miFormulario.controls['file'].enable();
-  }
-
-  disableForm(): void {
-    this.miFormulario.controls['title'].disable();
-    this.miFormulario.controls['teacher'].disable();
-    this.miFormulario.controls['course'].disable();
-    this.miFormulario.controls['file'].disable();
-  }
-
   
   filtrarMaterias($event: any) {
     let valor: string = $event.target.value.toLowerCase().trim();

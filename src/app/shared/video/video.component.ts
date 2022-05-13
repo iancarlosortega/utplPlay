@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class VideoComponent {
 
-  @Input('url') url:string = '';
+  @Input('url') url: string = '';
+  url2: string = 'https://www.youtube.com/embed/mOMcoXp1GRw';
 
 }

@@ -12,6 +12,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SliderComponent } from './slider/slider.component';
 import { VideoComponent } from './video/video.component';
+import { YoutubePipe } from './pipes/youtube.pipe';
+import { SafePipe } from './pipes/safe.pipe';
 
 
 
@@ -24,6 +26,8 @@ import { VideoComponent } from './video/video.component';
     SidenavComponent,
     SliderComponent,
     VideoComponent,
+    YoutubePipe,
+    SafePipe,
   ],
   imports: [
     CommonModule,

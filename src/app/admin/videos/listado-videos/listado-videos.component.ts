@@ -77,7 +77,7 @@ export class ListadoVideosComponent implements OnInit, AfterViewInit {
 
     dialog.afterClosed().subscribe( (result: any) => {
         if(result) {
-          this.adminService.eliminarVideo(video)
+          this.adminService.eliminarVideo(video.id)
           .then( (res: any) => {
             console.log(res);
             this.toastr.success('El video fue eliminado con éxito', 'Video eliminado!');
@@ -89,10 +89,6 @@ export class ListadoVideosComponent implements OnInit, AfterViewInit {
         }
       }
     )    
-  }
-
-  descargarVideo( url: string ) {
-    console.log(url);
   }
 
 }

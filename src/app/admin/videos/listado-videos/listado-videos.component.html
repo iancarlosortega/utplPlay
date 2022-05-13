@@ -65,38 +65,24 @@
     <ng-template pTemplate="header">
         <tr>
 
-            <th pSortableColumn="title" style="width: 150px">
+            <th pSortableColumn="title" style="width: 250px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Título
                     <p-sortIcon field="title"></p-sortIcon>
                 </div>
             </th>
 
-            <th pSortableColumn="teacher" style="width: 150px">
+            <th pSortableColumn="url" style="width: 400px">
                 <div class="p-d-flex p-jc-between p-ai-center">
-                    Tutor
-                    <p-sortIcon field="teacher"></p-sortIcon>
+                    Enlace de Youtube
+                    <p-sortIcon field="url"></p-sortIcon>
                 </div>
             </th>
 
-            <th pSortableColumn="course.name" style="width: 150px">
+            <th pSortableColumn="course.name" style="width: 250px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Materia
                     <p-sortIcon field="course.name"></p-sortIcon>
-                </div>
-            </th>
-
-            <th pSortableColumn="filename" style="width: 250px">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Nombre del archivo
-                    <p-sortIcon field="filename"></p-sortIcon>
-                </div>
-            </th>
-
-            <th pSortableColumn="views" style="width: 200px">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Visualizaciones
-                    <p-sortIcon field="views"></p-sortIcon>
                 </div>
             </th>
 
@@ -114,20 +100,14 @@
     </ng-template>
     <ng-template pTemplate="body" let-video>
         <tr>
-            <td style="width: 150px">
+            <td style="width: 250px">
                 {{video.title}}
             </td>
-            <td style="width: 150px">
-                {{video.teacher}}
+            <td style="width: 400px">
+                {{video.url}}
             </td>
-            <td style="width: 150px">
+            <td style="width: 250px">
                 {{video.course?.name}}
-            </td>
-            <td style="width: 250px">     
-                {{video.filename}}
-            </td>
-            <td style="width: 200px">     
-                {{video.views}}
             </td>
             <td style="width: 200px">
                 {{video.publication_date?.toDate() | date:'dd/MM/yyyy h:mm:ss a' }}
@@ -136,16 +116,6 @@
             <td style="width: 200px">
 
                 <div class="acciones">
-                    <!-- Botón de descargar -->
-                    <!-- TODO: Descargar los videos -->
-                    <!-- <button 
-                        pButton 
-                        icon="pi pi-download" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="descargarVideo(video.url)"
-                        class="p-button-raised p-button-rounded p-button-success">
-                    </button> -->
 
                     <!-- Botón de previsualización -->
                     <button 
