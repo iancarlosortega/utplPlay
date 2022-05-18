@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.obs = this.authService.obtenerClaims().subscribe( idTokenResult => {
 
       this.claims = idTokenResult?.claims;
-      if( this.claims.admin ){
+      if( this.claims?.admin ){
         this.admin = true;
       };
       const menuItems = [

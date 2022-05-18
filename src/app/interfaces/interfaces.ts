@@ -56,6 +56,7 @@ export interface Course {
 export interface Video {
     id: string;
     title: string;
+    description: string;
     course: Course;
     publication_date: any | null;
     url: string;

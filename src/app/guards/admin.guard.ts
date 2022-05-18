@@ -25,8 +25,8 @@ export class AdminGuard implements CanActivate, CanLoad, OnDestroy {
         const claims = idTokenResult?.claims;
         console.log('Can Activate');
         if( claims ){
-          if( claims!['admin'] === null ||  claims!['editor'] === null ) {
-            console.log('not admin');
+          if( claims!['editor'] === null ) {
+            console.log('not editor');
             this.router.navigateByUrl('/play')
           }
         }
@@ -38,8 +38,8 @@ export class AdminGuard implements CanActivate, CanLoad, OnDestroy {
         const claims = idTokenResult?.claims;
         console.log('Can Load');
         if( claims ){
-          if( claims!['admin'] === null || claims!['editor'] === null ) {
-            console.log('not admin');
+          if(claims!['editor'] === null ) {
+            console.log('not editor');
             this.router.navigateByUrl('/play')
           }
           // if( claims!['admin'] ||  claims!['editor'] ) {

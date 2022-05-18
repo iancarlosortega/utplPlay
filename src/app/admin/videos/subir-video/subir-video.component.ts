@@ -24,6 +24,7 @@ export class SubirVideoComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
     title: [ '', [ Validators.required, Validators.minLength(3) ] ],
+    description: [ '', [ Validators.required, Validators.minLength(3) ] ],
     url: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(this.youtubeLinkRegExp) ] ],
     course: [ , [ Validators.required ] ],
   })
@@ -76,7 +77,7 @@ export class SubirVideoComponent implements OnInit {
       return;
     }
 
-    if( this.video.id ){
+    if( this.video?.id ){
 
       // Actualizar Video
       this.video = {
@@ -106,6 +107,8 @@ export class SubirVideoComponent implements OnInit {
       this.adminService.agregarVideo( this.video )
         .then( res => {
           this.toastr.success('El video fue subido con éxito!', 'Video Subido');
+          this.miFormulario.reset();
+          this.formulario?.resetForm();
         })
         .catch( err => {
           console.log(err);

@@ -22,6 +22,22 @@
             </mat-error>
         </mat-form-field>
 
+        <!-- Input Descripción -->
+        <div class="descripcion">
+            <label class="label" for="descripcion">Descripción del video</label>
+            <textarea 
+                class="form-control textarea"
+                formControlName="description"
+                rows="10"
+                [ngClass]="{'is-invalid': campoNoValido('description')}">
+            </textarea>
+            <small 
+                *ngIf="campoNoValido('description')" 
+                class="text text-danger">
+                La descripción del video es <strong>obligatoria</strong>
+            </small>
+        </div>    
+
         <!-- Input URL Youtube -->
 
         <mat-form-field class="example-full-width" appearance="fill">
@@ -85,5 +101,3 @@
         
     </form>
 </div>
-
-<div class="espacio"></div>

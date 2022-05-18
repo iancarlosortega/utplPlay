@@ -72,6 +72,13 @@
                 </div>
             </th>
 
+            <th pSortableColumn="description" style="width: 250px">
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Descripción
+                    <p-sortIcon field="description"></p-sortIcon>
+                </div>
+            </th>
+
             <th pSortableColumn="url" style="width: 400px">
                 <div class="p-d-flex p-jc-between p-ai-center">
                     Enlace de Youtube
@@ -102,6 +109,9 @@
         <tr>
             <td style="width: 250px">
                 {{video.title}}
+            </td>
+            <td style="width: 250px">
+                {{video.description}}
             </td>
             <td style="width: 400px">
                 {{video.url}}
