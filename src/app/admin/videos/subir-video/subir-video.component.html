@@ -22,6 +22,20 @@
             </mat-error>
         </mat-form-field>
 
+        <!-- Input URL Youtube -->
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Enlace de Youtube</mat-label>
+            <input 
+                type="text" 
+                matInput 
+                formControlName="url"
+                placeholder="https://www.youtube.com/watch?v=mOMcoXp1GRw">
+            <mat-error *ngIf="campoNoValido('url')">
+                El campo del url es <strong>obligatorio</strong>
+            </mat-error>
+        </mat-form-field>
+
         <!-- Input Descripción -->
         <div class="descripcion">
             <label class="label" for="descripcion">Descripción del video</label>
@@ -38,17 +52,38 @@
             </small>
         </div>    
 
-        <!-- Input URL Youtube -->
+        <!-- Input Carrera -->
 
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Enlace de Youtube</mat-label>
-            <input 
-                type="text" 
-                matInput 
-                formControlName="url"
-                placeholder="https://www.youtube.com/watch?v=mOMcoXp1GRw">
-            <mat-error *ngIf="campoNoValido('url')">
-                El campo del url es <strong>obligatorio</strong>
+        <mat-form-field>
+            <mat-label>Carrera</mat-label>
+            <mat-select 
+                placeholder="Elija la carrera que desee" 
+                formControlName="career"
+                [compareWith]="compareObjects"
+                (closed)="limpiarBuscador()">
+                <mat-form-field class="select-input">
+                    <mat-label>Buscador</mat-label>
+                    <form autocomplete="off">
+                        <input
+                            #txtBuscar
+                            matInput type="text" 
+                            placeholder="Buscar Carrera" 
+                            (keyup)="filtrarCarreras($event)"
+                        >
+                    </form>
+                </mat-form-field>
+                
+                <mat-option *ngFor="let carrera of carreras" [value]="carrera">
+                    {{ carrera.name }}
+                </mat-option>
+
+                <mat-option *ngIf="carreras?.length == 0" disabled>
+                    No existe ninguna materia, cree una en <b>Carreras</b>
+                </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="campoNoValido('career')">
+                El campo de carrera es <strong>obligatorio</strong>
             </mat-error>
         </mat-form-field>
 

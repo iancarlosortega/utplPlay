@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
-import { Course, Video } from 'src/app/interfaces/interfaces';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
+import { Career, Course, Video } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-subir-video',
@@ -17,8 +17,10 @@ export class SubirVideoComponent implements OnInit {
   @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
 
   video!: Video;
-  materias!: Course[];
-  materiasAux!: any[];
+  materias: Course[] = [];
+  materiasAux: any[] = [];
+  carreras: Career[] = [];
+  carrerasAux: any[] = [];
 
   youtubeLinkRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
 
@@ -26,7 +28,8 @@ export class SubirVideoComponent implements OnInit {
     title: [ '', [ Validators.required, Validators.minLength(3) ] ],
     description: [ '', [ Validators.required, Validators.minLength(3) ] ],
     url: [ '', [ Validators.required, Validators.minLength(3), Validators.pattern(this.youtubeLinkRegExp) ] ],
-    course: [ , [ Validators.required ] ],
+    career: [ , [ Validators.required ] ],
+    course: [{ value: '', disabled: this.materias.length === 0 } , [ Validators.required ] ],
   })
 
   constructor( private fb: FormBuilder,
@@ -47,10 +50,25 @@ export class SubirVideoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.adminService.obtenerMateriasVideos().subscribe( materias => {
-      this.materias = materias;
-      this.materiasAux = materias;
+    this.adminService.obtenerCarreras().subscribe( carreras => {
+      this.carreras = carreras;
+      this.carrerasAux = carreras;
     });
+
+    //Cargar las ciudades cuando elija un pais
+
+    this.miFormulario.get('career')?.valueChanges
+      .pipe(
+        tap( ( _ ) => {
+          this.miFormulario.get('course')?.reset('');
+          this.miFormulario.get('course')?.enable();
+        }),
+        switchMap( carrera => this.adminService.obtenerMateriasPorCarrera(carrera) )
+      )
+      .subscribe( (materias: Course[]) => {
+        this.materias = materias;
+        this.materiasAux = materias;
+      });
 
     if( !this.router.url.includes('editar') ) {
       return;
@@ -126,6 +144,20 @@ export class SubirVideoComponent implements OnInit {
     this.materias = this.materias.filter((materia: Course) => {
       const nombreMateria = materia.name.toLowerCase();
       if( nombreMateria.includes(valor) ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  filtrarCarreras($event: any) {
+    let valor: string = $event.target.value.toLowerCase().trim();
+
+    this.carreras = this.carrerasAux
+    this.carreras = this.carreras.filter((carrera: Career) => {
+      const nombreCarrera = carrera.name.toLowerCase();
+      if( nombreCarrera.includes(valor) ) {
         return true;
       } else {
         return false;
