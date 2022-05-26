@@ -23,7 +23,7 @@
                     <h5 class="card-title">{{materia.name}}</h5>
                     <p class="card-text" >
                         {{materia.description | slice:0:120}}...
-                        <a class="link" [routerLink]="['../materias', materia.id]">Ver Más</a>
+                        <a class="link" [routerLink]="['../materias', materia.slug]">Ver Más</a>
                     </p>
                     <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
                         <span class="tags" *ngFor="let keyword of materia?.keywords">
@@ -35,7 +35,7 @@
         </main>
         
         <div class="paginator">
-            <p-paginator [rows]="5" [totalRecords]="length" [rowsPerPageOptions]="[9,24,30]" (onPageChange)="paginate($event)"></p-paginator>
+            <p-paginator [rows]="9" [totalRecords]="length" [rowsPerPageOptions]="[9,24,30]" (onPageChange)="paginate($event)"></p-paginator>
         </div>
     </div>
     

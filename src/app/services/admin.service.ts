@@ -97,11 +97,22 @@ export class AdminService {
       )
   }
 
+  obtenerCarreraPorSlug(slug: string) {
+    const carrera = this.firestore.collection('careers', ref => ref.where('slug', '==' , slug));
+    return carrera.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Career;
+            data.id = a.payload.doc.id;
+            return data
+          });
+        })
+      )
+  }
+
   obtenerCarrerasPorArea(area: Area){
-
-
     const carrerasCollection = this.firestore.collection('careers', ref => ref.where('area', '==' , area));
-
     return carrerasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -225,6 +236,22 @@ export class AdminService {
           const data = a.payload.data() as Course;
           data.id = a.payload.id;  
           return data
+        })
+      )
+  }
+
+  obtenerMateriaPorSlug(slug: string){
+
+    const materiasCollection = this.firestore.collection('courses', ref => ref.where('slug', '==' , slug));
+    return materiasCollection.snapshotChanges()
+      .pipe(
+        map(actions => {       
+          return actions.map(a => {
+            const data = a.payload.doc.data() as Course;
+            data.id = a.payload.doc.id;  
+            const {careers, keywords, purposes, ...materia} = data
+            return materia;
+          });
         })
       )
   }

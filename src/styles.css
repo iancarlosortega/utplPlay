@@ -170,3 +170,9 @@ body {
     -webkit-transform: translate(0, 15%);
             transform: translate(0, 15%);
 }
+
+@media (min-width:992px){
+    .breadcrumb {
+        padding: 10rem 0;
+    }
+}

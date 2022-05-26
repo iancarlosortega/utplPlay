@@ -19,7 +19,7 @@ export class BreadcrumbService {
       filter((event) => event instanceof NavigationEnd) 
     ).subscribe(event => { 
       // Construct the breadcrumb hierarchy 
-      const root = this.router.routerState.snapshot.root; 
+      const root = this.router.routerState.snapshot.root;
       const breadcrumbs: any[] = []; 
       this.addBreadcrumb(root, [], breadcrumbs); 
  

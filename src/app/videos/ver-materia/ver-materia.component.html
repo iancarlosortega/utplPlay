@@ -8,7 +8,12 @@
     </div>
 </main>
 <div class="container">
-    <main class="materia">
+
+    <div *ngIf="loading" class="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <main *ngIf="!loading" class="materia">
         <h1 class="titulo">{{materia?.name}}</h1>
         <p class="descripcion">{{materia?.description}}</p>
         <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
@@ -34,7 +39,7 @@
         <article class="videos" *ngIf="videos.length > 0">
             <h5>Listado de videos</h5>
             <ul class="videos-listado">
-                <li *ngFor="let video of videos" [routerLink]="['/play/video', video.id]">
+                <li *ngFor="let video of videos" [routerLink]="['./', video.id]">
                     <mat-icon>play_circle</mat-icon>
                     {{video.title}}
                 </li>

@@ -102,3 +102,9 @@
 .videos-listado li mat-icon {
     margin-right: 0.5rem;
 }
+
+.loading {
+    display: grid;
+    place-content: center;
+    height: 20rem;
+}

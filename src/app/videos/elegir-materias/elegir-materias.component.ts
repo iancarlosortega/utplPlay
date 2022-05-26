@@ -30,9 +30,9 @@ export class ElegirMateriasComponent implements OnInit {
         // a must be equal to b
         return 0;
       });
-      this.materias = this.materiasTotales.slice(0,9);
       this.materiasAux = this.materiasTotales;
       this.length = this.materiasTotales.length;
+      this.materias = this.materiasTotales.slice(0,9);
     })
 
   }

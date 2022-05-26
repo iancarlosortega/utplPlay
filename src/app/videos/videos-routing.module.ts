@@ -17,13 +17,27 @@ const routes: Routes = [
     path: '',
     data: { breadcrumb: 'Home' },
     children: [
-      { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
+      { path: 'home', component: HomeComponent, data: { breadcrumb: '' } },
       { 
         path: 'carreras', 
         data: { breadcrumb: 'Carreras' },
         children: [
           { path: '', component: ElegirCarrerasComponent, data: { breadcrumb: '' } },
-          { path: ':id', component: VerCarreraComponent, data: { breadcrumb: 'Ver Carrera' } },
+          { 
+            path: ':slug',
+            data: { breadcrumb: 'Ver Carrera' },
+            children: [
+              { path: '', component: VerCarreraComponent, data: { breadcrumb: '' } },
+              { 
+                path: ':slug',
+                data: { breadcrumb: 'Ver Asignatura' },
+                children: [
+                  { path: '', component: VerMateriaComponent, data: { breadcrumb: '' } },
+                  { path: ':id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },
+                ]
+              },
+            ] 
+          },
         ]
       },
       { 
@@ -31,7 +45,14 @@ const routes: Routes = [
         data: { breadcrumb: 'Asignaturas' },
         children: [
           { path: '', component: ElegirMateriasComponent, data: { breadcrumb: '' } },
-          { path: ':id', component: VerMateriaComponent, data: { breadcrumb: 'Ver Asignatura' } },
+          { 
+            path: ':slug',
+            data: { breadcrumb: 'Ver Asignatura'},
+            children: [
+              { path: '', component: VerMateriaComponent, data: { breadcrumb: '' } },
+              { path: ':id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },
+            ]
+          },
         ]
       },
       { path: 'video/:id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },

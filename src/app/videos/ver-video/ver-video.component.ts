@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { AdminService } from 'src/app/services/admin.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { Records, Video } from 'src/app/interfaces/interfaces';
 
 @Component({
@@ -12,7 +11,6 @@ import { Records, Video } from 'src/app/interfaces/interfaces';
 })
 export class VerVideoComponent implements OnInit {
 
-
   video!: Video;
   videoHistorial: boolean = false;
   videoView: boolean = false;
@@ -20,9 +18,7 @@ export class VerVideoComponent implements OnInit {
   record!: Records;
 
   constructor( private adminService: AdminService,
-               private activatedRoute: ActivatedRoute,
-               private authService: AuthService,
-               private router: Router ) { 
+               private activatedRoute: ActivatedRoute) { 
 
   }
 
@@ -45,17 +41,6 @@ export class VerVideoComponent implements OnInit {
           this.videos = this.videos.filter( video => video.id != this.video.id );
         }
       )
-
-  }
-
-  cambiarVideo( id: string ){
-    this.router.navigate(['/play/video', id]);
-    this.videoHistorial = false;
-    this.videoView = false;
-  }
-  
-
-  historial(event: any){
 
   }
 

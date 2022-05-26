@@ -14,6 +14,7 @@ export class VerCarreraComponent implements OnInit {
   carrera!: Career;
   materias: Course[] = [];
   carrerasRelacionadas!: Career[];
+  loading: boolean = true;
 
   constructor( private activatedRoute: ActivatedRoute,
                private adminService: AdminService  
@@ -23,12 +24,13 @@ export class VerCarreraComponent implements OnInit {
 
     this.activatedRoute.params
       .pipe(
-        switchMap( ({id}) => this.adminService.obtenerCarreraPorId(id) )
+        switchMap( ({slug}) => this.adminService.obtenerCarreraPorSlug(slug) )
       )
       .subscribe( carrera => {
-        this.carrera = carrera;
-        this.adminService.obtenerMateriasPorCarrera(carrera).subscribe( materias => {
+        this.carrera = carrera[0];
+        this.adminService.obtenerMateriasPorCarrera(carrera[0]).subscribe( materias => {
           this.materias = materias;
+          this.loading = false;
         });
         this.adminService.obtenerCarrerasPorArea(this.carrera.area).subscribe( carreras => {
           this.carrerasRelacionadas = carreras.filter( carrera => carrera.id != this.carrera.id )

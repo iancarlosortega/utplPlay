@@ -27,7 +27,7 @@
   <article class="resultados" *ngIf="carreras_aux.length > 0">
       <h5>Carreras relacionadas</h5>
       <ul class="listado">
-          <li *ngFor="let carrera of carreras_aux" [routerLink]="['/play/carreras', carrera.id]">
+          <li *ngFor="let carrera of carreras_aux" [routerLink]="['/play/carreras', carrera.slug]">
               <mat-icon>play_circle</mat-icon>
               {{carrera.name}}
           </li>
@@ -36,20 +36,15 @@
   <article class="resultados" *ngIf="asignaturas_aux.length > 0">
       <h5>Materias relacionadas</h5>
       <ul class="listado">
-          <li *ngFor="let asignatura of asignaturas_aux" [routerLink]="['/play/materias', asignatura.id]">
+          <li *ngFor="let asignatura of asignaturas_aux" [routerLink]="['/play/materias', asignatura.slug]">
               <mat-icon>play_circle</mat-icon>
               {{asignatura.name}}
           </li>
       </ul>
   </article>
-  <!-- <article class="videos" *ngIf="videos.length == 0">
-      <h5>Historial de videos</h5>
-      <ul class="videos-listado">
-          <li>
-              No se encontró ningún resultado...
-          </li>
-      </ul>
-  </article> -->
+  <div *ngIf="videos_aux.length === 0 && carreras_aux.length === 0 && asignaturas_aux.length === 0" class="alert alert-secondary" role="alert">
+    No se encontraron resultados!
+  </div>
 </div>
 
 <app-footer></app-footer>

@@ -15,6 +15,7 @@
                 <p class="titulo">{{video?.title}}</p>
                 <div class="informacion">
                     <p><span class="texto-negrita">Fecha de publicación: </span>{{video?.publication_date.toDate() | date:'longDate' }}</p>
+                    <p><span class="texto-negrita">Descripción: </span>{{video?.description }}</p>
     
                 </div>
             </main>
@@ -22,7 +23,7 @@
         <aside class="videos">
             <h5>Videos Relacionados</h5>
             <ul class="videos-listado">
-                <li *ngFor="let video of videos" (click)="cambiarVideo(video.id)">
+                <li *ngFor="let video of videos" [routerLink]="['../', video.id]">
                     <mat-icon>play_circle</mat-icon>
                     {{video.title}}
                 </li>

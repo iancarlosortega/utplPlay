@@ -1,6 +1,7 @@
 export interface User {
     uid: string;
     name?: string;
+    slug?: string;
     last_name?: string;
     email: string;
     password?: string;
@@ -35,6 +36,7 @@ export interface Area {
 export interface Career {
     id: string;
     name: string;
+    slug?: string;
     duration: number;
     area: Area;
     views: number;
@@ -46,6 +48,7 @@ export interface Career {
 export interface Course {
     id: string;
     name: string;
+    slug?: string;
     description: string;
     keywords?: string[];
     purposes?: string[];
@@ -56,6 +59,7 @@ export interface Course {
 export interface Video {
     id: string;
     title: string;
+    slug?: string;
     description: string;
     course: Course;
     publication_date: any | null;

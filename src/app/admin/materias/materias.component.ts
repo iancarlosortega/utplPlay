@@ -8,6 +8,7 @@ import { Table } from 'primeng/table';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { Career, Course } from 'src/app/interfaces/interfaces';
+import { stringToSlug } from '../../utils/stringToSlug';
 @Component({
   selector: 'app-materias',
   templateUrl: './materias.component.html',
@@ -108,6 +109,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
 
     this.materia = this.miFormulario.value;
     this.materia.views = 0;
+    this.materia.slug = stringToSlug(this.materia.name);
 
     this.disabled = true;
     this.adminService.agregarMateria(this.materia)
@@ -149,7 +151,11 @@ export class MateriasComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.materia = {...this.materia, ...this.miFormulario.value};
+    this.materia = {
+      ...this.materia, 
+      slug: stringToSlug(this.miFormulario.value.name),
+      ...this.miFormulario.value
+    };
 
     this.disabled = true;
     this.adminService.actualizarMateria( this.materia )

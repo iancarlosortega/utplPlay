@@ -133,3 +133,9 @@
     color: #FFFFFF;
     padding-left: 1.5rem;
 }
+
+.loading {
+    display: grid;
+    place-content: center;
+    height: 20rem;
+}

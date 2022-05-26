@@ -11,7 +11,7 @@ export class BreadcrumbComponent {
 
   breadcrumbs$: Observable<any[]>; 
  
-  constructor(private readonly breadcrumbService: BreadcrumbService) { 
+  constructor(private readonly breadcrumbService: BreadcrumbService) {
     this.breadcrumbs$ = breadcrumbService.breadcrumbs$; 
   } 
 

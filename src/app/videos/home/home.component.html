@@ -92,7 +92,7 @@
 
     <section class="carreras-populares">
 
-        <div class="card" *ngFor="let carrera of carreras" [routerLink]="['/play/carreras', carrera.id]">
+        <div class="card" *ngFor="let carrera of carreras" [routerLink]="['/play/carreras', carrera.slug]">
             <div class="carrera-imagen">
                 <img [src]="carrera.photo_url" class="card-img-top" [alt]="carrera.name">
             </div>
@@ -110,7 +110,7 @@
 
     <section class="carreras-populares">
 
-        <div class="card" *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.id]"> 
+        <div class="card" *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.slug]"> 
             <div class="card-body">
               <h5 class="card-title">{{ materia.name }}</h5>
             </div>

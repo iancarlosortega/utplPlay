@@ -13,6 +13,7 @@ export class VerMateriaComponent implements OnInit {
 
   materia!: Course;
   videos: Video[] = [];
+  loading: boolean = true;
 
   constructor( private adminService: AdminService,
                private activatedRoute: ActivatedRoute
@@ -22,12 +23,13 @@ export class VerMateriaComponent implements OnInit {
 
     this.activatedRoute.params
       .pipe(
-        switchMap( ({id}) => this.adminService.obtenerMateriaPorId(id) )
+        switchMap( ({slug}) => this.adminService.obtenerMateriaPorSlug(slug) )
       )
       .subscribe( materia => {
-        this.materia = materia;
+        this.materia = materia[0];
         this.adminService.obtenerVideosPorMateria(this.materia).subscribe( videos => {
-          this.videos = videos;
+          this.videos = videos.reverse();
+          this.loading = false;
         })
       });
 

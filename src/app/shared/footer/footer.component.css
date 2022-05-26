@@ -39,6 +39,7 @@ p {
 .logo {
     display: grid;
     place-items: center;
+    cursor: pointer;
 }
 
 .logo img {

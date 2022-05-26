@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { FileUpload } from '../models/file-upload-model';
 import { Area, Career } from 'src/app/interfaces/interfaces';
+import { stringToSlug } from 'src/app/utils/stringToSlug';
 
 @Component({
   selector: 'app-carreras',
@@ -155,12 +156,14 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
       this.miFormulario.markAllAsTouched();
       return;
     }
-
     
     if( this.carrera.id ){
       //Actualizar
       this.tipo = 'editar';
-      this.carrera = {...this.carrera, ...this.miFormulario.value };
+      this.carrera = {
+        ...this.carrera, 
+        slug: stringToSlug(this.miFormulario.value.name),
+        ...this.miFormulario.value };
 
       if (this.selectedFiles) {
 
@@ -171,11 +174,11 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
         this.carrera.photo_filename = filename;
         delete this.carrera.file;
         
-        
         const file: File | null = this.selectedFiles.item(0);
         this.selectedFiles = undefined;
   
         if (file) {
+          this.visible = true;
           this.disabled = true;
           this.disableForm();
           this.currentFileUpload = new FileUpload(file);
@@ -218,6 +221,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
       //Crear
       
       this.carrera = this.miFormulario.value;
+      this.carrera.slug = stringToSlug(this.carrera.name);
       this.carrera.views = 0;
 
       if (this.selectedFiles) {

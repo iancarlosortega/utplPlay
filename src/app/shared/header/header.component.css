@@ -22,6 +22,11 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e3c1d2', endColorstr='#bebfcd',GradientType=0 );
 }
 
+.sticky {
+    position: fixed;
+    z-index: 99;
+}
+
 .navbar2 {
     padding: 2rem;
     display: flex;
@@ -67,6 +72,7 @@
 
 .logo {
     padding: 1rem;
+    cursor: pointer;
 }
 
 .logo img {
