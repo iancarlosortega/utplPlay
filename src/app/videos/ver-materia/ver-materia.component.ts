@@ -27,12 +27,19 @@ export class VerMateriaComponent implements OnInit {
       )
       .subscribe( materia => {
         this.materia = materia[0];
+        this.agregarVisualizacion(this.materia.id);
         this.adminService.obtenerVideosPorMateria(this.materia).subscribe( videos => {
           this.videos = videos.reverse();
           this.loading = false;
         })
       });
 
+  }
+
+  agregarVisualizacion(id: string) {
+    this.adminService.agregarVisualizacionMateria(id).subscribe( res => {
+      console.log(res);
+    })
   }
 
 }

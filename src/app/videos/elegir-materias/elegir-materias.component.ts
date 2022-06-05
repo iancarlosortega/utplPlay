@@ -41,16 +41,21 @@ export class ElegirMateriasComponent implements OnInit {
     const primero = event.first;
     const ultimo = primero + event.rows;
     this.materias = this.materiasAux.slice( primero, ultimo );
+    window.scroll(0,0);
   }   
 
   buscar( event: any ){
 
     const value = event.target.value.trim().toLowerCase();
-    this.materias = this.materiasTotales.filter( video => video.name.toLowerCase().includes(value) );
+    this.materias = this.materiasTotales.filter( video => this.quitarAcentos(video.name.toLowerCase()).includes(value) );
     this.length = this.materias.length;
     this.materiasAux = this.materias;
     this.materias = this.materias.slice(0,9);
 
+  }
+
+  quitarAcentos(text: string){
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
 
 }

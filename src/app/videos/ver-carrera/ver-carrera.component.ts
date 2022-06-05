@@ -24,10 +24,11 @@ export class VerCarreraComponent implements OnInit {
 
     this.activatedRoute.params
       .pipe(
-        switchMap( ({slug}) => this.adminService.obtenerCarreraPorSlug(slug) )
+        switchMap( ({slug}) => this.adminService.obtenerCarreraPorSlug(slug) ),
       )
       .subscribe( carrera => {
         this.carrera = carrera[0];
+        this.agregarVisualizacion(this.carrera.id);
         this.adminService.obtenerMateriasPorCarrera(carrera[0]).subscribe( materias => {
           this.materias = materias;
           this.loading = false;
@@ -37,6 +38,12 @@ export class VerCarreraComponent implements OnInit {
         })
       });
 
+  }
+
+  agregarVisualizacion(id: string) {
+    this.adminService.agregarVisualizacionCarrera(id).subscribe( res => {
+      console.log(res);
+    })
   }
 
 }

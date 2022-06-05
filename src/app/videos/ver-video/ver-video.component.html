@@ -20,7 +20,7 @@
                 </div>
             </main>
         </div>
-        <aside class="videos">
+        <aside class="videos" *ngIf="videos.length > 0">
             <h5>Videos Relacionados</h5>
             <ul class="videos-listado">
                 <li *ngFor="let video of videos" [routerLink]="['../', video.id]">

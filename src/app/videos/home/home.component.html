@@ -86,6 +86,21 @@
     </section>
 
     <header class="header">
+        <p>Asignaturas más populares</p>
+        <div class="linea"></div>
+    </header>
+
+    <section class="carreras-populares">
+
+        <div class="card" *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.slug]"> 
+            <div class="card-body">
+              <h5 class="card-title">{{ materia.name }}</h5>
+            </div>
+          </div>
+
+    </section>
+
+    <header class="header">
         <p>Carreras más populares</p>
         <div class="linea"></div>
     </header>
@@ -98,21 +113,6 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">{{ carrera.name }}</h5>
-            </div>
-          </div>
-
-    </section>
-
-    <header class="header">
-        <p>Asignaturas más populares</p>
-        <div class="linea"></div>
-    </header>
-
-    <section class="carreras-populares">
-
-        <div class="card" *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.slug]"> 
-            <div class="card-body">
-              <h5 class="card-title">{{ materia.name }}</h5>
             </div>
           </div>
 

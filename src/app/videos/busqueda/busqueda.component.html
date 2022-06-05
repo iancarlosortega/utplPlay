@@ -12,7 +12,11 @@
   <!-- Buscador -->
   <div class="buscador">
       <mat-icon>search</mat-icon>
-      <input (keyup)="buscar($event)" type="text" placeholder="Buscar...">
+      <input 
+        [value]="busqueda"
+        (keyup)="buscar($event)" 
+        type="text" 
+        placeholder="Buscar...">
   </div>
 
   <article class="resultados" *ngIf="videos_aux.length > 0">
@@ -28,7 +32,7 @@
       <h5>Carreras relacionadas</h5>
       <ul class="listado">
           <li *ngFor="let carrera of carreras_aux" [routerLink]="['/play/carreras', carrera.slug]">
-              <mat-icon>play_circle</mat-icon>
+              <mat-icon>data_usage</mat-icon>
               {{carrera.name}}
           </li>
       </ul>
@@ -37,7 +41,7 @@
       <h5>Materias relacionadas</h5>
       <ul class="listado">
           <li *ngFor="let asignatura of asignaturas_aux" [routerLink]="['/play/materias', asignatura.slug]">
-              <mat-icon>play_circle</mat-icon>
+              <mat-icon>library_books</mat-icon>
               {{asignatura.name}}
           </li>
       </ul>

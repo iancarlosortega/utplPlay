@@ -71,5 +71,6 @@
 }
 
 .listado li mat-icon {
+    color: var(--primario);
     margin-right: 0.5rem;
 }

@@ -8,23 +8,23 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class AuthGuard implements CanActivate, CanLoad {
 
   constructor( private afAuth: AngularFireAuth, 
-               private router:Router 
+               private router: Router
   ) {}
 
   async canActivate(): Promise<boolean>  {
     this.afAuth.authState.subscribe( user => {
       if( user == null ) {
-        this.router.navigate(['/auth']);
+        this.router.navigate(['/auth'], { state: { redirect: this.router.url } });
       }
     })
     return true;
   }
   async canLoad(): Promise<boolean> {
-      this.afAuth.authState.subscribe( user => {
-        if( user == null ) {
-          this.router.navigate(['/auth']);
-        }
-      })
-      return true;
+    this.afAuth.authState.subscribe( user => {
+      if( user == null ) {
+        this.router.navigate(['/auth'], { state: { redirect: this.router.url } });
+      }
+    })
+    return true;
   }
 }

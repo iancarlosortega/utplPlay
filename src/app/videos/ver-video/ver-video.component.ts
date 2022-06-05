@@ -14,7 +14,7 @@ export class VerVideoComponent implements OnInit {
   video!: Video;
   videoHistorial: boolean = false;
   videoView: boolean = false;
-  videos!: Video[];
+  videos: Video[] = [];
   record!: Records;
 
   constructor( private adminService: AdminService,

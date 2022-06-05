@@ -71,7 +71,6 @@ export class AuthService {
 
           this.agregarUsuario(usuario)
             .then( res => {
-              console.log('Usuario agregado', res);
               this.router.navigate([ 'auth/register/', usuario.uid ])
             })
             .catch( err => {
@@ -79,7 +78,8 @@ export class AuthService {
             })
 
         } else {
-          this.router.navigateByUrl('/play')
+          const { redirect } = window.history.state;
+          this.router.navigateByUrl( redirect || '/play');
         }
 
       })

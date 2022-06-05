@@ -174,6 +174,10 @@ export class AdminService {
     this.storage.ref(this.basePathCarreras).child(name).delete();
   }
 
+  agregarVisualizacionCarrera(carreraId: string) {
+    return this.http.post(`${environment.functionsURL}/carreras/${{carreraId}}`, {});
+  }
+
   // Materias
   
   obtenerMaterias(){
@@ -248,9 +252,8 @@ export class AdminService {
         map(actions => {       
           return actions.map(a => {
             const data = a.payload.doc.data() as Course;
-            data.id = a.payload.doc.id;  
-            const {careers, keywords, purposes, ...materia} = data
-            return materia;
+            data.id = a.payload.doc.id; 
+            return data;
           });
         })
       )
@@ -262,6 +265,10 @@ export class AdminService {
 
   eliminarMateria( id: string ) {
     return this.firestore.collection('courses').doc(id).delete();
+  }
+
+  agregarVisualizacionMateria(materiaId: string) {
+    return this.http.post(`${environment.functionsURL}/materias/${{materiaId}}`, {});
   }
 
   // Videos

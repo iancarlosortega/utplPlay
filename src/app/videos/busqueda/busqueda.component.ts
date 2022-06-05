@@ -28,15 +28,15 @@ export class BusquedaComponent implements OnInit {
 
     this.adminService.obtenerVideos().subscribe( videos => {
       this.videos = videos;
-      this.videos_aux = videos.filter( video => video.title.toLowerCase().includes( this.busqueda ) );
+      this.videos_aux = videos.filter( video => this.quitarAcentos(video.title.toLowerCase()).includes( this.busqueda ) );
     })
     this.adminService.obtenerCarreras().subscribe( carreras => {
       this.carreras = carreras;
-      this.carreras_aux = carreras.filter( carrera => carrera.name.toLowerCase().includes( this.busqueda ) );
+      this.carreras_aux = carreras.filter( carrera => this.quitarAcentos(carrera.name.toLowerCase()).includes( this.busqueda ) );
     })
     this.adminService.obtenerMaterias().subscribe( asignaturas => {
       this.asignaturas = asignaturas;
-      this.asignaturas_aux = asignaturas.filter( asignatura => asignatura.name.toLowerCase().includes( this.busqueda ) || asignatura.keywords?.includes( this.busqueda ));
+      this.asignaturas_aux = asignaturas.filter( asignatura => this.quitarAcentos(asignatura.name.toLowerCase()).includes( this.busqueda ) || asignatura.keywords?.includes( this.busqueda ));
     })
 
   }
@@ -44,10 +44,14 @@ export class BusquedaComponent implements OnInit {
   buscar(event: any) {
 
     const value = event.target.value.toLowerCase().trim();
-    this.videos_aux = this.videos.filter( video => video.title.toLowerCase().includes(value) );
-    this.carreras_aux = this.carreras.filter( carrera => carrera.name.toLowerCase().includes(value) );
-    this.asignaturas_aux = this.asignaturas.filter( asignatura => asignatura.name.toLowerCase().includes(value) || asignatura.keywords?.includes(value));
+    this.videos_aux = this.videos.filter( video => this.quitarAcentos(video.title.toLowerCase()).includes(value) );
+    this.carreras_aux = this.carreras.filter( carrera => this.quitarAcentos(carrera.name.toLowerCase()).includes(value) );
+    this.asignaturas_aux = this.asignaturas.filter( asignatura => this.quitarAcentos(asignatura.name.toLowerCase()).includes(value) || asignatura.keywords?.includes(value));
 
+  }
+
+  quitarAcentos(text: string){
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
 
 }

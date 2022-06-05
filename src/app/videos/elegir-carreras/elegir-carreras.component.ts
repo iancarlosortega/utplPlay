@@ -60,9 +60,13 @@ export class ElegirCarrerasComponent implements OnInit {
   buscar( event: any ){
 
     const value = event.target.value.trim().toLowerCase();
-    this.carreras = this.carrerasTotales.filter( carrera => carrera.name.toLowerCase().includes(value) );
+    this.carreras = this.carrerasTotales.filter( carrera => this.quitarAcentos(carrera.name.toLowerCase()).includes(value) );
     this.filtrar(this.carreras)
 
+  }
+
+  quitarAcentos(text: string){
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
   }
 
 }

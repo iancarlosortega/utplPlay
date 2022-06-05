@@ -22,8 +22,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{materia.name}}</h5>
                     <p class="card-text" >
-                        {{materia.description | slice:0:120}}...
+                        {{ materia.description | slice:0:120 }}...
                         <a class="link" [routerLink]="['../materias', materia.slug]">Ver Más</a>
+                    </p>
+                    <p class="texto-negrita" *ngIf="materia?.keywords">Carreras: 
+                        <span 
+                        class="tags tags-carreras" 
+                        [routerLink]="['/play/carreras', career.slug]"
+                        *ngFor="let career of materia?.careers">
+                            {{career.name}}
+                        </span>
                     </p>
                     <p class="texto-negrita" *ngIf="materia?.keywords">Palabras clave: 
                         <span class="tags" *ngFor="let keyword of materia?.keywords">

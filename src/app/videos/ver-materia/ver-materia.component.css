@@ -37,6 +37,7 @@
 
 .texto-negrita {
     font-weight: bold;
+    margin: 0;
 }
 
 .tags {
@@ -58,7 +59,7 @@
     background-color: var(--blanco);
     border: 1px solid #c7c7c7;
     padding: 2rem;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
 }
 
 .objetivos h5, .videos h5 {
