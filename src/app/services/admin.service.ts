@@ -175,7 +175,7 @@ export class AdminService {
   }
 
   agregarVisualizacionCarrera(carreraId: string) {
-    return this.http.post(`${environment.functionsURL}/carreras/${{carreraId}}`, {});
+    return this.http.post(`${environment.functionsURL}/carreras/${carreraId}`, {});
   }
 
   // Materias
@@ -268,7 +268,7 @@ export class AdminService {
   }
 
   agregarVisualizacionMateria(materiaId: string) {
-    return this.http.post(`${environment.functionsURL}/materias/${{materiaId}}`, {});
+    return this.http.post(`${environment.functionsURL}/materias/${materiaId}`, {});
   }
 
   // Videos
