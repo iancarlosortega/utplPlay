@@ -26,6 +26,7 @@ export class CarrerasComponent implements OnInit, AfterViewInit {
   carrera: Career = {
     id: '',
     name: '',
+    slug: '',
     duration: 0,
     area: {
       name: '',

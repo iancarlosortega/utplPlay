@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, map } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import firebase from '@firebase/app-compat';
-import { Area, Career, Course, Records, User, Video } from '../interfaces/interfaces';
+import { Area, Career, Course, Records, User, Video, CareerMin } from '../interfaces/interfaces';
 import { FileUpload } from '../admin/models/file-upload-model';
 
 @Injectable({
@@ -13,20 +12,15 @@ import { FileUpload } from '../admin/models/file-upload-model';
 })
 export class AdminService {
 
-  // Nombre de la carpeta donde se guardaran en el storage de firebase
-  private basePath = '/videos';
   private basePathCarreras = '/careers';
 
   constructor( private firestore: AngularFirestore,
-               private storage: AngularFireStorage,
-               private http: HttpClient
-  ) { }
+               private storage: AngularFireStorage ) { }
 
   // Usuarios
 
   obtenerUsuarios(){
     const usuariosCollection = this.firestore.collection('users');
-
     return usuariosCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -40,8 +34,8 @@ export class AdminService {
   }
 
   obtenerUsuarioPorId(id: string) {
-    const usuario = this.firestore.collection('users').doc(id);
-    return usuario.snapshotChanges()
+    const usuariosCollection = this.firestore.collection('users').doc(id);
+    return usuariosCollection.snapshotChanges()
       .pipe(
         map(a => {       
           const data = a.payload.data() as User;
@@ -72,7 +66,6 @@ export class AdminService {
 
   obtenerCarreras(){
     const carrerasCollection = this.firestore.collection('careers');
-
     return carrerasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -86,8 +79,8 @@ export class AdminService {
   }
 
   obtenerCarreraPorId(id: string) {
-    const carrera = this.firestore.collection('careers').doc(id);
-    return carrera.snapshotChanges()
+    const carrerasCollection = this.firestore.collection('careers').doc(id);
+    return carrerasCollection.snapshotChanges()
       .pipe(
         map(a => {       
           const data = a.payload.data() as Career;
@@ -98,17 +91,15 @@ export class AdminService {
   }
 
   obtenerCarreraPorSlug(slug: string) {
-    const carrera = this.firestore.collection('careers', ref => ref.where('slug', '==' , slug));
-    return carrera.snapshotChanges()
+    const carrerasCollection = this.firestore.collection('careers', ref => ref.where('slug', '==' , slug));
+    return carrerasCollection.get()
       .pipe(
-        map(actions => {       
-          return actions.map(a => {
-            const data = a.payload.doc.data() as Career;
-            data.id = a.payload.doc.id;
-            return data
-          });
+        map(a => {
+          const data = a.docs[0].data() as Career;
+          data.id = a.docs[0].id;
+          return data;
         })
-      )
+      );
   }
 
   obtenerCarrerasPorArea(area: Area){
@@ -174,15 +165,10 @@ export class AdminService {
     this.storage.ref(this.basePathCarreras).child(name).delete();
   }
 
-  agregarVisualizacionCarrera(carreraId: string) {
-    return this.http.post(`${environment.functionsURL}/carreras/${carreraId}`, {});
-  }
-
   // Materias
   
   obtenerMaterias(){
     const materiasCollection = this.firestore.collection('courses');
-
     return materiasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -197,7 +183,6 @@ export class AdminService {
 
   obtenerMateriasVideos(){
     const materiasCollection = this.firestore.collection('courses');
-
     return materiasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -211,10 +196,8 @@ export class AdminService {
       )
   }
 
-  obtenerMateriasPorCarrera(carrera: Career){
-
+  obtenerMateriasPorCarrera(carrera: CareerMin){
     const materiasCollection = this.firestore.collection('courses', ref => ref.where('careers', 'array-contains' , carrera));
-
     return materiasCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -232,9 +215,9 @@ export class AdminService {
     return this.firestore.collection('courses').add(materia);
   }
 
-  obtenerMateriaPorId(id: string) {
-    const carrera = this.firestore.collection('courses').doc(id);
-    return carrera.snapshotChanges()
+  obtenerMateriaPorId( id: string ) {
+    const materiasCollection = this.firestore.collection('courses').doc(id);
+    return materiasCollection.snapshotChanges()
       .pipe(
         map(a => {       
           const data = a.payload.data() as Course;
@@ -244,38 +227,30 @@ export class AdminService {
       )
   }
 
-  obtenerMateriaPorSlug(slug: string){
-
+  obtenerMateriaPorSlug( slug: string ) {
     const materiasCollection = this.firestore.collection('courses', ref => ref.where('slug', '==' , slug));
-    return materiasCollection.snapshotChanges()
+    return materiasCollection.get()
       .pipe(
-        map(actions => {       
-          return actions.map(a => {
-            const data = a.payload.doc.data() as Course;
-            data.id = a.payload.doc.id; 
-            return data;
-          });
+        map(a => {
+          const data = a.docs[0].data() as Course;
+          data.id = a.docs[0].id;
+          return data;
         })
-      )
+      );
   }
 
-  actualizarMateria(data: Course ) {
-    return this.firestore.collection('courses').doc(data.id).update( data );
+  actualizarMateria( materia: Course ) {
+    return this.firestore.collection('courses').doc(materia.id).update( materia );
   }
 
   eliminarMateria( id: string ) {
     return this.firestore.collection('courses').doc(id).delete();
   }
 
-  agregarVisualizacionMateria(materiaId: string) {
-    return this.http.post(`${environment.functionsURL}/materias/${materiaId}`, {});
-  }
-
   // Videos
 
   obtenerVideos(){
     const videosCollection = this.firestore.collection('videos');
-
     return videosCollection.snapshotChanges()
       .pipe(
         map(actions => {       
@@ -289,8 +264,8 @@ export class AdminService {
   }
 
   obtenerVideoPorId( id: string ){
-    const video = this.firestore.collection('videos').doc(id);
-    return video.snapshotChanges()
+    const videosCollection = this.firestore.collection('videos').doc(id);
+    return videosCollection.snapshotChanges()
       .pipe(
         map(a => {       
           const data = a.payload.data() as Video;
@@ -301,9 +276,7 @@ export class AdminService {
   }
 
   obtenerVideosPorMateria(materia: Course){
-
     const videosCollection = this.firestore.collection('videos', ref => ref.where('course.id', '==' , materia.id));
-
     return videosCollection.snapshotChanges()
       .pipe(
         map(actions => {       

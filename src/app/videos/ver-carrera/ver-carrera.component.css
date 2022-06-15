@@ -7,24 +7,38 @@
     .grid {
         display: grid;
         grid-template-columns: 70% 30%;
+        gap: 1rem;
     }
 }
 
-.informacion {
+.carrera-main {
     background-color: var(--blanco);
     border: 1px solid #c7c7c7;
-    padding: 2rem;
     margin-bottom: 1.5rem;
 }
 
-.titulo, .carreras-relacionadas {
+.carrera-header {
+    background-color: var(--primario);
+}
+
+.carrera-titulo, .carreras-relacionadas {
     font-family: 'Poppins', sans-serif;
     text-align: center;
 }
 
-.titulo {
+.carrera-titulo {
+    padding: 1rem;
     text-transform: uppercase;
-    font-weight: 300;
+    font-weight: 500;
+    font-size: 2rem;
+    color: #FFF;
+}
+
+@media (min-width: 992px){
+    .carrera-titulo {
+        padding: 1rem 0;
+        font-size: 2.5rem;
+    }
 }
 
 .carreras-relacionadas {
@@ -33,21 +47,8 @@
     background-color: var(--primario);
 }
 
-.informacion-imagen {
-    margin: 1rem auto;
-    width: 100%;
-}
-
-@media (min-width:769px){
-    .informacion-imagen {
-        width: 70%;
-    }
-}
-
-.informacion-imagen img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+.informacion {
+    padding: 2rem;
 }
 
 .area-duration {
@@ -70,46 +71,48 @@
     padding: 0.5rem 2rem;
     cursor: pointer;
     margin-bottom: 0.5rem;
-}
-
-.listado-materias li:nth-child(odd) {
-    background-color: var(--primario);
     color: var(--blanco);
 }
 
+.listado-materias li:nth-child(odd) {
+    background-color: #293a4a;
+}
+
 .listado-materias li:nth-child(even) {
-    background-color: #CDCDCD;
-    color: var(--negro);
+    background-color: #34495e;
 }
 
-.relacionadas {
-    padding: 0 2rem;
+@media (min-width: 992px){
+    .relacionadas {
+        padding: 0 2rem;
+    }
 }
 
-.relacionadas ul {
+.listado {
     list-style: none;
     padding: 0;
 }
 
-.carrera{
-    margin: 0.5rem 0;
-    border-radius: 10px;
-    width: 100%;
-    height: 200px;
-    -webkit-box-shadow: -9px 10px 8px -9px rgba(0,0,0,0.71);
-    -moz-box-shadow: -9px 10px 8px -9px rgba(0,0,0,0.71);
-    box-shadow: -9px 10px 8px -9px rgba(0,0,0,0.71);
+.listado li {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    border-bottom: 1px solid #cdcdcd;
+    transition: color 0.3s ease-in-out;
 }
 
-.carrera figure {
-    width: 100%;
+.listado li:hover {
+    color: var(--primario);
 }
 
-.carrera img {
-    width: 100%;
-    border-radius: 10px;
-    height: 200px;
-    object-fit: cover;
+.listado li:last-child {
+    border-bottom: none;
+}
+
+.listado li mat-icon {
+    color: var(--primario);
+    margin-right: 0.5rem;
 }
 
 .breadcrumb {

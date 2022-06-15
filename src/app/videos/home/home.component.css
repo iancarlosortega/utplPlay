@@ -207,7 +207,7 @@
     height: 5rem;
 }
 
-.carreras-populares {
+.populares {
     display: grid; 
     gap: 1rem; 
     grid-template-columns: repeat( auto-fill, minmax(20rem, 1fr) );
@@ -216,6 +216,7 @@
 .card {
     cursor: pointer;
     transition: ease .2s;
+    border: none;
 }
 
 .card:hover {
@@ -224,13 +225,19 @@
     color: #FFFFFF;
 }
 
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .carrera-imagen {
     display: inline-block; /* change the default display type to inline-block */
     overflow: hidden;
 }
 
 .card:hover img {
-    transform: scale(1.5);
+    transform: scale(1.2);
 }
 
 .card img {

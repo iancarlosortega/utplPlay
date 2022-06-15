@@ -7,7 +7,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
 import { MatDialog } from '@angular/material/dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
-import { Career, Course } from 'src/app/interfaces/interfaces';
+import { Course, CareerMin, Career } from 'src/app/interfaces/interfaces';
 import { stringToSlug } from '../../utils/stringToSlug';
 @Component({
   selector: 'app-materias',
@@ -22,7 +22,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
   @ViewChild ('modalEditar') modalEditar!: TemplateRef<any>;
 
   id?: string;
-  carreras: Career[] = [];
+  carreras: CareerMin[] = [];
   materias: Course[] = [];
   materia!: Course;
   loading: boolean = true;
@@ -82,7 +82,13 @@ export class MateriasComponent implements OnInit, AfterViewInit {
     });
 
     this.adminService.obtenerCarreras().subscribe( carreras => {
-      this.carreras = carreras
+      this.carreras = carreras.map( (career: Career) => {
+        return {
+          id: career.id,
+          name: career.name,
+          slug: career.slug,
+        }
+      })
     })
 
   }

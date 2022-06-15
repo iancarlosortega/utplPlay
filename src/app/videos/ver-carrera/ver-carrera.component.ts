@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { switchMap } from 'rxjs';
-import { Career, Course } from 'src/app/interfaces/interfaces';
+import { Career, Course, CareerMin } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-ver-carrera',
@@ -11,7 +11,9 @@ import { Career, Course } from 'src/app/interfaces/interfaces';
 })
 export class VerCarreraComponent implements OnInit {
 
+  slug: string = '';
   carrera!: Career;
+  carreraMin!: CareerMin;
   materias: Course[] = [];
   carrerasRelacionadas!: Career[];
   loading: boolean = true;
@@ -27,9 +29,15 @@ export class VerCarreraComponent implements OnInit {
         switchMap( ({slug}) => this.adminService.obtenerCarreraPorSlug(slug) ),
       )
       .subscribe( carrera => {
-        this.carrera = carrera[0];
-        this.agregarVisualizacion(this.carrera.id);
-        this.adminService.obtenerMateriasPorCarrera(carrera[0]).subscribe( materias => {
+        this.carrera = carrera;
+        this.carrera.views++;
+        this.adminService.actualizarCarrera(this.carrera);
+        this.carreraMin = {
+          id: this.carrera.id,
+          name: this.carrera.name,
+          slug: this.carrera.slug,
+        }
+        this.adminService.obtenerMateriasPorCarrera(this.carreraMin).subscribe( materias => {
           this.materias = materias;
           this.loading = false;
         });
@@ -38,12 +46,6 @@ export class VerCarreraComponent implements OnInit {
         })
       });
 
-  }
-
-  agregarVisualizacion(id: string) {
-    this.adminService.agregarVisualizacionCarrera(id).subscribe( res => {
-      console.log(res);
-    })
   }
 
 }

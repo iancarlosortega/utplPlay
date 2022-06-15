@@ -36,13 +36,19 @@ export interface Area {
 export interface Career {
     id: string;
     name: string;
-    slug?: string;
+    slug: string;
     duration: number;
     area: Area;
     views: number;
     file?: string;
     photo_url?: string;
     photo_filename?: string;
+}
+
+export interface CareerMin {
+    id: string;
+    name: string;
+    slug: string;
 }
 
 export interface Course {
@@ -52,7 +58,7 @@ export interface Course {
     description: string;
     keywords?: string[];
     purposes?: string[];
-    careers?: Career[];
+    careers?: CareerMin[];
     views: number;
 }
 

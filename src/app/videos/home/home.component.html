@@ -90,13 +90,13 @@
         <div class="linea"></div>
     </header>
 
-    <section class="carreras-populares">
+    <section class="populares">
 
         <div class="card" *ngFor="let materia of materias" [routerLink]="['/play/materias', materia.slug]"> 
             <div class="card-body">
               <h5 class="card-title">{{ materia.name }}</h5>
             </div>
-          </div>
+        </div>
 
     </section>
 
@@ -105,7 +105,7 @@
         <div class="linea"></div>
     </header>
 
-    <section class="carreras-populares">
+    <section class="populares">
 
         <div class="card" *ngFor="let carrera of carreras" [routerLink]="['/play/carreras', carrera.slug]">
             <div class="carrera-imagen">
@@ -114,7 +114,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ carrera.name }}</h5>
             </div>
-          </div>
+        </div>
 
     </section>
 
@@ -127,7 +127,6 @@
     </div>
 
     <div class="informacion">
-
         <h4>Nunca dejes de aprender</h4>
         <p>Gracias a los contenidos de alta calidad por parte de UTPL, puedes preparte de la manera más profesional posible</p>
         <button routerLink="/play/materias">Encontrar cursos</button>

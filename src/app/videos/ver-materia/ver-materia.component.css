@@ -52,6 +52,7 @@
 }
 
 .tags-carreras {
+    cursor: pointer;
     background-color: #34495e;
 }
 
@@ -101,6 +102,7 @@
 }
 
 .videos-listado li mat-icon {
+    color: var(--primario);
     margin-right: 0.5rem;
 }
 

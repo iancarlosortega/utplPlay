@@ -22,7 +22,10 @@
             </span>
         </p>
         <p class="texto-negrita" *ngIf="materia?.careers">Carreras: 
-            <span class="tags tags-carreras" *ngFor="let carrera of materia?.careers">
+            <span 
+                [routerLink]="['/play/carreras', carrera.slug]"
+                class="tags tags-carreras" 
+                *ngFor="let carrera of materia?.careers">
                 {{carrera?.name}}
             </span>
         </p>

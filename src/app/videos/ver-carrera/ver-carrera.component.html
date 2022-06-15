@@ -15,29 +15,27 @@
 
     <div *ngIf="!loading" class="grid">
         <div>
-            <main class="informacion">
+            <main class="carrera-main">
 
-                <h3 class="titulo">{{carrera?.name}}</h3>
-    
-                <div class="informacion-imagen">
-                    <img [src]="carrera?.photo_url" [alt]="carrera?.name">
-                </div>
+                <header class="carrera-header">
+                    <h3 class="carrera-titulo">{{carrera?.name}}</h3>
+                </header>
                 
-                <hr>
-
-                <div class="area-duration">
-                    <p><span class="texto-negrita">Área: </span>{{carrera?.area?.name}}</p>
-                    <p><span class="texto-negrita">Número de ciclos: </span>{{carrera?.duration}}</p>
-                </div>
-                
-                <div *ngIf="materias.length > 0">
-                    <p class="texto-negrita">Listado de materias:</p>
-                    <ul class="listado-materias">
-                        <li *ngFor="let materia of materias" [routerLink]="['./', materia.slug]">
-                            {{materia.name}}
-                            <mat-icon>arrow_right</mat-icon>
-                        </li>
-                    </ul>
+                <div class="informacion">
+                    <div class="area-duration">
+                        <p><span class="texto-negrita">Área: </span>{{carrera?.area?.name}}</p>
+                        <p><span class="texto-negrita">Número de ciclos: </span>{{carrera?.duration}}</p>
+                    </div>
+                    
+                    <div *ngIf="materias.length > 0">
+                        <p class="texto-negrita">Listado de materias:</p>
+                        <ul class="listado-materias">
+                            <li *ngFor="let materia of materias" [routerLink]="['./', materia.slug]">
+                                {{materia.name}}
+                                <mat-icon>arrow_right</mat-icon>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 
             </main>
@@ -46,17 +44,10 @@
 
         <aside class="relacionadas">
             <p class="carreras-relacionadas">Carreras Relacionadas</p>
-            <ul>
-                <li *ngFor="let carrera of carrerasRelacionadas">
-                    <div class="carrera" [routerLink]="['/play/carreras', carrera.slug]">
-                        <figure class="imghvr-fade-up">
-                            <img [src]="carrera.photo_url" [alt]="carrera.name">
-                            <figcaption class="">
-                              <h3 class="ih-fade-down ih-delay-sm">{{carrera.name}}</h3>
-                            </figcaption>
-                        </figure>
-                    </div>
-
+            <ul class="listado">
+                <li *ngFor="let carrera of carrerasRelacionadas" [routerLink]="['/play/carreras', carrera.slug]">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                    {{carrera.name}}
                 </li>
             </ul>
 
