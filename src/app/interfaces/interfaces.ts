@@ -54,12 +54,18 @@ export interface CareerMin {
 export interface Course {
     id: string;
     name: string;
-    slug?: string;
+    slug: string;
     description: string;
     keywords?: string[];
     purposes?: string[];
     careers?: CareerMin[];
     views: number;
+}
+
+export interface CourseMin {
+    id: string;
+    name: string;
+    slug: string;
 }
 
 export interface Video {
