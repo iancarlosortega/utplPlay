@@ -10,18 +10,18 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 
 //Firebase
-import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 //Cambiar el locale de la app
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
 registerLocaleData(localeEs);
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,14 +31,16 @@ registerLocaleData(localeEs);
       positionClass: 'toast-top-right',
       timeOut: 3000,
       maxOpened: 1,
-      preventDuplicates: true
+      preventDuplicates: true,
     }),
+    // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    // provideAuth(() => getAuth()),
+    // provideFirestore(() => getFirestore()),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFireStorageModule,
   ],
-  providers: [
-    { provide: LOCALE_ID , useValue: 'es' }
-  ],
-  bootstrap: [AppComponent]
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

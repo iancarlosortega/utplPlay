@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { Table } from 'primeng/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { Course, CareerMin, Career } from 'src/app/interfaces/interfaces';
 import { stringToSlug } from '../../utils/stringToSlug';
@@ -31,7 +31,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
   modalRef?: BsModalRef;
   emptyMessage: string = 'Ninguna carrera encontrada'
 
-  miFormulario: FormGroup = this.fb.group({
+  miFormulario: UntypedFormGroup = this.fb.group({
     name: [ '', [ Validators.required, Validators.minLength(3) ] ],
     description: [ '', [ Validators.required, Validators.minLength(10) ] ],
     keywords: [ '', [ Validators.required ] ],
@@ -61,7 +61,7 @@ export class MateriasComponent implements OnInit, AfterViewInit {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  constructor( private fb: FormBuilder ,
+  constructor( private fb: UntypedFormBuilder ,
                private adminService: AdminService, 
                private modalService: BsModalService,
                private toastr: ToastrService,

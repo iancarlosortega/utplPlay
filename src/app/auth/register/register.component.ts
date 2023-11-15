@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/interfaces/interfaces';
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   ciudades: any[] = [];
   formSubmitted: boolean = false;
 
-  miFormulario: FormGroup = this.fb.group({
+  miFormulario: UntypedFormGroup = this.fb.group({
     name: [ '', Validators.required ],
     email: [ '', [Validators.required, Validators.email] ],
     password: ['', [Validators.required, Validators.minLength(6)] ],
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     validators: [ this.validator.camposIguales( 'password', 'password2' ) ]
   })
   
-  constructor( private fb: FormBuilder,
+  constructor( private fb: UntypedFormBuilder,
                private authService: AuthService,
                private router: Router,
                private validator: ValidatorService,
@@ -79,6 +79,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.usuario)
       .then( (userCredential: any)  => {
         delete this.usuario.password;
+        delete this.usuario.password2;
         this.usuario.uid = userCredential.user.uid;
         this.authService.agregarUsuario( this.usuario ).then( () => {
 

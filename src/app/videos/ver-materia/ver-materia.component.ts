@@ -7,34 +7,33 @@ import { Course, Video } from 'src/app/interfaces/interfaces';
 @Component({
   selector: 'app-ver-materia',
   templateUrl: './ver-materia.component.html',
-  styleUrls: ['./ver-materia.component.css']
+  styleUrls: ['./ver-materia.component.css'],
 })
 export class VerMateriaComponent implements OnInit {
-
-  materia!: Course;
+  materia?: Course;
   videos: Video[] = [];
   loading: boolean = true;
 
-  constructor( private adminService: AdminService,
-               private activatedRoute: ActivatedRoute
-    ) { }
+  constructor(
+    private adminService: AdminService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-
     this.activatedRoute.params
       .pipe(
-        switchMap( ({slug}) => this.adminService.obtenerMateriaPorSlug(slug) )
+        switchMap(({ slug }) => this.adminService.obtenerMateriaPorSlug(slug))
       )
-      .subscribe( materia => {
+      .subscribe((materia) => {
         this.materia = materia;
         this.materia.views++;
         this.adminService.actualizarMateria(this.materia);
-        this.adminService.obtenerVideosPorMateria(this.materia).subscribe( videos => {
-          this.videos = videos.reverse();
-          this.loading = false;
-        })
+        this.adminService
+          .obtenerVideosPorMateria(this.materia)
+          .subscribe((videos) => {
+            this.videos = videos.reverse();
+            this.loading = false;
+          });
       });
-
   }
-
 }

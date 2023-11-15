@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { User } from 'src/app/interfaces/interfaces';
@@ -19,7 +19,7 @@ export class NuevoUsuarioComponent implements OnInit {
   ciudades: any[] = [];
   formSubmitted: boolean = false;
 
-  miFormulario: FormGroup = this.fb.group({
+  miFormulario: UntypedFormGroup = this.fb.group({
     education_level: [ '', Validators.required ],
     institution: [ '', Validators.required ],
     country: [ '', Validators.required ],
@@ -28,7 +28,7 @@ export class NuevoUsuarioComponent implements OnInit {
     identification_card: [ '', Validators.required ]
   })
   
-  constructor( private fb: FormBuilder,
+  constructor( private fb: UntypedFormBuilder,
                private adminService: AdminService,
                private authService: AuthService,
                private router: Router,

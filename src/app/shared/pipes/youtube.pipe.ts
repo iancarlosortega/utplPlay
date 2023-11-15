@@ -7,7 +7,14 @@ export class YoutubePipe implements PipeTransform {
 
   transform(url: string): string {
 
-    const youtubeId = url.split('=')[1]
+    let youtubeId = ''
+
+    if( url.includes('youtu.be') ){
+      const urlArray = url.split('/');
+      youtubeId = urlArray[ urlArray.length - 1];
+    } else {
+      youtubeId = url.split('=')[1];
+    }
 
     return `https://www.youtube.com/embed/${youtubeId}`;
   }

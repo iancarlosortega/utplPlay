@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { CanActivate, CanLoad, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate, CanLoad, OnDestroy {
+export class AdminGuard  implements OnDestroy {
 
   obs1!: Subscription;
   obs2!: Subscription;
@@ -23,7 +23,6 @@ export class AdminGuard implements CanActivate, CanLoad, OnDestroy {
 
       this.obs1 = this.afAuth.idTokenResult.subscribe( idTokenResult => {
         const claims = idTokenResult?.claims;
-        console.log('Can Activate');
         if( claims ){
           if( claims!['editor'] === null ) {
             console.log('not editor');
@@ -36,17 +35,11 @@ export class AdminGuard implements CanActivate, CanLoad, OnDestroy {
   canLoad(): boolean {
       this.obs2 = this.afAuth.idTokenResult.subscribe( idTokenResult => {
         const claims = idTokenResult?.claims;
-        console.log('Can Load');
         if( claims ){
           if(claims!['editor'] === null ) {
             console.log('not editor');
             this.router.navigateByUrl('/play')
           }
-          // if( claims!['admin'] ||  claims!['editor'] ) {
-          //   this.router.navigateByUrl('/admin')
-          // } else {
-          //   this.router.navigateByUrl('/play')
-          // }
         }
       });
       return true;

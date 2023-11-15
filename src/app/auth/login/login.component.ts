@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  miFormulario: FormGroup = this.fb.group({
+  miFormulario: UntypedFormGroup = this.fb.group({
     'email': [ '', [Validators.required, Validators.email] ],
     'password': [ '', [Validators.required, Validators.minLength(6)] ]
   })
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   formSubmitted: boolean = false;
 
   constructor( private authService: AuthService ,
-               private fb: FormBuilder,
+               private fb: UntypedFormBuilder,
                private router: Router
   ) { }
 

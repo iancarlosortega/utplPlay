@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
@@ -25,7 +25,7 @@ export class EditarPerfilComponent implements OnInit {
   percentage = 0;
   visible = true;
 
-  miFormulario: FormGroup = this.fb.group({
+  miFormulario: UntypedFormGroup = this.fb.group({
     name: [ { value: '', disabled: false }, Validators.required ],
     education_level: [ { value: '', disabled: false }, Validators.required ],
     institution: [ { value: '', disabled: false }, Validators.required ],
@@ -44,7 +44,7 @@ export class EditarPerfilComponent implements OnInit {
                private adminService: AdminService,
                private paisesService: PaisesService,
                private toastr: ToastrService,
-               private fb: FormBuilder
+               private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {
