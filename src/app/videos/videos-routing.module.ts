@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../guards/auth.guard';
 
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
@@ -17,56 +18,106 @@ const routes: Routes = [
     path: '',
     data: { breadcrumb: 'Home' },
     children: [
-      { path: 'home', component: HomeComponent, data: { breadcrumb: '' } },
-      { 
-        path: 'carreras', 
+      { path: '', component: HomeComponent, data: { breadcrumb: '' } },
+      {
+        path: 'carreras',
         data: { breadcrumb: 'Carreras' },
         children: [
-          { path: '', component: ElegirCarrerasComponent, data: { breadcrumb: '' } },
-          { 
+          {
+            path: '',
+            component: ElegirCarrerasComponent,
+            data: { breadcrumb: '' },
+          },
+          {
             path: ':slug',
             data: { breadcrumb: 'Ver Carrera' },
             children: [
-              { path: '', component: VerCarreraComponent, data: { breadcrumb: '' } },
-              { 
+              {
+                path: '',
+                component: VerCarreraComponent,
+                data: { breadcrumb: '' },
+              },
+              {
                 path: ':slug',
                 data: { breadcrumb: 'Ver Asignatura' },
                 children: [
-                  { path: '', component: VerMateriaComponent, data: { breadcrumb: '' } },
-                  { path: ':id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },
-                ]
+                  {
+                    path: '',
+                    component: VerMateriaComponent,
+                    data: { breadcrumb: '' },
+                  },
+                  {
+                    path: ':id',
+                    component: VerVideoComponent,
+                    data: { breadcrumb: 'Ver Video' },
+                  },
+                ],
               },
-            ] 
+            ],
           },
-        ]
+        ],
       },
-      { 
-        path: 'materias', 
+      {
+        path: 'materias',
         data: { breadcrumb: 'Asignaturas' },
         children: [
-          { path: '', component: ElegirMateriasComponent, data: { breadcrumb: '' } },
-          { 
-            path: ':slug',
-            data: { breadcrumb: 'Ver Asignatura'},
-            children: [
-              { path: '', component: VerMateriaComponent, data: { breadcrumb: '' } },
-              { path: ':id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },
-            ]
+          {
+            path: '',
+            component: ElegirMateriasComponent,
+            data: { breadcrumb: '' },
           },
-        ]
+          {
+            path: ':slug',
+            data: { breadcrumb: 'Ver Asignatura' },
+            children: [
+              {
+                path: '',
+                component: VerMateriaComponent,
+                data: { breadcrumb: '' },
+              },
+              {
+                path: ':id',
+                component: VerVideoComponent,
+                data: { breadcrumb: 'Ver Video' },
+              },
+            ],
+          },
+        ],
       },
-      { path: 'video/:id', component: VerVideoComponent, data: { breadcrumb: 'Ver Video' } },
-      { path: 'perfil', component: EditarPerfilComponent, data: { breadcrumb: 'Editar Perfil' } },
-      { path: 'historial', component: HistorialComponent, data: { breadcrumb: 'Historial' } },
-      { path: 'nosotros', component: SobreNosotrosComponent, data: { breadcrumb: 'Sobre Nosotros' } },
-      { path: 'buscar/:id', component: BusquedaComponent, data: { breadcrumb: 'Búsqueda' } },
-      { path: '**', redirectTo: 'home' },
-    ]
-  }
+      {
+        path: 'video/:id',
+        component: VerVideoComponent,
+        data: { breadcrumb: 'Ver Video' },
+      },
+      {
+        path: 'perfil',
+        component: EditarPerfilComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Editar Perfil' },
+      },
+      {
+        path: 'historial',
+        component: HistorialComponent,
+        canActivate: [AuthGuard],
+        data: { breadcrumb: 'Historial' },
+      },
+      {
+        path: 'nosotros',
+        component: SobreNosotrosComponent,
+        data: { breadcrumb: 'Sobre Nosotros' },
+      },
+      {
+        path: 'buscar/:id',
+        component: BusquedaComponent,
+        data: { breadcrumb: 'Búsqueda' },
+      },
+      { path: '**', redirectTo: '' },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class VideosRoutingModule { }
+export class VideosRoutingModule {}

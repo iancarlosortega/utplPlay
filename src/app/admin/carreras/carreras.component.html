@@ -1,419 +1,392 @@
-
-
 <h3 class="text-center">Listado de carreras</h3>
-   
-<p-table 
-    #dt 
-    [value]="carreras" 
-    dataKey="name" 
-    selectionMode="single"
-    [rows]="15" 
-    [showCurrentPageReport]="true" 
-    [rowsPerPageOptions]="[15,25,50]" 
-    [loading]="loading" 
-    styleClass="p-datatable-usuarios p-datatable-gridlines"
-    [paginator]="true" 
-    [scrollable]="scrollable" scrollDirection="both"
-    currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
-    [globalFilterFields]="['name', 'area.name', 'duration']">
 
-    <!-- Tabla header -->
-    <ng-template pTemplate="caption">
-        <div class="tabla-header">
-            <!-- Agregar Carrera -->
-            <button 
-                pButton
-                icon="pi pi-plus-circle" 
-                iconPos="right"
-                type="button" 
-                class="p-button-raised" 
-                label="Agregar Carrera"
-                (click)="openModal()">
-            </button>
+<p-table
+  #dt
+  [value]="carreras"
+  dataKey="name"
+  selectionMode="single"
+  [rows]="15"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[15, 25, 50]"
+  [loading]="loading"
+  styleClass="p-datatable-usuarios p-datatable-gridlines"
+  [paginator]="true"
+  [scrollable]="scrollable"
+  scrollDirection="both"
+  currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} carreras"
+  [globalFilterFields]="['name', 'area.name', 'duration']"
+>
+  <!-- Tabla header -->
+  <ng-template pTemplate="caption">
+    <div class="tabla-header">
+      <!-- Agregar Carrera -->
+      <button
+        pButton
+        icon="pi pi-plus-circle"
+        iconPos="right"
+        type="button"
+        class="p-button-raised"
+        label="Agregar Carrera"
+        (click)="openModal()"
+      ></button>
 
-            <!-- Buscador -->
-            <span class="p-input-icon-left p-ml-auto">
-                <i class="pi pi-search"></i>
-                <input 
-                    class="p-inputtext p-component"
-                    pInputText 
-                    type="text" 
-                    (input)="applyFilterGlobal($event, 'contains')" 
-                    placeholder="Buscar carrera" />
-            </span>
+      <!-- Buscador -->
+      <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input
+          class="p-inputtext p-component"
+          pInputText
+          type="text"
+          (input)="applyFilterGlobal($event, 'contains')"
+          placeholder="Buscar carrera"
+        />
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="name" style="width: 200px">
+        Nombre
+        <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th style="width: 200px">Imagen</th>
+      <th pSortableColumn="area.name" style="width: 200px">
+        Facultad
+        <p-sortIcon field="area.name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="duration" style="width: 200px">
+        Descripción
+        <p-sortIcon field="duration"></p-sortIcon>
+      </th>
+      <th style="width: 150px">Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-carrera>
+    <tr>
+      <td style="width: 200px">
+        {{ carrera.name }}
+      </td>
+      <td class="tabla-imagen" style="width: 200px">
+        <img [src]="carrera.photo_url" [alt]="carrera.name" />
+      </td>
+      <td style="width: 200px">
+        {{ carrera.area.name }}
+      </td>
+      <td style="width: 200px">
+        {{
+          carrera.duration.length > 200
+            ? (carrera.duration | slice : 0 : 200) + "..."
+            : carrera.duration
+        }}
+      </td>
+
+      <td style="width: 150px">
+        <div class="acciones">
+          <button
+            pButton
+            icon="pi pi-pencil"
+            type="button"
+            (click)="obtenerCarrera(carrera.id)"
+            class="p-button-raised p-button-rounded"
+          ></button>
+
+          <button
+            pButton
+            icon="pi pi-trash"
+            type="button"
+            (click)="eliminarCarrera(carrera)"
+            class="p-button-raised p-button-rounded p-button-danger"
+          ></button>
         </div>
-    </ng-template>
-
-
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="name" style="width: 200px">
-                <div>
-                    Nombre
-                    <p-sortIcon field="name"></p-sortIcon>
-                </div>
-            </th>
-            <th style="width: 200px">
-                <div>
-                    Imagen
-                </div>
-            </th>
-            <th pSortableColumn="area.name" style="width: 200px">
-                <div>
-                    Área
-                    <p-sortIcon field="area.name"></p-sortIcon>
-                </div>
-            </th>
-            <th pSortableColumn="duration" style="width: 200px">
-                <div>
-                    Número de ciclos
-                    <p-sortIcon field="duration"></p-sortIcon>
-                </div>
-            </th>
-            <th style="width: 150px">Acciones</th>
-            
-        </tr>
-        
-    </ng-template>
-    <ng-template pTemplate="body" let-carrera>
-        <tr>
-            <td style="width: 200px">
-                {{carrera.name}}
-            </td>
-            <td class="tabla-imagen" style="width: 200px">
-                <img [src]="carrera.photo_url" [alt]="carrera.name">
-            </td>
-            <td style="width: 200px">
-                {{carrera.area.name}}
-            </td>
-            <td style="width: 200px">
-                
-                {{carrera.duration}}
-            </td>
-            
-            <td style="width: 150px">
-
-                <div class="acciones">
-                    <!-- Botón de editar -->
-                    <button 
-                        pButton 
-                        icon="pi pi-pencil" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="obtenerCarrera(carrera.id)"
-                        class="p-button-raised p-button-rounded">
-                    </button>
-
-                    <!-- Botón de eliminar -->
-                    <button 
-                        pButton 
-                        icon="pi pi-trash" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="eliminarCarrera(carrera)"
-                        class="p-button-raised p-button-rounded p-button-danger">
-                    </button>
-                </div> 
-            </td>
-            
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td class="sin-carreras" colspan="5">Ninguna carrera encontrada.</td>
-        </tr>
-    </ng-template>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td class="sin-carreras" colspan="5">Ninguna carrera encontrada.</td>
+    </tr>
+  </ng-template>
 </p-table>
 
 <!-- Modal para crear carrera -->
- 
+
 <ng-template #modalCrear>
-    <div class="modal-header">
+  <div class="modal-header">
     <h4 class="modal-title pull-left">Agregar Carrera</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
-    </div>
-    <div class="modal-body">
-        <form 
-        [formGroup]="miFormulario" 
-        #formulario
-        #form="ngForm"
-        autocomplete="off" >
-
-        <div class="foto-perfil">
-            <!-- Previsualizacion de la foto de carrera -->
-            <div class="imagen">
-
-                <img [src]="url" alt="Foto de carrera" *ngIf="format==='image' && url" >
-
-            </div>
-
-            <!-- Input File -->
-
-            <div class="custom-file">
-                <input 
-                    #inputFile
-                    type="file" 
-                    class="form-control"
-                    formControlName="file"
-                    accept="image/png, image/jpg, image/*"
-                    (change)="selectFile($event)">
-            </div>
-
-            
-
-            <!-- Barra de porcentaje -->
-            <div class="porcentaje" *ngIf="currentFileUpload && visible">
-                
-                <div class="alert alert-info loading">
-                    <p>Cargando imagen...</p>
-                    <p-progressSpinner 
-                        [style]="{width: '20px', height: '20px'}" 
-                        styleClass="custom-spinner" 
-                        strokeWidth="8"
-                        animationDuration=".5s">
-                    </p-progressSpinner>
-                </div>
-
-                <div class="progress mt-2">
-                    <div
-                        class="progress-bar progress-bar-striped"
-                        role="progressbar"
-                        attr.aria-valuenow="{{ percentage }}"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        [ngStyle]="{ width: percentage + '%' }"
-                        [ngClass]="{
-                            'bg-success': percentage > 70,
-                            'bg-info': percentage > 40 && percentage < 70,
-                            'bg-warning': percentage > 20 && percentage < 40,
-                            'bg-danger': percentage > 0 && percentage < 20
-                        }"
-                        >
-                        {{ percentage }}%
-                    </div>
-                </div>
-
-            </div>
+  </div>
+  <div class="modal-body">
+    <form
+      [formGroup]="miFormulario"
+      #formulario
+      #form="ngForm"
+      autocomplete="off"
+    >
+      <div class="foto-perfil">
+        <!-- Previsualizacion de la foto de carrera -->
+        <div class="imagen">
+          <img
+            [src]="url"
+            alt="Foto de carrera"
+            *ngIf="format === 'image' && url"
+          />
         </div>
 
-            <!-- Input Nombre -->
-        
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Nombre de la carrera</mat-label>
-                <input 
-                    type="text" 
-                    matInput 
-                    formControlName="name"
-                    placeholder="Ex. Computación">
-                <mat-error *ngIf="campoNoValido('name')">
-                  El campo de nombre es <strong>obligatorio</strong>
-                </mat-error>
-            </mat-form-field>
+        <!-- Input File -->
 
-        
-            <!-- Input número de ciclos -->
-            
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Número de ciclos</mat-label>
-                <input 
-                    type="number" 
-                    matInput 
-                    formControlName="duration"
-                    placeholder="Ex. 1"
-                    min="1">
-                <mat-error *ngIf="campoNoValido('duration')">
-                  El número de ciclos debe ser mínimo <strong>1</strong>
-                </mat-error>
-            </mat-form-field>
+        <div class="custom-file">
+          <input
+            #inputFile
+            type="file"
+            class="form-control"
+            formControlName="file"
+            accept="image/png, image/jpg, image/*"
+            (change)="selectFile($event)"
+          />
+        </div>
 
-            <!-- Input de área  -->
-            
-            <mat-form-field>
-                <mat-label>Área</mat-label>
-                <mat-select 
-                    formControlName="area">
-                    
-                    <mat-option *ngFor="let area of areas" [value]="area">
-                        {{ area.name }}
-                    </mat-option>
-    
-                </mat-select>
-                <mat-error *ngIf="campoNoValido('area')">
-                    El campo de área es <strong>obligatorio</strong>
-                </mat-error>
-            </mat-form-field>
-                    
-        </form>
+        <!-- Barra de porcentaje -->
+        <div class="porcentaje" *ngIf="currentFileUpload && visible">
+          <div class="alert alert-info loading">
+            <p>Cargando imagen...</p>
+            <p-progressSpinner
+              [style]="{ width: '20px', height: '20px' }"
+              styleClass="custom-spinner"
+              strokeWidth="8"
+              animationDuration=".5s"
+            >
+            </p-progressSpinner>
+          </div>
 
-    </div>
+          <div class="progress mt-2">
+            <div
+              class="progress-bar progress-bar-striped"
+              role="progressbar"
+              attr.aria-valuenow="{{ percentage }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{ width: percentage + '%' }"
+              [ngClass]="{
+                'bg-success': percentage > 70,
+                'bg-info': percentage > 40 && percentage < 70,
+                'bg-warning': percentage > 20 && percentage < 40,
+                'bg-danger': percentage > 0 && percentage < 20
+              }"
+            >
+              {{ percentage }}%
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="modal-footer">
-        <button 
-            pButton 
-            (click)="closeModal()" 
-            label="Cancelar" 
-            icon="pi pi-times" 
-            iconPos="left" 
-            class="p-button-raised boton-cancelar">
-        </button>
+      <!-- Input Nombre -->
 
-        <button 
-            pButton 
-            (click)="agregarCarrera()" 
-            label="Guardar" 
-            [disabled]="disabled"
-            icon="pi pi-check" 
-            iconPos="right" 
-            class="p-button-raised">
-        </button>
-        
-    </div>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre de la carrera</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Ex. Computación"
+        />
+        <mat-error *ngIf="campoNoValido('name')">
+          El campo de nombre es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Input número de ciclos -->
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Descripción</mat-label>
+        <input type="text" matInput formControlName="duration" />
+        <mat-error *ngIf="campoNoValido('duration')">
+          El campo de descripción es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Input de área  -->
+
+      <mat-form-field>
+        <mat-label>Área</mat-label>
+        <mat-select formControlName="area">
+          <mat-option *ngFor="let area of areas" [value]="area">
+            {{ area.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('area')">
+          El campo de área es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      pButton
+      (click)="closeModal()"
+      label="Cancelar"
+      icon="pi pi-times"
+      iconPos="left"
+      class="p-button-raised boton-cancelar"
+    ></button>
+
+    <button
+      pButton
+      (click)="agregarCarrera()"
+      label="Guardar"
+      [disabled]="disabled"
+      icon="pi pi-check"
+      iconPos="right"
+      class="p-button-raised"
+    ></button>
+  </div>
 </ng-template>
 
 <!-- Modal para editar carrera -->
 
 <ng-template #modalEditar>
-    <div class="modal-header">
+  <div class="modal-header">
     <h4 class="modal-title pull-left">Editar Carrera</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
-    </div>
-    <div class="modal-body">
-        <form 
-        [formGroup]="miFormulario" 
-        #formulario
-        #form="ngForm"
-        autocomplete="off" >
-
-        <div class="foto-perfil">
-            <!-- Previsualizacion de la foto de carrera -->
-            <div class="imagen">
-
-                <img [src]="url" alt="Foto de carrera" *ngIf="format==='image' && url" >
-
-            </div>
-
-            <!-- Input File -->
-
-            <div class="custom-file">
-                <input 
-                    #inputFile
-                    type="file" 
-                    class="form-control"
-                    formControlName="file"
-                    accept="image/png, image/jpg, image/*"
-                    (change)="selectFile($event)">
-            </div>
-
-            
-
-            <!-- Barra de porcentaje -->
-            <div class="porcentaje" *ngIf="currentFileUpload && visible">
-                
-                <div class="alert alert-info loading">
-                    <p>Cargando imagen...</p>
-                    <p-progressSpinner 
-                        [style]="{width: '20px', height: '20px'}" 
-                        styleClass="custom-spinner" 
-                        strokeWidth="8"
-                        animationDuration=".5s">
-                    </p-progressSpinner>
-                </div>
-
-                <div class="progress mt-2">
-                    <div
-                        class="progress-bar progress-bar-striped"
-                        role="progressbar"
-                        attr.aria-valuenow="{{ percentage }}"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        [ngStyle]="{ width: percentage + '%' }"
-                        [ngClass]="{
-                            'bg-success': percentage > 70,
-                            'bg-info': percentage > 40 && percentage < 70,
-                            'bg-warning': percentage > 20 && percentage < 40,
-                            'bg-danger': percentage > 0 && percentage < 20
-                        }"
-                        >
-                        {{ percentage }}%
-                    </div>
-                </div>
-
-            </div>
+  </div>
+  <div class="modal-body">
+    <form
+      [formGroup]="miFormulario"
+      #formulario
+      #form="ngForm"
+      autocomplete="off"
+    >
+      <div class="foto-perfil">
+        <!-- Previsualizacion de la foto de carrera -->
+        <div class="imagen">
+          <img
+            [src]="url"
+            alt="Foto de carrera"
+            *ngIf="format === 'image' && url"
+          />
         </div>
 
-            <!-- Input Nombre -->
-        
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Nombre de la carrera</mat-label>
-                <input 
-                    type="text" 
-                    matInput 
-                    formControlName="name"
-                    placeholder="Ex. Computación">
-                <mat-error *ngIf="campoNoValido('name')">
-                  El campo de nombre es <strong>obligatorio</strong>
-                </mat-error>
-            </mat-form-field>
+        <!-- Input File -->
 
-            <!-- Input número de ciclos -->
-            
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Número de ciclos</mat-label>
-                <input 
-                    type="number" 
-                    matInput 
-                    formControlName="duration"
-                    placeholder="Ex. 1"
-                    min="1">
-                <mat-error *ngIf="campoNoValido('duration')">
-                  El número de ciclos debe ser mínimo <strong>1</strong>
-                </mat-error>
-            </mat-form-field>
+        <div class="custom-file">
+          <input
+            #inputFile
+            type="file"
+            class="form-control"
+            formControlName="file"
+            accept="image/png, image/jpg, image/*"
+            (change)="selectFile($event)"
+          />
+        </div>
 
-            <!-- Input de área  -->
-            
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Área</mat-label>
-                <mat-select formControlName="area" [compareWith]="compareObjects"> 
+        <!-- Barra de porcentaje -->
+        <div class="porcentaje" *ngIf="currentFileUpload && visible">
+          <div class="alert alert-info loading">
+            <p>Cargando imagen...</p>
+            <p-progressSpinner
+              [style]="{ width: '20px', height: '20px' }"
+              styleClass="custom-spinner"
+              strokeWidth="8"
+              animationDuration=".5s"
+            >
+            </p-progressSpinner>
+          </div>
 
-                    <mat-option *ngFor="let area of areas" [value]="area">
-                        {{ area.name }}
-                    </mat-option>
-    
-                </mat-select>
-                <mat-error *ngIf="campoNoValido('area')">
-                    El campo de área es <strong>obligatorio</strong>
-                </mat-error>
-            </mat-form-field>
-                    
-        </form>
+          <div class="progress mt-2">
+            <div
+              class="progress-bar progress-bar-striped"
+              role="progressbar"
+              attr.aria-valuenow="{{ percentage }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{ width: percentage + '%' }"
+              [ngClass]="{
+                'bg-success': percentage > 70,
+                'bg-info': percentage > 40 && percentage < 70,
+                'bg-warning': percentage > 20 && percentage < 40,
+                'bg-danger': percentage > 0 && percentage < 20
+              }"
+            >
+              {{ percentage }}%
+            </div>
+          </div>
+        </div>
+      </div>
 
-    </div>
+      <!-- Input Nombre -->
 
-    <div class="modal-footer">
-        <button 
-            pButton 
-            (click)="closeModal()" 
-            label="Cancelar" 
-            icon="pi pi-times" 
-            iconPos="left" 
-            class="p-button-raised boton-cancelar">
-        </button>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre de la carrera</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Ex. Computación"
+        />
+        <mat-error *ngIf="campoNoValido('name')">
+          El campo de nombre es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
 
-        <button 
-            pButton 
-            (click)="agregarCarrera()" 
-            [disabled]="disabled"
-            label="Actualizar" 
-            icon="pi pi-check" 
-            iconPos="right" 
-            class="p-button-raised">
-        </button>
-        
-    </div>
+      <!-- Input descripción -->
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Descripción</mat-label>
+        <input matInput type="text" formControlName="duration" />
+        <mat-error *ngIf="campoNoValido('duration')">
+          El campo de descripción es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Input de área  -->
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Área</mat-label>
+        <mat-select formControlName="area" [compareWith]="compareObjects">
+          <mat-option *ngFor="let area of areas" [value]="area">
+            {{ area.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoNoValido('area')">
+          El campo de área es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      pButton
+      (click)="closeModal()"
+      label="Cancelar"
+      icon="pi pi-times"
+      iconPos="left"
+      class="p-button-raised boton-cancelar"
+    ></button>
+
+    <button
+      pButton
+      (click)="agregarCarrera()"
+      [disabled]="disabled"
+      label="Actualizar"
+      icon="pi pi-check"
+      iconPos="right"
+      class="p-button-raised"
+    ></button>
+  </div>
 </ng-template>
-    

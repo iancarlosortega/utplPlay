@@ -16,38 +16,32 @@ const routes: Routes = [
     path: '',
     component: HomeAdminComponent,
     children: [
-      
-      { path: '', redirectTo: 'dashboard' },
-      { 
-        path: 'dashboard', 
+      {
+        path: '',
         component: DashboardComponent,
         canActivate: [DashboardGuard],
-        canLoad: [DashboardGuard]
       },
-      { 
-        path: 'usuarios', 
+      {
+        path: 'usuarios',
         component: UsuariosComponent,
         canActivate: [DashboardGuard],
-        canLoad: [DashboardGuard]
       },
-      { 
-        path: 'carreras', 
+      {
+        path: 'carreras',
         component: CarrerasComponent,
         canActivate: [AdminGuard],
-        canLoad: [AdminGuard]
       },
       { path: 'materias', component: MateriasComponent },
       { path: 'subir/videos', component: SubirVideoComponent },
       { path: 'editar/video/:id', component: SubirVideoComponent },
       { path: 'videos', component: ListadoVideosComponent },
-      { path: '**', redirectTo: 'dashboard' },
-  
-    ]
-  }
+      { path: '**', redirectTo: '' },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

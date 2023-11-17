@@ -23,9 +23,17 @@
 .nav-item {
     color: var(--negro);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0.5rem 0;
 }
 
-.activo {
+.nav-item p {
+    margin: 0;
+}
+
+.active-link {
     font-weight: bold;
     color: var(--primario);
 }

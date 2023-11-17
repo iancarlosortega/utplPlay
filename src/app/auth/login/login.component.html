@@ -1,74 +1,71 @@
 <div class="login">
-    <div class="formulario">
-        <form [formGroup]="miFormulario" (submit)="login()">
-            <div class="logo">
-                <img src="./assets/logo.png" alt="">
-            </div>
+  <div class="formulario">
+    <form [formGroup]="miFormulario" (submit)="login()">
+      <a class="logo" routerLink="/">
+        <img src="./assets/logo.png" alt="UTPL Play Logo" />
+      </a>
 
-            <div class="campo">
-                <input type="text" formControlName="email" placeholder="Correo electrónico">
-                <span 
-                    class="text-error alert alert-danger" 
-                    *ngIf="campoNoValido('email')"
-                    >El correo electrónico es  <b>obligatorio</b>
-                </span>
-            </div>
-            <div class="campo">
-                <input type="password" formControlName="password" placeholder="Contraseña">
-                <span 
-                    class="text-error alert alert-danger" 
-                    *ngIf="campoNoValido('password')"
-                    >La contraseña es  <b>obligatoria</b>
-                </span>
-            </div>
+      <div class="campo">
+        <input
+          type="text"
+          formControlName="email"
+          placeholder="Correo electrónico"
+        />
+        <span
+          class="text-error alert alert-danger"
+          *ngIf="campoNoValido('email')"
+          >El correo electrónico es <b>obligatorio</b>
+        </span>
+      </div>
+      <div class="campo">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Contraseña"
+        />
+        <span
+          class="text-error alert alert-danger"
+          *ngIf="campoNoValido('password')"
+          >La contraseña es <b>obligatoria</b>
+        </span>
+      </div>
 
-            <span 
-                class="text-error alert alert-danger" 
-                *ngIf="error"
-                >El correo electrónico o la contraseña son <b>incorrectos</b>
-            </span>
+      <div class="boton">
+        <button type="submit" mat-button class="boton-submit">
+          Iniciar Sesión
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
 
-            <div class="boton">
-                <button type="submit" mat-button class="boton-submit">
-                    Iniciar Sesión
-                    <mat-icon>arrow_forward_ios</mat-icon>
-                </button>
-            </div>
+      <div class="separador">
+        <hr />
+        <div class="mid">
+          <p>o</p>
+        </div>
+        <hr />
+      </div>
 
+      <div class="proveedores">
+        <div class="boton-oauth" (click)="loginGoogle()">
+          <img src="/assets/auth/login/google.png" alt="Google" />
+          <p>Continuar con Google</p>
+        </div>
+        <div class="boton-oauth" (click)="loginFacebook()">
+          <img src="/assets/auth/login/facebook.png" alt="Facebook" />
+          <p>Continuar con Facebook</p>
+        </div>
+        <div class="boton-oauth" (click)="loginMicrosoft()">
+          <img src="/assets/auth/login/microsoft.png" alt="Microsoft" />
+          <p>Continuar con Microsoft</p>
+        </div>
+      </div>
 
-            <div class="separador">
-                <hr>
-                <div class="mid">
-                    <p>o</p>
-                </div>
-                <hr>
-            </div>
-
-
-            <div class="proveedores">
-
-                <div class="boton-oauth" (click)="loginGoogle()">
-                    <img src="/assets/auth/login/google.png" alt="Google">
-                    <p>Continuar con Google</p>
-                </div>
-                <div class="boton-oauth" (click)="loginFacebook()">
-                    <img src="/assets/auth/login/facebook.png" alt="Facebook">
-                    <p>Continuar con Facebook</p>
-                </div>
-                <div class="boton-oauth" (click)="loginMicrosoft()">
-                    <img src="/assets/auth/login/microsoft.png" alt="Microsoft">
-                    <p>Continuar con Microsoft</p>
-                </div>
-
-            </div>
-
-            <div class="formulario-footer">
-                <div class="pregunta">
-                    <p>¿No tienes una cuenta?</p>
-                </div>
-                <button routerLink="../register" class="register">Crear Cuenta</button>
-            </div>
-
-        </form>
-    </div>
+      <footer class="formulario-footer">
+        <div class="pregunta">
+          <p>¿No tienes una cuenta?</p>
+          <a routerLink="../register" class="register">Crear Cuenta</a>
+        </div>
+      </footer>
+    </form>
+  </div>
 </div>

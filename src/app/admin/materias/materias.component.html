@@ -1,348 +1,318 @@
-
-
 <h3 class="text-center">Listado de materias</h3>
-   
-<p-table 
-    #dt 
-    [value]="materias" 
-    dataKey="name" 
-    selectionMode="single"
-    [rows]="15" 
-    [showCurrentPageReport]="true" 
-    [rowsPerPageOptions]="[15,25,50]" 
-    [loading]="loading" 
-    styleClass="p-datatable-usuarios p-datatable-gridlines"
-    [paginator]="true" 
-    [scrollable]="scrollable" scrollDirection="both"
-    currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} materias"
-    [globalFilterFields]="['name']">
 
-    <!-- Tabla header -->
-    <ng-template pTemplate="caption">
-        <div class="tabla-header">
-            <!-- Agregar Materia -->
-            <button 
-                pButton
-                icon="pi pi-plus-circle" 
-                iconPos="right"
-                type="button" 
-                class="p-button-raised" 
-                label="Agregar Materia"
-                (click)="openModal()">
-            </button>
+<p-table
+  #dt
+  [value]="materias"
+  dataKey="name"
+  selectionMode="single"
+  [rows]="15"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[15, 25, 50]"
+  [loading]="loading"
+  styleClass="p-datatable-usuarios p-datatable-gridlines"
+  [paginator]="true"
+  [scrollable]="scrollable"
+  scrollDirection="both"
+  currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} materias"
+  [globalFilterFields]="['name']"
+>
+  <!-- Tabla header -->
+  <ng-template pTemplate="caption">
+    <div class="tabla-header">
+      <!-- Agregar Materia -->
+      <button
+        pButton
+        icon="pi pi-plus-circle"
+        iconPos="right"
+        type="button"
+        class="p-button-raised"
+        label="Agregar Materia"
+        (click)="openModal()"
+      ></button>
 
-            <!-- Buscador -->
-            <span class="p-input-icon-left p-ml-auto">
-                <i class="pi pi-search"></i>
-                <input 
-                    class="p-inputtext p-component" 
-                    pInputText 
-                    type="text"
-                    (input)="applyFilterGlobal($event, 'contains')" 
-                    placeholder="Buscar materia" />
-            </span>
+      <!-- Buscador -->
+      <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input
+          class="p-inputtext p-component"
+          pInputText
+          type="text"
+          (input)="applyFilterGlobal($event, 'contains')"
+          placeholder="Buscar materia"
+        />
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="nombre" style="width: 200px">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Nombre
+          <p-sortIcon field="nombre"></p-sortIcon>
         </div>
-    </ng-template>
+      </th>
+      <th style="width: 400px">Descripción</th>
+      <th style="width: 200px">Palabras Clave</th>
+      <th style="width: 200px">Carreras</th>
+      <th style="width: 200px">Acciones</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-materia>
+    <tr>
+      <td style="width: 200px">
+        {{ materia.name }}
+      </td>
+      <td style="width: 400px">
+        {{
+          materia.description.length > 200
+            ? (materia.description | slice : 0 : 200) + "..."
+            : materia.description
+        }}
+      </td>
+      <td style="width: 200px">
+        {{ materia.keywords | space }}
+      </td>
+      <td style="width: 200px">
+        {{ materia.careers | carreras | space }}
+      </td>
 
+      <td style="width: 200px">
+        <div class="acciones">
+          <!-- Botón de editar -->
+          <button
+            pButton
+            icon="pi pi-pencil"
+            iconPos="right"
+            type="button"
+            (click)="obtenerMateria(materia.id)"
+            class="p-button-raised p-button-rounded"
+          ></button>
 
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="nombre" style="width: 200px">
-                <div class="p-d-flex p-jc-between p-ai-center">
-                    Nombre
-                    <p-sortIcon field="nombre"></p-sortIcon>
-                </div>
-            </th>
-            <th style="width: 400px">
-                Descripción
-            </th>
-            <th style="width: 200px">
-                Palabras Clave
-            </th>
-            <th style="width: 200px">
-                Objetivos
-            </th>
-            <th style="width: 200px">
-                Carreras
-            </th>
-            <th style="width: 200px">Acciones</th>
-            
-        </tr>
-        
-    </ng-template>
-    <ng-template pTemplate="body" let-materia>
-        <tr>
-            <td style="width: 200px">
-                {{materia.name}}
-            </td>
-            <td style="width: 400px">
-                {{materia.description}}
-            </td>
-            <td style="width: 200px">
-                {{materia.keywords | space }}
-            </td>
-            <td style="width: 200px">
-                {{materia.purposes | space }}
-            </td>
-            <td style="width: 200px">
-                {{materia.careers | carreras | space}}
-            </td>
-            
-            <td style="width: 200px">
-
-                <div class="acciones">
-                    <!-- Botón de editar -->
-                    <button 
-                        pButton 
-                        icon="pi pi-pencil" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="obtenerMateria(materia.id)"
-                        class="p-button-raised p-button-rounded">
-                    </button>
-
-                    <!-- Botón de eliminar -->
-                    <button 
-                        pButton 
-                        icon="pi pi-trash" 
-                        iconPos="right"
-                        type="button" 
-                        (click)="eliminarMateria(materia.id)"
-                        class="p-button-raised p-button-rounded p-button-danger">
-                    </button>
-                </div>
-                
-            </td>
-            
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td class="sin-materias" colspan="5">Ninguna materia encontrada.</td>
-        </tr>
-    </ng-template>
+          <!-- Botón de eliminar -->
+          <button
+            pButton
+            icon="pi pi-trash"
+            iconPos="right"
+            type="button"
+            (click)="eliminarMateria(materia.id)"
+            class="p-button-raised p-button-rounded p-button-danger"
+          ></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td class="sin-materias" colspan="5">Ninguna materia encontrada.</td>
+    </tr>
+  </ng-template>
 </p-table>
 
 <!-- Modal para crear materia -->
 
 <ng-template #modalCrear>
-    <div class="modal-header">
+  <div class="modal-header">
     <h4 class="modal-title pull-left">Agregar Materia</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
-    </div>
-    <div class="modal-body">
-        <form 
-            [formGroup]="miFormulario" 
-            autocomplete="off">
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="miFormulario" autocomplete="off">
+      <!-- Input Nombre -->
 
-            <!-- Input Nombre -->
-        
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Nombre de la materia</mat-label>
-                <input 
-                    type="text" 
-                    matInput 
-                    formControlName="name"
-                    placeholder="Ex. Física">
-                <mat-error *ngIf="campoNoValido('name')">
-                    El campo de nombre es <strong>obligatorio</strong>
-                </mat-error>
-            </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre de la materia</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Ex. Física"
+        />
+        <mat-error *ngIf="campoNoValido('name')">
+          El campo de nombre es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
 
-            <!-- Input Descripción -->
-            <div class="descripcion">
-                <label class="label" for="descripcion">Descripción de la materia</label>
-                <textarea 
-                    class="form-control textarea"
-                    formControlName="description"
-                    id="descripcion"
-                    rows="10"
-                    [ngClass]="{'is-invalid': campoNoValido('description')}">
-                </textarea>
-                <small 
-                    *ngIf="campoNoValido('description')" 
-                    class="text text-danger">
-                    La descripción de la materia es <strong>obligatoria</strong>
-                </small>
-            </div>     
-            
-            <!-- Input carreras -->
-            <label for="careers">Carreras</label>
-            <p-multiSelect 
-                [options]="carreras" 
-                formControlName="careers" 
-                defaultLabel="Selecione las carreras"
-                optionLabel="name"
-                emptyFilterMessage="Ninguna carrera encontrada"
-                [style]="{'width': '100%', 'margin-top': '0.5rem'}"
-                display="chip">
-            </p-multiSelect>
-            <small 
-                *ngIf="campoNoValido('careers')" 
-                class="text text-danger">
-                Seleccion al menos <strong>1</strong> carrera
-            </small>
+      <!-- Input Descripción -->
+      <div class="descripcion">
+        <label class="label" for="descripcion">Descripción de la materia</label>
+        <textarea
+          class="form-control textarea"
+          formControlName="description"
+          id="descripcion"
+          rows="10"
+          [ngClass]="{ 'is-invalid': campoNoValido('description') }"
+        >
+        </textarea>
+        <small *ngIf="campoNoValido('description')" class="text text-danger">
+          La descripción de la materia es <strong>obligatoria</strong>
+        </small>
+      </div>
 
-            <!-- Keywords -->
+      <!-- Input carreras -->
+      <label for="careers">Carreras</label>
+      <p-multiSelect
+        [options]="carreras"
+        formControlName="careers"
+        defaultLabel="Selecione las carreras"
+        optionLabel="name"
+        emptyFilterMessage="Ninguna carrera encontrada"
+        [style]="{ width: '100%', 'margin-top': '0.5rem' }"
+        display="chip"
+      >
+      </p-multiSelect>
+      <small *ngIf="campoNoValido('careers')" class="text text-danger">
+        Seleccion al menos <strong>1</strong> carrera
+      </small>
 
-            <div class="chips">
-                <label for="keywords">Palabras claves</label>
-                <p-chips
-                    formControlName="keywords">
-                </p-chips>
-            </div>
-            <small 
-                *ngIf="campoNoValido('keywords')" 
-                class="text text-danger">
-                Escriba por lo menos <strong>1</strong> palabra clave
-            </small>
+      <!-- Keywords -->
 
-            <!-- Purposes -->
+      <div class="chips">
+        <label for="keywords">Palabras claves</label>
+        <p-chips formControlName="keywords"> </p-chips>
+      </div>
+      <small *ngIf="campoNoValido('keywords')" class="text text-danger">
+        Escriba por lo menos <strong>1</strong> palabra clave
+      </small>
 
-            <div class="chips">
-                <label for="purposes">Objetivos de la materia</label>
-                <p-chips
-                    formControlName="purposes">
-                </p-chips>
-            </div>
-                    
-        </form>
+      <!-- Purposes -->
 
-    </div>
+      <div class="chips">
+        <label for="purposes">Objetivos de la materia</label>
+        <p-chips formControlName="purposes"> </p-chips>
+      </div>
+    </form>
+  </div>
 
-    <div class="modal-footer">
-        <button 
-            pButton 
-            (click)="closeModal()" 
-            label="Cancelar" 
-            icon="pi pi-times" 
-            iconPos="left" 
-            class="p-button-raised boton-cancelar">
-        </button>
+  <div class="modal-footer">
+    <button
+      pButton
+      (click)="closeModal()"
+      label="Cancelar"
+      icon="pi pi-times"
+      iconPos="left"
+      class="p-button-raised boton-cancelar"
+    ></button>
 
-        <button 
-            pButton 
-            (click)="agregarMateria()" 
-            label="Guardar" 
-            [disabled]="disabled"
-            icon="pi pi-check" 
-            iconPos="right" 
-            class="p-button-raised">
-        </button>
-        
-    </div>
+    <button
+      pButton
+      (click)="agregarMateria()"
+      label="Guardar"
+      [disabled]="disabled"
+      icon="pi pi-check"
+      iconPos="right"
+      class="p-button-raised"
+    ></button>
+  </div>
 </ng-template>
 
 <!-- Modal para editar materia -->
 
 <ng-template #modalEditar>
-    <div class="modal-header">
+  <div class="modal-header">
     <h4 class="modal-title pull-left">Editar Materia</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
-    </div>
-    <div class="modal-body">
-        <form 
-            [formGroup]="miFormulario" 
-            autocomplete="off">
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="miFormulario" autocomplete="off">
+      <!-- Input Nombre -->
 
-            <!-- Input Nombre -->
-        
-            <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Nombre de la materia</mat-label>
-                <input 
-                    type="text" 
-                    matInput 
-                    formControlName="name"
-                    placeholder="Ex. Física">
-                <mat-error *ngIf="campoNoValido('name')">
-                  El campo de nombre es <strong>obligatorio</strong>
-                </mat-error>
-            </mat-form-field>      
-            
-            <!-- Input Descripción -->
-            <div class="descripcion">
-                <label class="label" for="descripcion">Descripción de la materia</label>
-                <textarea 
-                    class="form-control textarea"
-                    formControlName="description"
-                    id="descripcion"
-                    rows="10"
-                    [ngClass]="{'is-invalid': campoNoValido('description')}">
-                </textarea>
-                <small 
-                    *ngIf="campoNoValido('description')" 
-                    class="text text-danger">
-                    La descripción de la materia es <strong>obligatoria</strong>
-                </small>
-            </div>  
-            
-            <!-- Input carreras -->
-            <label for="careers">Carreras</label>
-            <p-multiSelect 
-                [options]="carreras" 
-                formControlName="careers" 
-                defaultLabel="Selecione las carreras"
-                optionLabel="name"
-                emptyFilterMessage="Ninguna carrera encontrada"
-                [style]="{'width': '100%', 'margin-top': '0.5rem'}"
-                display="chip">
-            </p-multiSelect>
-            <small 
-                *ngIf="campoNoValido('careers')" 
-                class="text text-danger">
-                Seleccion al menos <strong>1</strong> carrera
-            </small>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre de la materia</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="name"
+          placeholder="Ex. Física"
+        />
+        <mat-error *ngIf="campoNoValido('name')">
+          El campo de nombre es <strong>obligatorio</strong>
+        </mat-error>
+      </mat-form-field>
 
-            <!-- Keywords -->
+      <!-- Input Descripción -->
+      <div class="descripcion">
+        <label class="label" for="descripcion">Descripción de la materia</label>
+        <textarea
+          class="form-control textarea"
+          formControlName="description"
+          id="descripcion"
+          rows="10"
+          [ngClass]="{ 'is-invalid': campoNoValido('description') }"
+        >
+        </textarea>
+        <small *ngIf="campoNoValido('description')" class="text text-danger">
+          La descripción de la materia es <strong>obligatoria</strong>
+        </small>
+      </div>
 
-            <div class="chips">
-                <label for="keywords">Palabras claves</label>
-                <p-chips
-                    formControlName="keywords">
-                </p-chips>
-            </div>
-            <small 
-                *ngIf="campoNoValido('keywords')" 
-                class="text text-danger">
-                Escriba por lo menos <strong>1</strong> palabra clave
-            </small>
+      <!-- Input carreras -->
+      <label for="careers">Carreras</label>
+      <p-multiSelect
+        [options]="carreras"
+        formControlName="careers"
+        defaultLabel="Selecione las carreras"
+        optionLabel="name"
+        emptyFilterMessage="Ninguna carrera encontrada"
+        [style]="{ width: '100%', 'margin-top': '0.5rem' }"
+        display="chip"
+      >
+      </p-multiSelect>
+      <small *ngIf="campoNoValido('careers')" class="text text-danger">
+        Seleccion al menos <strong>1</strong> carrera
+      </small>
 
-            <!-- Purposes -->
+      <!-- Keywords -->
 
-            <div class="chips">
-                <label for="purposes">Objetivos de la materia</label>
-                <p-chips
-                    formControlName="purposes">
-                </p-chips>
-            </div>
-                    
-        </form>
+      <div class="chips">
+        <label for="keywords">Palabras claves</label>
+        <p-chips formControlName="keywords"> </p-chips>
+      </div>
+      <small *ngIf="campoNoValido('keywords')" class="text text-danger">
+        Escriba por lo menos <strong>1</strong> palabra clave
+      </small>
 
-    </div>
+      <!-- Purposes -->
 
-    <div class="modal-footer">
-        <button 
-            pButton 
-            (click)="closeModal()" 
-            label="Cancelar" 
-            icon="pi pi-times" 
-            iconPos="left" 
-            class="p-button-raised boton-cancelar">
-        </button>
+      <div class="chips">
+        <label for="purposes">Objetivos de la materia</label>
+        <p-chips formControlName="purposes"> </p-chips>
+      </div>
+    </form>
+  </div>
 
-        <button 
-            pButton 
-            (click)="actualizarMateria()" 
-            [disabled]="disabled"
-            label="Actualizar" 
-            icon="pi pi-check" 
-            iconPos="right" 
-            class="p-button-raised">
-        </button>
-        
-    </div>
+  <div class="modal-footer">
+    <button
+      pButton
+      (click)="closeModal()"
+      label="Cancelar"
+      icon="pi pi-times"
+      iconPos="left"
+      class="p-button-raised boton-cancelar"
+    ></button>
+
+    <button
+      pButton
+      (click)="actualizarMateria()"
+      [disabled]="disabled"
+      label="Actualizar"
+      icon="pi pi-check"
+      iconPos="right"
+      class="p-button-raised"
+    ></button>
+  </div>
 </ng-template>

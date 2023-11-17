@@ -105,3 +105,13 @@
 .activo {
     color: var(--primario);
 }
+
+.login-button {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: var(--primario);
+    color: var(--blanco);
+    width: 140px;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}

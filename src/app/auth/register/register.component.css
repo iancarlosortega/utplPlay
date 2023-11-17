@@ -29,7 +29,7 @@
 
 @media (min-width:768px){
     .formulario {
-        padding: var(--separacion);
+        padding: 3rem;
     }
 }
 
@@ -46,6 +46,7 @@
 }
 
 .formulario-form {
+    margin: 2rem 0;
     width: 100%;
 }
 
@@ -59,12 +60,11 @@
     border: 1px solid var(--gris-bordes);
     border-radius: 10px;
     margin-top: 1rem 0;
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem 1.25rem;
 }
 
 .campo input:focus, .custom-select select:focus {
-    outline: none !important;
-    border:2px solid var(--primario);
+    outline: 2px solid var(--primario);
 }
 
 @media (min-width:992px){
@@ -86,12 +86,17 @@
 }
 
 .boton-submit {
-    background-color: var(--blanco);
+    padding: 0.15rem 2rem;
+    background-color: var(--primario);
+    font-weight: semibold;
+    color: var(--blanco);
 }
 
 .boton-submit mat-icon {
-    color: var(--primario);
-    font-weight: bold;
+    margin-left: 0.25rem;
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
 }
 
 .formulario-footer {
@@ -124,9 +129,9 @@
     padding: 0.5rem 1.5rem;
     cursor: pointer;
     border: 1px solid var(--gradiente1);
-    border-radius: 10px;
-    background-color: #ffffff00;
-    color: var(--gradiente1);
+    border-radius: 20px;
+    background-color: var(--gradiente1);
+    color: #161616b0;
     font-weight: 500;
     transition: 0.2s ease-in;
 }
@@ -138,12 +143,7 @@
 }
 
 .login:hover {
-    background-color: var(--gradiente1);
-    color: #161616b0;
-}
-
-.login {
-    cursor: pointer;
+    background-color: rgb(231, 173, 184);
 }
 
 .text-error {

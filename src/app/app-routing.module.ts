@@ -4,27 +4,28 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
-  { 
-    path: 'auth', 
-    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule ) 
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
-  { 
-    path: 'play', 
-    loadChildren: () => import('./videos/videos.module').then( m => m.VideosModule ), 
-    canActivate: [AuthGuard], 
-    canLoad: [AuthGuard]
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [AuthGuard, AdminGuard],
   },
-  { 
-    path: 'admin', 
-    loadChildren: () => import('./admin/admin.module').then( m => m.AdminModule ), 
-    canActivate: [AuthGuard, AdminGuard], 
-    canLoad: [AuthGuard, AdminGuard]
+  {
+    path: '',
+    loadChildren: () =>
+      import('./videos/videos.module').then((m) => m.VideosModule),
   },
-  { path: '**', redirectTo: 'play' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

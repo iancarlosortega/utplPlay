@@ -1,96 +1,133 @@
-<nav class="fullnav" *ngIf="!toolBar" [ngClass]=" { 'gradiente sticky' : !hidden } " >
+<!-- Tablet & Desktop Header -->
 
+<header
+  class="fullnav"
+  *ngIf="!toolBar"
+  [ngClass]="{ 'gradiente sticky': !hidden }"
+>
   <div class="container navbar">
     <div class="logo">
-      <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="/">
+      <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="/" />
     </div>
 
-    <div class="nav-items">
-        <a class="nav-item hvr-underline-from-center" routerLink="/play/home" routerLinkActive="link-activo">Home</a>
-        <a class="nav-item hvr-underline-from-center" routerLink="/play/carreras" routerLinkActive="link-activo">Carreras</a>
-        <a class="nav-item hvr-underline-from-center" routerLink="/play/materias" routerLinkActive="link-activo">Asignaturas</a>
-        <a class="nav-item hvr-underline-from-center" routerLink="/play/nosotros" routerLinkActive="link-activo">Sobre Nosotros</a>
+    <nav class="nav-items">
+      <a
+        class="nav-item hvr-underline-from-center"
+        routerLink="/"
+        routerLinkActive="link-activo"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
+      </a>
+      <a
+        class="nav-item hvr-underline-from-center"
+        routerLink="/carreras"
+        routerLinkActive="link-activo"
+        >Carreras</a
+      >
+      <a
+        class="nav-item hvr-underline-from-center"
+        routerLink="/materias"
+        routerLinkActive="link-activo"
+        >Asignaturas</a
+      >
+      <a
+        class="nav-item hvr-underline-from-center"
+        routerLink="/nosotros"
+        routerLinkActive="link-activo"
+        >Sobre Nosotros</a
+      >
+    </nav>
+
+    <div class="perfil-usuario" *ngIf="claims">
+      <button mat-mini-fab color="accent" [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button
+          *ngIf="claims?.admin || claims?.editor"
+          mat-menu-item
+          routerLink="/admin"
+        >
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Dashboard</span>
+        </button>
+        <button mat-menu-item routerLink="/historial">
+          <mat-icon>history</mat-icon>
+          <span>Historial</span>
+        </button>
+        <button mat-menu-item routerLink="/perfil">
+          <mat-icon>account_box</mat-icon>
+          <span>Editar perfil</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Cerrar sesión</span>
+        </button>
+      </mat-menu>
     </div>
 
-    <div class="perfil-usuario">
-        <button 
-            mat-mini-fab color="primary" 
-            [matMenuTriggerFor]="menu">
-            <mat-icon>person</mat-icon>
-        </button>      
-
-        <mat-menu 
-            #menu="matMenu" 
-            xPosition="before">
-            <button *ngIf="claims?.admin || claims?.editor" mat-menu-item routerLink="/admin">
-                <mat-icon>admin_panel_settings</mat-icon>
-                <span>Dashboard</span>
-            </button>
-            <button mat-menu-item routerLink="/play/historial">
-                <mat-icon>history</mat-icon>
-                <span>Historial</span>
-            </button>
-            <button mat-menu-item routerLink="/play/perfil">
-                <mat-icon>account_box</mat-icon>
-                <span>Editar perfil</span>
-            </button>
-            <button mat-menu-item (click)="logout()">
-                <mat-icon>logout</mat-icon>
-                <span>Cerrar sesión</span>
-            </button>
-        </mat-menu>
-
-    </div>
+    <a *ngIf="!claims" class="login-button" routerLink="/auth/login">
+      Iniciar Sesión
+    </a>
   </div>
-</nav>
+</header>
 
-<nav class="navbar2" *ngIf="toolBar" [ngClass]=" { 'gradiente' : !hidden } ">
-    <div class="logo">
-        <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="/">
-    </div>
-</nav>
+<!-- Phone Header -->
+
+<header class="navbar2" *ngIf="toolBar" [ngClass]="{ gradiente: !hidden }">
+  <div class="logo">
+    <img src="./assets/logo.png" alt="UTPL Play logo" routerLink="/" />
+  </div>
+</header>
 
 <mat-toolbar *ngIf="toolBar">
-    <div class="navbar-button">
-        <button mat-icon-button (click)="visibleSidebar = true">
-            <mat-icon>
-                menu
-            </mat-icon>
-        </button>
-    </div>
+  <div class="navbar-button">
+    <button mat-icon-button (click)="visibleSidebar = true">
+      <mat-icon> menu </mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 <p-sidebar [(visible)]="visibleSidebar" [baseZIndex]="10000">
-    <ul class="listado">
-        <li *ngFor="let item of menuItems">
-          <a class="nav-item2" [routerLink]="item.route">
-            <div class="listado-item">
-              <mat-icon routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">{{item.icono}}</mat-icon>
-              <div class="item-nombre" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">
-                <p>{{item.titulo}}</p>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li *ngIf="claims?.admin || claims?.editor">
-            <a class="nav-item2" routerLink="/admin">
-              <div class="listado-item">
-                <mat-icon>admin_panel_settings</mat-icon>
-                <div class="item-nombre">
-                  <p>Dashboard</p>
-                </div>
-              </div>
-            </a>
-        </li>
-        <li>
-            <a class="nav-item2" (click)="logout()">
-              <div class="listado-item">
-                <mat-icon>logout</mat-icon>
-                <div class="item-nombre">
-                  <p>Cerrar Sesión</p>
-                </div>
-              </div>
-            </a>
-        </li>
-    </ul>
+  <ul class="listado">
+    <li *ngFor="let item of menuItems">
+      <a class="nav-item2" [routerLink]="item.route">
+        <div class="listado-item">
+          <mat-icon
+            routerLinkActive="activo"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ item.icono }}</mat-icon
+          >
+          <div
+            class="item-nombre"
+            routerLinkActive="activo"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <p>{{ item.titulo }}</p>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li *ngIf="claims?.admin || claims?.editor">
+      <a class="nav-item2" routerLink="/admin">
+        <div class="listado-item">
+          <mat-icon>admin_panel_settings</mat-icon>
+          <div class="item-nombre">
+            <p>Dashboard</p>
+          </div>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="nav-item2" (click)="logout()">
+        <div class="listado-item">
+          <mat-icon>logout</mat-icon>
+          <div class="item-nombre">
+            <p>Cerrar Sesión</p>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
 </p-sidebar>
-

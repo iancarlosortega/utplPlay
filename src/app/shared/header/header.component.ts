@@ -7,10 +7,9 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
-
   obs!: Subscription;
   visibleSidebar: boolean = false;
   toolBar: boolean = false;
@@ -20,56 +19,53 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   menuItems = [
     {
       titulo: 'Home',
-      route: '/play/home',
-      icono: 'home'
+      route: '/',
+      icono: 'home',
     },
     {
       titulo: 'Carreras',
-      route: '/play/carreras',
-      icono: 'data_usage'
+      route: '/carreras',
+      icono: 'data_usage',
     },
     {
       titulo: 'Asignaturas',
-      route: '/play/materias',
-      icono: 'library_books'
+      route: '/materias',
+      icono: 'library_books',
     },
     {
       titulo: 'Historial',
-      route: '/play/historial',
-      icono: 'history'
+      route: '/historial',
+      icono: 'history',
     },
     {
       titulo: 'Editar Perfil',
-      route: '/play/perfil',
-      icono: 'account_box'
+      route: '/perfil',
+      icono: 'account_box',
     },
     {
       titulo: 'Sobre Nosotros',
-      route: '/play/nosotros',
-      icono: 'supervised_user_circle'
-    }
+      route: '/nosotros',
+      icono: 'supervised_user_circle',
+    },
   ];
 
-
-  constructor( private authService: AuthService,
-               private router: Router,
-               private observer: BreakpointObserver
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private observer: BreakpointObserver
   ) {}
   ngOnDestroy(): void {
     this.obs.unsubscribe();
   }
 
   ngOnInit(): void {
-
-    if( this.router.url === '/play/home' ) {
+    if (this.router.url === '/') {
       this.hidden = true;
     }
 
-    this.obs = this.authService.obtenerClaims().subscribe( idTokenResult => {
-      const claims = idTokenResult?.claims;
-      this.claims = claims;
+    this.obs = this.authService.obtenerClaims().subscribe((idTokenResult) => {
+      this.claims = idTokenResult?.claims;
     });
-    
   }
 
   ngAfterViewInit() {
@@ -81,11 +77,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
           this.toolBar = true;
         }
       });
-    }, 0)
+    }, 0);
   }
 
   logout() {
     this.authService.logout();
   }
-
 }
